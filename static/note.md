@@ -1,0 +1,14 @@
+
+
+- css文档中后边的样式会覆盖前边的样式
+
+<div class="a b"></div>
+
+a{
+   prop1: xxx;
+}
+B{
+   prop1: xxx;
+}
+
+prop1为 B样式.

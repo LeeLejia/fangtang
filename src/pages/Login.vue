@@ -18,7 +18,7 @@
                                         <div class="form-input">
                                             <div class="form-unit tip-unit">
                                                 <label class="input-tips" style="display: none;">手机号/邮箱/昵称</label>
-                                                <input [(ngModel)]="account" type="text" class="qc-log-input-text lg J-username" placeholder="手机号/邮箱/昵称" />
+                                                <input :v-model="account" type="text" class="qc-log-input-text lg J-username" placeholder="手机号/邮箱/昵称" />
                                                 <ul class="tip-list J-mailSuggest" style="display:none;">
                                                 </ul>
                                             </div>
@@ -27,7 +27,7 @@
                                         <div class="form-input">
                                             <div class="form-unit">
                                                 <label class="input-tips" style="display: none;">密码</label>
-                                                <input type="password" [(ngModel)]="password" (keyup.enter)="login()" class="qc-log-input-text lg J-password" placeholder="密码" />
+                                                <input type="password" :v-model="password" class="qc-log-input-text lg J-password" placeholder="密码" />
                                             </div>
                                         </div>
                                     </li>
@@ -44,7 +44,7 @@
                                 </ul>
                             </div>
                             <div class="op-btn">
-                                <input type="button"  value="登 录" class="qc-log-btn J-loginBtn" (click)="login()"/>
+                                <input type="button"  value="登 录" class="qc-log-btn J-loginBtn"/>
                                 <button type="button" class="qc-log-btn lg" style="display:none">
                                     <div class="m-loading">
                                         <div class="loading">
@@ -54,7 +54,7 @@
                                         </div>
                                     </div> </button>
                                 <div class="psw-info">
-                                    <a href="{{forgetPwd}}" class="forgot-psw J-link">忘记密码？</a>
+                                    <a :href="forgetPwd" class="forgot-psw J-link">忘记密码？</a>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                     <!--login end-->
                     <!--注册提示 start-->
                     <div class="regist">
-                        <p class="tag-line"> 注册新帐号？ <a href="{{register}}" class="link J-link">立即注册</a> </p>
+                        <p class="tag-line"> 注册新帐号？ <a :href="register" class="link J-link">立即注册</a> </p>
                     </div>
                     <!--注册提示 end-->
                 </div>
@@ -199,5 +199,14 @@
     }
 </style>
 <script>
-
+export default {
+    data(){
+        return {
+            account: '',
+            password: '',
+            forgetPwd: 'www.cjwddz.cn/url',
+            register: 'www.cjwddz.cn/url',
+        }
+    }
+}
 </script>
