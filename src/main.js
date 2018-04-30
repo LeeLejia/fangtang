@@ -5,7 +5,7 @@ import {
   Icon, BreadcrumbItem, Message, Notice,
   Form, FormItem, Input, CheckboxGroup, Checkbox,
   Button, Row, Col, AutoComplete, Card, DatePicker,
-  RadioGroup, Radio, Slider, Switch, Select,
+  RadioGroup, Radio, Slider, Switch, Select, Breadcrumb, Menu,
 } from 'iview'
 import 'iview/dist/styles/iview.css'
 import Vue from 'vue'
@@ -14,6 +14,7 @@ import router from './router'
 
 Vue.config.productionTip = false
 Vue.component('MenuItem', MenuItem)
+Vue.component('Menu', Menu)
 Vue.component('Col', Col)
 Vue.component('Row', Row)
 Vue.component('Icon', Icon)
@@ -36,6 +37,7 @@ Vue.component('Radio', Radio)
 Vue.component('Slider', Slider)
 Vue.component('i-switch', Switch)
 Vue.component('Select', Select)
+Vue.component('Breadcrumb', Breadcrumb)
 
 
 Vue.prototype.$Notice = Notice
