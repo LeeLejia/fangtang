@@ -38,7 +38,7 @@ module.exports = {
       '@': path.join(__dirname, '../src'),
       Pages: path.join(__dirname, '../src/pages'),
       Utils: path.join(__dirname, '../src/utils'),
-      Api$: path.join(__dirname, '../src/services/api.js'),
+      Api$: path.join(__dirname, '../src/services'),
     },
   },
   module: {
