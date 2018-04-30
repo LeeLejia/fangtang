@@ -9,7 +9,7 @@
                <Input v-model="formItem.name" placeholder="输入项目名称"></Input>
            </FormItem>
            <FormItem label="项目周期">
-               <DatePicker type="daterange" format="yyyy年MM月dd日" :value="period" placement="bottom-start" placeholder="项目周期" :start-date="new Date()" style="width: 250px"></DatePicker>
+               <DatePicker type="daterange" format="yyyy年MM月dd日" :value="formItem.period" placement="bottom-start" placeholder="项目周期" :start-date="new Date()" style="width: 250px"></DatePicker>
            </FormItem>
            <FormItem label="类型">
                <CheckboxGroup v-model="formItem.type">
@@ -75,7 +75,7 @@
                <Input v-model="formItem.describe" type="textarea" :autosize="{minRows: 2,maxRows: 8}" placeholder="简要说明项目内容"></Input>
            </FormItem>
            <FormItem>
-               <Button type="primary">提交</Button>
+               <Button type="primary" @click="submit">提交</Button>
                <Button type="ghost" style="margin-left: 8px">取消</Button>
            </FormItem>
        </Form>
@@ -84,14 +84,14 @@
 <style>
     .publish-from{
         width:650px;
-        margin-top:50px;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 50px auto 400px;
     }
     .notice{
         font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
         color:#9ea7b4;
         font-size:12px;
+        line-height:20px;
+        margin-top:5px;
     }
     .annex-layout{
         max-height:300px;
@@ -99,6 +99,8 @@
     }
 </style>
 <script>
+    import throttle from 'lodash/throttle'
+    import Api from 'Api/publish-api'
     export default {
         data () {
             return {
@@ -114,12 +116,10 @@
                 formItem: {
                     name: '',
                     unit: 'yuan',
-                    select: '',
                     outsourcing: 'false',
                     type: [],
                     commission: '',
                     code: true,
-                    time: '',
                     slider: [20, 50],
                     period: [],
                     describe: ''
@@ -143,8 +143,11 @@
         },
         methods: {
             tipFormat(value){
+                return `${this.getYuan(value)}元`
+            },
+            getYuan(value){
                 let unit = this.formItem.unit === 'yuan'?1:(this.formItem.unit==='bai'?100:1000)
-                return value*unit+"元"
+                return value*unit
             },
             handleAdd () {
                 this.index++;
@@ -156,6 +159,35 @@
             },
             handleRemove (index) {
                 this.annex.items[index].status = 0;
+            },
+            submit: throttle(async function(){
+                if(!this.checkForm()){
+                    return
+                }
+                const data = this.formItem
+                const pushData = {
+                    name: data.name,
+                    money_lower: this.getYuan(data.slider[0]),
+                    money_upper: this.getYuan(data.slider[1]),
+                    outsourcing: data.outsourcing,
+                    type: data.type,
+                    commission: data.commission,
+                    code: data.code,
+                    from_time:data.period[0],
+                    to_time: data.period[1],
+                    describe: data.describe,
+                }
+                console.log(pushData)
+                Api.publish(pushData).then(response=>{
+                    if(response.status){
+                        this.$Message.success(response.msg || '提交成功!')
+                    }else{
+                        this.$Message.error(response.msg || '提交失败!')
+                    }
+                })
+            },2000),
+            checkForm(){
+                return true
             }
         }
     }

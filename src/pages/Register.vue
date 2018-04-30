@@ -74,7 +74,7 @@ h2{
 }
 </style>
 <script>
-import Api from 'Api'
+import Api from 'Api/user-api'
 import throttle from 'lodash/throttle'
 export default {
     data(){
@@ -92,7 +92,7 @@ export default {
     },
     computed: {
         autoEmail(){
-            if(this.formItem.email.indexOf('@')!==-1)
+            if(this.formItem.email.indexOf('@')!==-1 || this.formItem.email==='')
                 return []
             const emails = ['@qq.com','@gmail.com','@163.com','@yahoo.com','@ask.com','@live.com']
             return emails.map(email=>{
@@ -104,11 +104,11 @@ export default {
         handleSubmit: throttle(async function(){
             if(!this.check())
                 return
-            Api.register(this.formItem).then(result=>{
-                if(result.status){
-                    this.$Message.success('注册成功!')
+            Api.register(this.formItem).then(response=>{
+                if(response.status){
+                    this.$Message.success(response.msg || '注册成功!')
                 }else {
-                    this.$Message.error('注册失败!请重试.')
+                    this.$Message.error(response.msg || '注册失败!请重试.')
                 }
             })
         },3000,{ leading: true, trailing: true }),
