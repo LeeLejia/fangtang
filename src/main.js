@@ -4,7 +4,7 @@ import {
   Submenu, Layout, Header, Sider, MenuItem,
   Icon, BreadcrumbItem, Message, Notice,
   Form, FormItem, Input, CheckboxGroup, Checkbox,
-  Button, Row, Col,
+  Button, Row, Col, AutoComplete, Card,
 } from 'iview'
 import 'iview/dist/styles/iview.css'
 import Vue from 'vue'
@@ -23,6 +23,8 @@ Vue.component('Submenu', Submenu)
 Vue.component('FormItem', FormItem)
 Vue.component('Form', Form)
 Vue.component('Input', Input)
+Vue.component('Card', Card)
+Vue.component('AutoComplete', AutoComplete)
 Vue.component('Button', Button)
 Vue.component('CheckboxGroup', CheckboxGroup)
 Vue.component('Checkbox', Checkbox)

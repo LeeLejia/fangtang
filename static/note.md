@@ -12,3 +12,11 @@ B{
 }
 
 prop1为 B样式.
+
+
+- 防抖
+```javascript
+refresh: throttle(async function () {
+      ....
+    }, 10000, { leading: true, trailing: true })
+```

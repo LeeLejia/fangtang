@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import MainLayout from 'Pages/MainLayout'
 import LoginPage from 'Pages/Login'
 import Register from 'Pages/Register'
+import Publish from 'Pages/Publish'
 
 Vue.use(Router)
 
@@ -19,6 +20,9 @@ export default new Router({
     }, {
       path: '/register',
       component: Register,
+    }, {
+      path: '/publish',
+      component: Publish,
     },
   ],
 })
