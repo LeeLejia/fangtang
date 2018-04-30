@@ -1,73 +1,161 @@
 <template>
-    <Form :model="formItem" :label-width="80">
-        <FormItem label="Input">
-            <Input v-model="formItem.input" placeholder="Enter something..."></Input>
-        </FormItem>
-        <FormItem label="Select">
-            <Select v-model="formItem.select">
-                <Option value="beijing">New York</Option>
-                <Option value="shanghai">London</Option>
-                <Option value="shenzhen">Sydney</Option>
-            </Select>
-        </FormItem>
-        <FormItem label="DatePicker">
-            <Row>
-                <Col span="11">
-                <DatePicker type="date" placeholder="Select date" v-model="formItem.date"></DatePicker>
-                </Col>
-                <Col span="2" style="text-align: center">-</Col>
-                <Col span="11">
-                <TimePicker type="time" placeholder="Select time" v-model="formItem.time"></TimePicker>
-                </Col>
-            </Row>
-        </FormItem>
-        <FormItem label="Radio">
-            <RadioGroup v-model="formItem.radio">
-                <Radio label="male">Male</Radio>
-                <Radio label="female">Female</Radio>
-            </RadioGroup>
-        </FormItem>
-        <FormItem label="Checkbox">
-            <CheckboxGroup v-model="formItem.checkbox">
-                <Checkbox label="Eat"></Checkbox>
-                <Checkbox label="Sleep"></Checkbox>
-                <Checkbox label="Run"></Checkbox>
-                <Checkbox label="Movie"></Checkbox>
-            </CheckboxGroup>
-        </FormItem>
-        <FormItem label="Switch">
-            <i-switch v-model="formItem.switch" size="large">
-                <span slot="open">On</span>
-                <span slot="close">Off</span>
-            </i-switch>
-        </FormItem>
-        <FormItem label="Slider">
-            <Slider v-model="formItem.slider" range></Slider>
-        </FormItem>
-        <FormItem label="Text">
-            <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
-        </FormItem>
-        <FormItem>
-            <Button type="primary">Submit</Button>
-            <Button type="ghost" style="margin-left: 8px">Cancel</Button>
-        </FormItem>
-    </Form>
+   <Card class="publish-from">
+       <p slot="title">
+           <Icon type="ios-film-outline"></Icon>
+           项目发布
+       </p>
+       <Form :model="formItem" :label-width="80">
+           <FormItem label="项目名称">
+               <Input v-model="formItem.name" placeholder="输入项目名称"></Input>
+           </FormItem>
+           <FormItem label="项目周期">
+               <DatePicker type="daterange" format="yyyy年MM月dd日" :value="period" placement="bottom-start" placeholder="项目周期" :start-date="new Date()" style="width: 250px"></DatePicker>
+           </FormItem>
+           <FormItem label="类型">
+               <CheckboxGroup v-model="formItem.type">
+                   <Checkbox label="逆向"></Checkbox>
+                   <Checkbox label="安卓"></Checkbox>
+                   <Checkbox label="网页"></Checkbox>
+                   <Checkbox label="脚本"></Checkbox>
+                   <Checkbox label="爬虫"></Checkbox>
+                   <Checkbox label="自动化"></Checkbox>
+                   <Checkbox label="数据采集"></Checkbox>
+                   <Checkbox label="智能硬件"></Checkbox>
+                   <Checkbox label="平面设计"></Checkbox>
+                   <Checkbox label="3D模型"></Checkbox>
+                   <Checkbox label="毕业设计"></Checkbox>
+                   <Checkbox label="其它"></Checkbox>
+               </CheckboxGroup>
+           </FormItem>
+           <FormItem label="需要源码">
+               <i-switch v-model="formItem.code" size="large">
+                   <span slot="open">Yes</span>
+                   <span slot="close">No</span>
+               </i-switch>
+           </FormItem>
+           <FormItem label="价格区间">
+               <RadioGroup v-model="formItem.unit">
+                   <Radio label="yuan">元</Radio>
+                   <Radio label="bai">百元</Radio>
+                   <Radio label="qian">千元</Radio>
+               </RadioGroup><span style="margin-left: 20px;"><b>{{range}}</b></span>
+               <Slider style="z-index: 999" v-model="formItem.slider" range :min="1" :max="100" :step="1" :tip-format="tipFormat"></Slider>
+               <p class="notice">注:价格区间尽量符合项目难度,否则可能不被关注</p>
+           </FormItem>
+           <FormItem label="佣金">
+               <RadioGroup v-model="formItem.outsourcing">
+                   <Radio label="false">指定平台方</Radio>
+                   <Radio label="true">可外包</Radio>
+               </RadioGroup>
+               <AutoComplete :data="autoCommission" :disabled="formItem.outsourcing!=='true'" v-model="formItem.commission" placeholder="输入佣金金额,如:50元或5%"></AutoComplete>
+               <p class="notice">当指定项目可以外包时,如果本团队技术人员无法完成贵方项目,将会为贵方寻找合适的团队,双方对接工作开始后收取部分佣金.</p>
+           </FormItem>
+           <FormItem label="附件">
+               <FormItem
+                       v-for="(item, index) in annex.items"
+                       v-if="item.status"
+                       :key="index"
+                       :label="'附件' + index"
+                       :prop="'items.' + index + '.value'">
+                   <Row>
+                       <Input style="width: 250px;" type="text" v-model="item.value" placeholder="简要描述附件"></Input>
+                       <Button style="width: 100px;" type="ghost" icon="ios-cloud-upload-outline">选择附件</Button>
+                       <Button style="width: 50px;" type="ghost" @click="handleRemove(index)">删除</Button>
+                   </Row>
+               </FormItem>
+               <FormItem>
+                   <Row>
+                       <Col span="12">
+                       <Button type="dashed" style="margin-left:80px;" long @click="handleAdd" icon="plus-round">添加附件</Button>
+                       </Col>
+                   </Row>
+               </FormItem>
+           </FormItem>
+           <FormItem label="描述">
+               <Input v-model="formItem.describe" type="textarea" :autosize="{minRows: 2,maxRows: 8}" placeholder="简要说明项目内容"></Input>
+           </FormItem>
+           <FormItem>
+               <Button type="primary">提交</Button>
+               <Button type="ghost" style="margin-left: 8px">取消</Button>
+           </FormItem>
+       </Form>
+   </Card>
 </template>
+<style>
+    .publish-from{
+        width:650px;
+        margin-top:50px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .notice{
+        font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+        color:#9ea7b4;
+        font-size:12px;
+    }
+    .annex-layout{
+        max-height:300px;
+        overflow-y: scroll;
+    }
+</style>
 <script>
     export default {
         data () {
             return {
+                annex: {
+                    items: [
+                        {
+                            value: '',
+                            index: 1,
+                            status: 1
+                        }
+                    ]
+                },
                 formItem: {
-                    input: '',
+                    name: '',
+                    unit: 'yuan',
                     select: '',
-                    radio: 'male',
-                    checkbox: [],
-                    switch: true,
-                    date: '',
+                    outsourcing: 'false',
+                    type: [],
+                    commission: '',
+                    code: true,
                     time: '',
                     slider: [20, 50],
-                    textarea: ''
+                    period: [],
+                    describe: ''
                 }
+            }
+        },
+        computed:{
+          range(){
+            return `${this.tipFormat(this.formItem.slider[0])} - ${this.tipFormat(this.formItem.slider[1])}`
+          },
+          autoCommission(){
+              if(this.formItem.commission==='' ||  this.formItem.commission.indexOf('元')!==-1 || this.formItem.commission.indexOf('%')!==-1){
+                  return []
+              }
+              let result = [`${this.formItem.commission}元`]
+              if(Number(this.formItem.commission)<100){
+                  result.push(`${this.formItem.commission}%`)
+              }
+              return result
+          }
+        },
+        methods: {
+            tipFormat(value){
+                let unit = this.formItem.unit === 'yuan'?1:(this.formItem.unit==='bai'?100:1000)
+                return value*unit+"元"
+            },
+            handleAdd () {
+                this.index++;
+                this.annex.items.push({
+                    value: '',
+                    index: this.index,
+                    status: 1
+                });
+            },
+            handleRemove (index) {
+                this.annex.items[index].status = 0;
             }
         }
     }

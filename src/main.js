@@ -4,7 +4,8 @@ import {
   Submenu, Layout, Header, Sider, MenuItem,
   Icon, BreadcrumbItem, Message, Notice,
   Form, FormItem, Input, CheckboxGroup, Checkbox,
-  Button, Row, Col, AutoComplete, Card,
+  Button, Row, Col, AutoComplete, Card, DatePicker,
+  RadioGroup, Radio, Slider, Switch, Select,
 } from 'iview'
 import 'iview/dist/styles/iview.css'
 import Vue from 'vue'
@@ -29,6 +30,13 @@ Vue.component('Button', Button)
 Vue.component('CheckboxGroup', CheckboxGroup)
 Vue.component('Checkbox', Checkbox)
 Vue.component('BreadcrumbItem', BreadcrumbItem)
+Vue.component('DatePicker', DatePicker)
+Vue.component('RadioGroup', RadioGroup)
+Vue.component('Radio', Radio)
+Vue.component('Slider', Slider)
+Vue.component('i-switch', Switch)
+Vue.component('Select', Select)
+
 
 Vue.prototype.$Notice = Notice
 Vue.prototype.$Message = Message
