@@ -1,9 +1,5 @@
 <template>
-   <Card class="publish-from">
-       <p slot="title">
-           <Icon type="ios-film-outline"></Icon>
-           项目发布
-       </p>
+   <div class="publish-from">
        <Form :model="formItem" :label-width="80">
            <FormItem label="项目名称">
                <Input v-model="formItem.name" placeholder="输入项目名称"></Input>
@@ -79,12 +75,12 @@
                <Button type="ghost" style="margin-left: 8px">取消</Button>
            </FormItem>
        </Form>
-   </Card>
+   </div>
 </template>
 <style>
     .publish-from{
         width:650px;
-        margin: 50px auto 400px;
+        margin-left:50px;
     }
     .notice{
         font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;

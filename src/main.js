@@ -1,5 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import directives from '@/directives'
 import {
   Submenu, Layout, Header, Sider, MenuItem,
   Icon, BreadcrumbItem, Message, Notice,
@@ -39,6 +40,9 @@ Vue.component('i-switch', Switch)
 Vue.component('Select', Select)
 Vue.component('Breadcrumb', Breadcrumb)
 
+Object.keys(directives).forEach((directive) => {
+  Vue.directive(directive, directives[directive])
+})
 
 Vue.prototype.$Notice = Notice
 Vue.prototype.$Message = Message

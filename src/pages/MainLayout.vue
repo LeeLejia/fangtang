@@ -2,22 +2,22 @@
 <template>
     <Layout class="layout">
         <Header>
-            <Menu mode="horizontal" theme="dark" active-name="1">
-                <div class="layout-logo"></div>
+            <Menu mode="horizontal" theme="dark" active-name="1" @on-select="select">
+                <img class="layout-logo" v-icon="'logo'"></img>
                 <div class="layout-nav">
-                    <MenuItem name="1">
+                    <MenuItem name="home">
                         <Icon type="home"></Icon>
                         主页
                     </MenuItem>
-                    <MenuItem name="2">
+                    <MenuItem name="task">
                         <Icon type="home"></Icon>
-                        任务中心
+                        任务大厅
                     </MenuItem>
-                    <MenuItem name="3">
+                    <MenuItem name="about">
                         <Icon type="ios-analytics"></Icon>
                         关于
                     </MenuItem>
-                    <MenuItem name="4">
+                    <MenuItem name="person">
                         <Icon type="person"></Icon>
                         个人中心
                     </MenuItem>
@@ -25,51 +25,26 @@
             </Menu>
         </Header>
         <Layout>
-            <Sider hide-trigger :style="{background: '#fff'}">
-                <Menu mode="vertical" active-name="1-2" theme="light" width="auto" :open-names="['1']">
-                    <Submenu name="1">
-                        <template slot="title">
-                            <Icon type="ios-navigate"></Icon>
-                            Item 1
-                        </template>
-                        <MenuItem name="1-1">Option 1</MenuItem>
-                        <MenuItem name="1-2">Option 2</MenuItem>
-                        <MenuItem name="1-3">Option 3</MenuItem>
-                    </Submenu>
-                    <Submenu name="2">
-                        <template slot="title">
-                            <Icon type="ios-keypad"></Icon>
-                            Item 2
-                        </template>
-                        <MenuItem name="2-1">Option 1</MenuItem>
-                        <MenuItem name="2-2">Option 2</MenuItem>
-                    </Submenu>
-                    <Submenu name="3">
-                        <template slot="title">
-                            <Icon type="ios-analytics"></Icon>
-                            Item 3
-                        </template>
-                        <MenuItem name="3-1">Option 1</MenuItem>
-                        <MenuItem name="3-2">Option 2</MenuItem>
-                    </Submenu>
-                </Menu>
-            </Sider>
-            <Layout :style="{padding: '0 24px 24px'}">
-                <Breadcrumb :style="{margin: '24px 0'}">
-                    <BreadcrumbItem>Home</BreadcrumbItem>
-                    <BreadcrumbItem>Components</BreadcrumbItem>
-                    <BreadcrumbItem>Layout</BreadcrumbItem>
-                </Breadcrumb>
-                <Content class="content">
-                    <router-view></router-view>
-                </Content>
-            </Layout>
+            <!--content-->
+            <router-view></router-view>
         </Layout>
     </Layout>
 </template>
 <script>
 export default {
-
+    methods: {
+        select(value){
+            if(value==='home'){
+                this.$router.push(`/home`)
+            }else if(value==='task'){
+                this.$router.push(`/publish`)
+            }else if(value==='about'){
+                this.$router.push(`/about`)
+            }else if(value==='person'){
+                this.$router.push(`/person`)
+            }
+        }
+    }
 }
 </script>
 <style scoped>
@@ -81,15 +56,9 @@ export default {
     overflow: hidden;
     height:100vh;
 }
-.content{
-    padding: 24px;
-    height: calc(100% - 150px);
-    background: #fff;
-}
 .layout-logo{
     width: 100px;
     height: 30px;
-    background: #5b6270;
     border-radius: 3px;
     float: left;
     position: relative;

@@ -22,3 +22,5 @@ refresh: throttle(async function () {
 ```
 
 - css calc()
+
+- 第三方组件click事件不起效时可以试试,@click.native
