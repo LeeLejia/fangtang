@@ -10,6 +10,7 @@ import xb from '@/assets/icons/avatar_xb.png'
 import logo from '@/assets/logo.svg'
 import seal from '@/assets/icons/seal.svg'
 import overdue from '@/assets/icons/overdue.svg'
+import developer from '@/assets/icons/developer.svg'
 
 const icon = {
   // avatar
@@ -25,6 +26,7 @@ const icon = {
   logo,
   seal,
   overdue,
+  developer,
 }
 export default function (el, binding) {
   el.src = icon[binding.value] || '' // eslint-disable-line

@@ -104,7 +104,7 @@
           }
         },
         created(){
-          let mockData = require('./mock_task.json')
+          let mockData = require('../assets/mock/mock_task.json')
           Date.prototype.formatDate = function () {
             const y = this.getFullYear()
             const m = this.getMonth()

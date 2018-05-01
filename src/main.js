@@ -3,8 +3,8 @@
 import directives from '@/directives'
 import {
   Submenu, Layout, Header, Sider, MenuItem,
-  Icon, BreadcrumbItem, Message, Notice,
-  Form, FormItem, Input, CheckboxGroup, Checkbox, Spin,
+  Icon, BreadcrumbItem, Message, Notice, Carousel, CarouselItem,
+  Form, FormItem, Input, CheckboxGroup, Checkbox, Spin, Tabs, TabPane,
   Button, Row, Col, AutoComplete, Card, DatePicker, Scroll,
   RadioGroup, Radio, Slider, Switch, Select, Breadcrumb, Menu,
   Tag,
@@ -28,7 +28,11 @@ Vue.component('FormItem', FormItem)
 Vue.component('Form', Form)
 Vue.component('Input', Input)
 Vue.component('Card', Card)
+Vue.component('Carousel', Carousel)
 Vue.component('Tag', Tag)
+Vue.component('Tabs', Tabs)
+Vue.component('TabPane', TabPane)
+Vue.component('CarouselItem', CarouselItem)
 Vue.component('AutoComplete', AutoComplete)
 Vue.component('Button', Button)
 Vue.component('CheckboxGroup', CheckboxGroup)

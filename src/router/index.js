@@ -6,6 +6,8 @@ import Register from 'Pages/Register'
 import Publish from 'Pages/Publish'
 import Person from 'Pages/Person'
 import TaskHall from 'Pages/TaskHall'
+import Home from 'Pages/Home'
+import About from 'Pages/About'
 
 Vue.use(Router)
 
@@ -18,8 +20,19 @@ export default new Router({
       component: MainLayout,
       children: [
         {
+          path: '/',
+          redirect: '/home',
+        }, {
+          path: '/home',
+          component: Home,
+        },
+        {
           path: '/taskHall',
           component: TaskHall,
+        },
+        {
+          path: '/about',
+          component: About,
         },
         {
           path: '/person',
