@@ -24,9 +24,9 @@
                 </div>
             </Menu>
         </Header>
-        <Layout>
+        <Layout class="container">
             <!--content-->
-            <router-view></router-view>
+            <router-view class="router-view"></router-view>
         </Layout>
     </Layout>
 </template>
@@ -47,7 +47,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style scoped lang="less">
 .layout{
     border: 1px solid #d7dde4;
     background: #f5f7f9;
@@ -55,6 +55,12 @@ export default {
     border-radius: 4px;
     overflow: hidden;
     height:100vh;
+}
+.container{
+    background: #fff;
+    .router-view{
+        background: #fff;
+    }
 }
 .layout-logo{
     width: 100px;
@@ -67,7 +73,6 @@ export default {
 }
 .layout-nav{
     width: 420px;
-    margin: 0 auto;
-    margin-right: 20px;
+    margin: 0 20px 0 auto;
 }
 </style>

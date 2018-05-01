@@ -6,7 +6,7 @@
         <p>期待再见!</p>
     </div>
 </template>
-<style>
+<style scoped>
     .outsides{
         width:300px;
         margin:30px auto 0;

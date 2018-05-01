@@ -84,7 +84,7 @@
         </div>
     </div>
 </template>
-<style>
+<style scoped>
     /*! CSS Used from: https://imgcache.qq.com/open_proj/proj_qcloud_v2/gateway/login-regist/css/login-v20170405.css?t=20170808 */
     button,div,h1,input,li,p,ul{margin:0;padding:0;}
     h1{font-size:100%;}
