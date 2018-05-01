@@ -4,7 +4,8 @@ import MainLayout from 'Pages/MainLayout'
 import LoginPage from 'Pages/Login'
 import Register from 'Pages/Register'
 import Publish from 'Pages/Publish'
-import Person from '@/components/functional/Person'
+import Person from 'Pages/Person'
+import TaskHall from 'Pages/TaskHall'
 
 Vue.use(Router)
 
@@ -17,9 +18,10 @@ export default new Router({
       component: MainLayout,
       children: [
         {
-          path: '/publish',
-          component: Publish,
-        }, {
+          path: '/taskHall',
+          component: TaskHall,
+        },
+        {
           path: '/person',
           component: Person,
           children: [
@@ -36,9 +38,6 @@ export default new Router({
     }, {
       path: '/register',
       component: Register,
-    }, {
-      path: '/publish',
-      component: Publish,
     },
   ],
 })

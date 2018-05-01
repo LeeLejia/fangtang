@@ -4,8 +4,8 @@ import directives from '@/directives'
 import {
   Submenu, Layout, Header, Sider, MenuItem,
   Icon, BreadcrumbItem, Message, Notice,
-  Form, FormItem, Input, CheckboxGroup, Checkbox,
-  Button, Row, Col, AutoComplete, Card, DatePicker,
+  Form, FormItem, Input, CheckboxGroup, Checkbox, Spin,
+  Button, Row, Col, AutoComplete, Card, DatePicker, Scroll,
   RadioGroup, Radio, Slider, Switch, Select, Breadcrumb, Menu,
 } from 'iview'
 import 'iview/dist/styles/iview.css'
@@ -36,6 +36,8 @@ Vue.component('DatePicker', DatePicker)
 Vue.component('RadioGroup', RadioGroup)
 Vue.component('Radio', Radio)
 Vue.component('Slider', Slider)
+Vue.component('Scroll', Scroll)
+Vue.component('Spin', Spin)
 Vue.component('i-switch', Switch)
 Vue.component('Select', Select)
 Vue.component('Breadcrumb', Breadcrumb)

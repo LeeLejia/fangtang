@@ -37,7 +37,7 @@ export default {
             if(value==='home'){
                 this.$router.push(`/home`)
             }else if(value==='task'){
-                this.$router.push(`/publish`)
+                this.$router.push(`/taskHall`)
             }else if(value==='about'){
                 this.$router.push(`/about`)
             }else if(value==='person'){

@@ -79,7 +79,7 @@
 </template>
 <style>
     .publish-from{
-        width:650px;
+        /*width:650px;*/
     }
     .notice{
         font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
