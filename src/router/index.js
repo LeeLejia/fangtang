@@ -24,10 +24,7 @@ export default new Router({
           component: Person,
           children: [
             {
-              path: '/pushTask',
-              component: Publish,
-            }, {
-              path: '/',
+              path: '/person/pushTask',
               component: Publish,
             },
           ],
