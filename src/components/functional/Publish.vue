@@ -5,7 +5,7 @@
                <Input v-model="formItem.name" placeholder="输入项目名称"></Input>
            </FormItem>
            <FormItem label="项目周期">
-               <DatePicker type="daterange" format="yyyy年MM月dd日" :value="formItem.period" placement="bottom-start" placeholder="项目周期" :start-date="new Date()" style="width: 250px"></DatePicker>
+               <DatePicker type="daterange" :options="dateOptions" v-model="period" format="yyyy年MM月dd日" placement="bottom-start" placeholder="项目周期" :start-date="new Date()" style="width: 250px"></DatePicker>
            </FormItem>
            <FormItem label="类型">
                <CheckboxGroup v-model="formItem.type">
@@ -23,7 +23,7 @@
                    <Checkbox label="其它"></Checkbox>
                </CheckboxGroup>
            </FormItem>
-           <FormItem label="需要源码">
+           <FormItem label="交付源码">
                <i-switch v-model="formItem.code" size="large">
                    <span slot="open">Yes</span>
                    <span slot="close">No</span>
@@ -99,6 +99,7 @@
     export default {
         data () {
             return {
+                period: [],
                 annex: {
                     items: [
                         {
@@ -116,8 +117,13 @@
                     commission: '',
                     code: true,
                     slider: [20, 50],
-                    period: [],
+                    period: ['',''],
                     describe: ''
+                },
+                dateOptions: {
+                    disabledDate (date) {
+                        return date && date.valueOf() < Date.now() - 86400000;
+                    },
                 }
             }
         },
@@ -164,12 +170,12 @@
                     name: data.name,
                     money_lower: this.getYuan(data.slider[0]),
                     money_upper: this.getYuan(data.slider[1]),
-                    outsourcing: data.outsourcing,
+                    outsourcing: data.outsourcing ==='true',
                     type: data.type,
                     commission: data.commission,
                     code: data.code,
-                    from_time:data.period[0],
-                    to_time: data.period[1],
+                    from_time:this.period[0].getTime(),
+                    to_time: this.period[1].getTime(),
                     describe: data.describe,
                 }
                 console.log(pushData)

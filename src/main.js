@@ -7,6 +7,7 @@ import {
   Form, FormItem, Input, CheckboxGroup, Checkbox, Spin,
   Button, Row, Col, AutoComplete, Card, DatePicker, Scroll,
   RadioGroup, Radio, Slider, Switch, Select, Breadcrumb, Menu,
+  Tag,
 } from 'iview'
 import 'iview/dist/styles/iview.css'
 import Vue from 'vue'
@@ -27,6 +28,7 @@ Vue.component('FormItem', FormItem)
 Vue.component('Form', Form)
 Vue.component('Input', Input)
 Vue.component('Card', Card)
+Vue.component('Tag', Tag)
 Vue.component('AutoComplete', AutoComplete)
 Vue.component('Button', Button)
 Vue.component('CheckboxGroup', CheckboxGroup)

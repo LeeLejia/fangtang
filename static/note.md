@@ -52,4 +52,5 @@ git checkout xxx
 git checkout -b xxx
 
 
+- 使用 slot="xxx" 不会显示,除非父组件进行处理,安排
 
