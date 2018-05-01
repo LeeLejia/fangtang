@@ -10,11 +10,11 @@
                         主页
                     </MenuItem>
                     <MenuItem name="task">
-                        <Icon type="home"></Icon>
+                        <Icon type="social-wordpress-outline"></Icon>
                         任务大厅
                     </MenuItem>
                     <MenuItem name="about">
-                        <Icon type="ios-analytics"></Icon>
+                        <Icon type="social-twitch-outline"></Icon>
                         关于
                     </MenuItem>
                     <MenuItem name="person">

@@ -4,7 +4,7 @@
             <h1 class="title">任务大厅</h1>
             <Card style="width:80%;margin-left: auto;margin-right:auto; margin-bottom:20px;" v-for="task in tasks" :key = 'task.id'>
                 <p slot="title">
-                    <Icon type="ios-film-outline"></Icon>
+                    <Icon type="social-wordpress-outline"></Icon>
                     {{task.name}}
                 </p>
                 <a :href="'/task/'+task.id" @click="alert('洗洗睡吧!')" slot="extra">
