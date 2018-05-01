@@ -8,6 +8,8 @@ import wj from '@/assets/icons/avatar_wj.png'
 import xb from '@/assets/icons/avatar_xb.png'
 
 import logo from '@/assets/logo.svg'
+import seal from '@/assets/icons/seal.svg'
+import overdue from '@/assets/icons/overdue.svg'
 
 const icon = {
   // avatar
@@ -19,7 +21,10 @@ const icon = {
   qcrxw,
   wj,
   xb,
+
   logo,
+  seal,
+  overdue,
 }
 export default function (el, binding) {
   el.src = icon[binding.value] || '' // eslint-disable-line

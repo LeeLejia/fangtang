@@ -44,6 +44,8 @@
                         下载附件
                     </a>
                 </Row>
+                <img v-if="task.status==='finish'" class="seal" v-icon="'seal'">
+                <img v-else-if="task.overdue" class="overdue" v-icon="'overdue'">
             </Card>
         </Scroll>
     </div>
@@ -60,6 +62,20 @@
     }
     .file-item{
         margin-top: 20px;
+    }
+    .seal{
+        position: absolute;
+        width: 200px;
+        right: 50px;
+        bottom: 20px;
+        height: 200px;
+    }
+    .overdue{
+        position: absolute;
+        width: 130px;
+        right: 80px;
+        bottom: 40px;
+        height: 130px;
     }
     .title{
         margin-top:20px;
@@ -97,7 +113,8 @@
           }
           this.tasks = mockData.map(item=>{
               const result = item
-              result.period = `${Math.round(Math.abs((result.to_time - result.from_time))/(1000*60*60*24))}天`;
+              result.period = `${Math.round(Math.abs((result.to_time - result.from_time))/(1000*60*60*24))}天`
+              result.overdue = result.to_time < new Date().getTime()
               result.from_time = new Date(result.from_time).formatDate()
               result.to_time = new Date(result.to_time).formatDate()
               return result
