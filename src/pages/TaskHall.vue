@@ -48,9 +48,19 @@
                 <img v-else-if="task.overdue" class="overdue" v-icon="'overdue'">
             </Card>
         </Scroll>
+        <Button type="ghost" class="wanna" shape="circle" large><a href="/person/pushTask">我要发任务!</a></Button>
     </div>
 </template>
 <style scoped lang="less">
+    .wanna{
+        background: green;
+        position: fixed;
+        bottom: 20px;
+        right:50px;
+        font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+        font-size: 16px;
+        color: #fff
+    }
     .container{
         width: 80%;
         height:100vh;

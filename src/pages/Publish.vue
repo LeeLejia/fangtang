@@ -11,10 +11,11 @@
     }
 </style>
 <script>
-    import Publish from '@/components/functional/Publish'
-    export default {
-        components:{
-            Publish,
-        }
-    }
+import Publish from '@/components/functional/Publish'
+
+export default {
+  components: {
+    Publish,
+  },
+}
 </script>

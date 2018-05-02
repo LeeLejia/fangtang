@@ -94,102 +94,103 @@
     }
 </style>
 <script>
-    import throttle from 'lodash/throttle'
-    import Api from 'Api/publish-api'
-    export default {
-        data () {
-            return {
-                period: [],
-                annex: {
-                    items: [
-                        {
-                            value: '',
-                            index: 1,
-                            status: 1
-                        }
-                    ]
-                },
-                formItem: {
-                    name: '',
-                    unit: 'yuan',
-                    outsourcing: 'false',
-                    type: [],
-                    commission: '',
-                    code: true,
-                    slider: [20, 50],
-                    period: ['',''],
-                    describe: ''
-                },
-                dateOptions: {
-                    disabledDate (date) {
-                        return date && date.valueOf() < Date.now() - 86400000;
-                    },
-                }
-            }
-        },
-        computed:{
-          range(){
-            return `${this.tipFormat(this.formItem.slider[0])} - ${this.tipFormat(this.formItem.slider[1])}`
+import throttle from 'lodash/throttle'
+import Api from 'Api/publish-api'
+
+export default {
+  data() {
+    return {
+      period: [],
+      annex: {
+        items: [
+          {
+            value: '',
+            index: 1,
+            status: 1,
           },
-          autoCommission(){
-              if(this.formItem.commission==='' ||  this.formItem.commission.indexOf('元')!==-1 || this.formItem.commission.indexOf('%')!==-1){
-                  return []
-              }
-              let result = [`${this.formItem.commission}元`]
-              if(Number(this.formItem.commission)<100){
-                  result.push(`${this.formItem.commission}%`)
-              }
-              return result
-          }
+        ],
+      },
+      formItem: {
+        name: '',
+        unit: 'yuan',
+        outsourcing: 'false',
+        type: [],
+        commission: '',
+        code: true,
+        slider: [20, 50],
+        period: ['', ''],
+        describe: '',
+      },
+      dateOptions: {
+        disabledDate(date) {
+          return date && date.valueOf() < Date.now() - 86400000
         },
-        methods: {
-            tipFormat(value){
-                return `${this.getYuan(value)}元`
-            },
-            getYuan(value){
-                let unit = this.formItem.unit === 'yuan'?1:(this.formItem.unit==='bai'?100:1000)
-                return value*unit
-            },
-            handleAdd () {
-                this.index++;
-                this.annex.items.push({
-                    value: '',
-                    index: this.index,
-                    status: 1
-                });
-            },
-            handleRemove (index) {
-                this.annex.items[index].status = 0;
-            },
-            submit: throttle(async function(){
-                if(!this.checkForm()){
-                    return
-                }
-                const data = this.formItem
-                const pushData = {
-                    name: data.name,
-                    money_lower: this.getYuan(data.slider[0]),
-                    money_upper: this.getYuan(data.slider[1]),
-                    outsourcing: data.outsourcing ==='true',
-                    type: data.type,
-                    commission: data.commission,
-                    code: data.code,
-                    from_time:this.period[0].getTime(),
-                    to_time: this.period[1].getTime(),
-                    describe: data.describe,
-                }
-                console.log(pushData)
-                Api.publish(pushData).then(response=>{
-                    if(response.status){
-                        this.$Message.success(response.msg || '提交成功!')
-                    }else{
-                        this.$Message.error(response.msg || '提交失败!')
-                    }
-                })
-            },2000),
-            checkForm(){
-                return true
-            }
-        }
+      },
     }
+  },
+  computed: {
+    range() {
+      return `${this.tipFormat(this.formItem.slider[0])} - ${this.tipFormat(this.formItem.slider[1])}`
+    },
+    autoCommission() {
+      if (this.formItem.commission === '' || this.formItem.commission.indexOf('元') !== -1 || this.formItem.commission.indexOf('%') !== -1) {
+        return []
+      }
+      const result = [`${this.formItem.commission}元`]
+      if (Number(this.formItem.commission) < 100) {
+        result.push(`${this.formItem.commission}%`)
+      }
+      return result
+    },
+  },
+  methods: {
+    tipFormat(value) {
+      return `${this.getYuan(value)}元`
+    },
+    getYuan(value) {
+      const unit = this.formItem.unit === 'yuan' ? 1 : (this.formItem.unit === 'bai' ? 100 : 1000)
+      return value * unit
+    },
+    handleAdd() {
+      this.index++
+      this.annex.items.push({
+        value: '',
+        index: this.index,
+        status: 1,
+      })
+    },
+    handleRemove(index) {
+      this.annex.items[index].status = 0
+    },
+    submit: throttle(async function () {
+      if (!this.checkForm()) {
+        return
+      }
+      const data = this.formItem
+      const pushData = {
+        name: data.name,
+        money_lower: this.getYuan(data.slider[0]),
+        money_upper: this.getYuan(data.slider[1]),
+        outsourcing: data.outsourcing === 'true',
+        type: data.type,
+        commission: data.commission,
+        code: data.code,
+        from_time: this.period[0].getTime(),
+        to_time: this.period[1].getTime(),
+        describe: data.describe,
+      }
+      console.log(pushData)
+      Api.publish(pushData).then((response) => {
+        if (response.status) {
+          this.$Message.success(response.msg || '提交成功!')
+        } else {
+          this.$Message.error(response.msg || '提交失败!')
+        }
+      })
+    }, 2000),
+    checkForm() {
+      return true
+    },
+  },
+}
 </script>

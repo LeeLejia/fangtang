@@ -12,7 +12,7 @@
             </Menu>
         </Sider>
         <Layout :style="{padding: '0 24px 24px'}">
-            <Breadcrumb :style="{margin: '24px 0'}">
+            <Breadcrumb :style="{margin: '24px 0'}" v-if="this.selectedMenu">
                 <BreadcrumbItem v-for="item in breadcrumb" :key="item">{{item}}</BreadcrumbItem>
             </Breadcrumb>
             <Content class="content">
