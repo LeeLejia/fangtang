@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import directives from '@/directives'
 import {
-  Submenu, Layout, Header, Sider, MenuItem,
+  Submenu, Layout, Header, Sider, MenuItem, Modal,
   Icon, BreadcrumbItem, Message, Notice, Carousel, CarouselItem,
   Form, FormItem, Input, CheckboxGroup, Checkbox, Spin, Tabs, TabPane,
   Button, Row, Col, AutoComplete, Card, DatePicker, Scroll,
@@ -30,6 +30,7 @@ Vue.component('Input', Input)
 Vue.component('Card', Card)
 Vue.component('Carousel', Carousel)
 Vue.component('Tag', Tag)
+Vue.component('Modal', Modal)
 Vue.component('Tabs', Tabs)
 Vue.component('TabPane', TabPane)
 Vue.component('CarouselItem', CarouselItem)

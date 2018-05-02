@@ -2,8 +2,8 @@
 <template>
     <Layout class="layout">
         <Header>
-            <Menu mode="horizontal" theme="dark" active-name="1" @on-select="select">
-                <img class="layout-logo" v-icon="'logo'"></img>
+            <Menu mode="horizontal" theme="dark" active-name="home" @on-select="select">
+                <img class="layout-logo" v-icon="'logo'"/>
                 <div class="layout-nav">
                     <MenuItem name="home">
                         <Icon type="home"></Icon>
@@ -24,27 +24,40 @@
                 </div>
             </Menu>
         </Header>
+        <Modal title="图片预览" v-model="visible">
+            <img :src="imgUrl" style="width: 100%">
+        </Modal>
         <Layout class="container">
             <!--content-->
-            <router-view class="router-view"></router-view>
+            <router-view class="router-view" @openImg="openImg"></router-view>
         </Layout>
     </Layout>
 </template>
 <script>
 export default {
-    methods: {
-        select(value){
-            if(value==='home'){
-                this.$router.push(`/home`)
-            }else if(value==='task'){
-                this.$router.push(`/taskHall`)
-            }else if(value==='about'){
-                this.$router.push(`/about`)
-            }else if(value==='person'){
-                this.$router.push(`/person`)
-            }
-        }
+  data() {
+    return {
+      visible: false,
+      imgUrl: '',
     }
+  },
+  methods: {
+    openImg(url) {
+      this.imgUrl = url
+      this.visible = true
+    },
+    select(value) {
+      if (value === 'home') {
+        this.$router.push('/home')
+      } else if (value === 'task') {
+        this.$router.push('/taskHall')
+      } else if (value === 'about') {
+        this.$router.push('/about')
+      } else if (value === 'person') {
+        this.$router.push('/person')
+      }
+    },
+  },
 }
 </script>
 <style scoped lang="less">

@@ -96,44 +96,44 @@
     }
 </style>
 <script>
-    export default{
-        data(){
-          return {
-              height: document.body.clientHeight - 150,
-              tasks: []
-          }
-        },
-        created(){
-          let mockData = require('../assets/mock/mock_task.json')
-          Date.prototype.formatDate = function () {
-            const y = this.getFullYear()
-            const m = this.getMonth()
-            const d = this.getDate()
-            return `${y}/${m}/${d}`
-          }
-          this.tasks = mockData.map(item=>{
-              const result = item
-              result.period = `${Math.round(Math.abs((result.to_time - result.from_time))/(1000*60*60*24))}天`
-              result.overdue = result.to_time < new Date().getTime()
-              result.from_time = new Date(result.from_time).formatDate()
-              result.to_time = new Date(result.to_time).formatDate()
-              return result
-          })
-        },
-        mounted(){
-            window.onresize = function(){
-                this.height = document.body.clientHeight - 150
-            }
-        },
-        methods:{
-            async handleReachBottom(){
-                setTimeout(()=>{
-                    Promise.resolve( {status: true})
-                },2000)
-            },
-            getRandomColor(){
-                return "#"+("00000"+((Math.random()*16777215+0.5)>>0).toString(16)).slice(-6);
-            },
-        }
+export default{
+  data() {
+    return {
+      height: document.body.clientHeight - 150,
+      tasks: [],
     }
+  },
+  created() {
+    const mockData = require('../assets/mock/mock_task.json')
+    Date.prototype.formatDate = function () {
+      const y = this.getFullYear()
+      const m = this.getMonth()
+      const d = this.getDate()
+      return `${y}/${m}/${d}`
+    }
+    this.tasks = mockData.map((item) => {
+      const result = item
+      result.period = `${Math.ceil(Math.abs((result.to_time - result.from_time)) / (1000 * 60 * 60 * 24))}天`
+      result.overdue = result.to_time < new Date().getTime()
+      result.from_time = new Date(result.from_time).formatDate()
+      result.to_time = new Date(result.to_time).formatDate()
+      return result
+    })
+  },
+  mounted() {
+    window.onresize = function () {
+      this.height = document.body.clientHeight - 150
+    }
+  },
+  methods: {
+    async handleReachBottom() {
+      setTimeout(() => {
+        Promise.resolve({ status: true })
+      }, 2000)
+    },
+    getRandomColor() {
+      return `#${(`00000${((Math.random() * 16777215 + 0.5)).toString(16)}`).slice(-6)}`
+    },
+  },
+}
 </script>

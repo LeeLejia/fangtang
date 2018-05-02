@@ -1,24 +1,16 @@
 <template>
     <div class="container">
         <Scroll class="scroll" :on-reach-bottom="handleReachBottom" :height="height">
-            <!--item-->
-            <Card class="item">
+            <!--items-->
+            <Card class="item" v-for="(project, index) in projects" :key="index + Math.random()">
                 <Row>
                 <Col span="12">
                     <Carousel class="carousel" autoplay loop>
-                        <CarouselItem>
-                            <img class="carousel-item" src="http://www.cjwddz.cn/static/image/agv_chart.png"/>
-                            <p class="carousel-item-desc">A图片的描述内容</p>
-                        </CarouselItem>
-                        <CarouselItem>
-                            <img class="carousel-item" src="http://www.cjwddz.cn/static/image/agv_chart0.png"/>
-                            <p class="carousel-item-desc">B图片的描述内xxxx容</p>
-                        </CarouselItem>
-                        <CarouselItem>
-                            <img class="carousel-item" src="http://www.cjwddz.cn/static/image/agv_log.png"/>
-                        </CarouselItem>
-                        <CarouselItem>
-                            <img class="carousel-item" src="http://www.cjwddz.cn/static/image/agv_math.jpg"/>
+                        <CarouselItem v-for="(item, index) in project.media" :key="index + Math.random()">
+                            <div class="media-container" v-if="item.type === 'picture'">
+                                <img class="carousel-item-img" @click="$emit('openImg', item.url)" :src="item.url"/>
+                            </div>
+                            <p class="carousel-item-desc">{{item.desc}}</p>
                         </CarouselItem>
                     </Carousel>
                 </Col>
@@ -62,11 +54,17 @@
     .carousel{
         height: 300px;
     }
-    .carousel-item{
-        text-align: center;
-        vertical-align:middle;
-        height: 250px;
+    .media-container{
+        height: 260px;
         width: 100%;
+    }
+    .carousel-item-img{
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 250px;
+        margin-left: auto;
+        margin-right: auto;
     }
     .carousel-item-desc{
         text-align: center;
@@ -79,50 +77,57 @@
     }
 </style>
 <script scoped>
-    export default{
-    data(){
-        return {
-            height: document.body.clientHeight - 150,
-            projects: [
-                {
-                    pictures:[
-                        {src: 'agv_chart.png',desc: ''},
-                        {src: 'agv_chart0.png',desc: ''},
-                        {src: 'agv_log.png',desc: ''},
-                        {src: 'agv_math.jpg',desc: ''},
-                    ]
-                }
-            ]
-        }
-    },
-    mounted(){
-        window.onresize = function(){
-            this.height = document.body.clientHeight - 150
-        }
-    },
-    created(){
-        let mockData = require('../assets/mock/mock_projects.json')
-        Date.prototype.formatDate = function () {
-            const y = this.getFullYear()
-            const m = this.getMonth()
-            const d = this.getDate()
-            return `${y}/${m}/${d}`
-        }
-        this.tasks = mockData.map(item=>{
-            const result = item
-            result.period = `${Math.round(Math.abs((result.to_time - result.from_time))/(1000*60*60*24))}天`
-            result.overdue = result.to_time < new Date().getTime()
-            result.from_time = new Date(result.from_time).formatDate()
-            result.to_time = new Date(result.to_time).formatDate()
-            return result
-        })
-    },
-    methods:{
-        async handleReachBottom(){
-            setTimeout(()=>{
-                Promise.resolve( {status: true})
-            },2000)
-        }
+export default{
+  data() {
+    return {
+      height: document.body.clientHeight - 150,
+      projects: [
+        {
+          media: [
+            { url: 'http://www.cjwddz.cn/static/image/agv_chart.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'http://www.cjwddz.cn/static/image/agv_chart0.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'http://www.cjwddz.cn/static/image/agv_log.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'http://www.cjwddz.cn/static/image/agv_math.jpg', desc: '你说这里要说什么好呢！！', type: 'picture' },
+          ],
+        }, {
+          media: [
+            { url: 'http://www.cjwddz.cn/static/image/agv_chart.png', desc: '你你说这里要说什么好呢！！说这里要说什么好呢！！', type: 'picture' },
+            { url: 'http://www.cjwddz.cn/static/image/agv_chart0.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'http://www.cjwddz.cn/static/image/agv_log.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'http://www.cjwddz.cn/static/image/agv_math.jpg', desc: '你说这里要说什么好呢！！', type: 'picture' },
+          ],
+        },
+      ],
     }
+  },
+  mounted() {
+    window.onresize = function () {     // eslint-disable-line
+      this.height = document.body.clientHeight - 150
+    }
+  },
+  created() {
+    const mockData = require('../assets/mock/mock_projects.json') // eslint-disable-line
+    Date.prototype.formatDate = function () {                     // eslint-disable-line
+      const y = this.getFullYear()
+      const m = this.getMonth()
+      const d = this.getDate()
+      return `${y}/${m}/${d}`
+    }
+    this.tasks = mockData.map((item) => {
+      const result = item
+      result.period = `${Math.round(Math.abs((result.to_time - result.from_time)) / (1000 * 60 * 60 * 24))}天`
+      result.overdue = result.to_time < new Date().getTime()
+      result.from_time = new Date(result.from_time).formatDate()
+      result.to_time = new Date(result.to_time).formatDate()
+      return result
+    })
+  },
+  methods: {
+    async handleReachBottom() {
+      setTimeout(() => {
+        Promise.resolve({ status: true })
+      }, 2000)
+    },
+  },
 }
 </script>
