@@ -27,6 +27,9 @@
         <Modal title="图片预览" v-model="visible">
             <img :src="imgUrl" style="width: 100%">
         </Modal>
+        <Modal v-model="verification">
+            <component name="login"></component>
+        </Modal>
         <Layout class="container">
             <!--content-->
             <router-view class="router-view" @openImg="openImg"></router-view>
@@ -34,13 +37,18 @@
     </Layout>
 </template>
 <script>
+import Login from '@/components/functional/Login'
+
 export default {
   data() {
     return {
       visible: false,
+      verification: true,
+      verifiType: 'login',
       imgUrl: '',
     }
   },
+  components: [Login],
   methods: {
     openImg(url) {
       this.imgUrl = url

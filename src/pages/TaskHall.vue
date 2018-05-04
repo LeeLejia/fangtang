@@ -61,6 +61,9 @@
         font-size: 16px;
         color: #fff
     }
+    a{
+        color: white;
+    }
     .container{
         width: 80%;
         height:100vh;

@@ -94,7 +94,7 @@
     }
 </style>
 <script>
-import throttle from 'lodash/throttle'
+import throttle from 'lodash/throttle'  // eslint-disable-line
 import Api from 'Api/publish-api'
 
 export default {

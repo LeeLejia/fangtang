@@ -8,7 +8,8 @@
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "analayze": "cross-env ANALYZE=renderer npm run pack:renderer"
   },
   "dependencies": {
     "eslint-friendly-formatter": "^4.0.1",

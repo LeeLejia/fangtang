@@ -1,7 +1,5 @@
 <template>
-    <router-view>
-        <div class="loading"></div>
-    </router-view>
+    <router-view></router-view>
 </template>
 <script>
 export default {
@@ -9,41 +7,4 @@ export default {
 }
 </script>
 <style scoped>
-body {
-  background: #495060;
-}
-
-.loading {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: -60px 0 0 -60px;
-  background: #fff;
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;
-  border: 10px solid #19bee1;
-}
-.loading:after {
-  content: '';
-  background: trasparent;
-  width: 140%;
-  height: 140%;
-  position: absolute;
-  border-radius: 100%;
-  top: -20%;
-  left: -20%;
-  opacity: 0.7;
-  box-shadow: rgba(255, 255, 255, 0.6) -4px -5px 3px -3px;
-  animation: rotate 2s infinite linear;
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  100% {
-    transform: rotateZ(360deg);
-  }
-}
 </style>
