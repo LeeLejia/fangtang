@@ -27,8 +27,13 @@
         <Modal title="图片预览" v-model="visible">
             <img :src="imgUrl" style="width: 100%">
         </Modal>
-        <Modal v-model="verification">
-            <component name="login"></component>
+        <Modal width="340" height="250" v-model="verification">
+            <component v-bind:is="modal"></component>
+            <div slot="footer">
+                <Row>
+                    <p @click="modal=verifications[1]">注册帐号</p>
+                </Row>
+            </div>
         </Modal>
         <Layout class="container">
             <!--content-->
@@ -38,17 +43,19 @@
 </template>
 <script>
 import Login from '@/components/functional/Login'
+import Register from '@/components/functional/Register'
 
 export default {
   data() {
     return {
       visible: false,
       verification: true,
-      verifiType: 'login',
+      modal: Login,
+      verifications: [Login,Register],
       imgUrl: '',
     }
   },
-  components: [Login],
+  components: {Login,Register},
   methods: {
     openImg(url) {
       this.imgUrl = url

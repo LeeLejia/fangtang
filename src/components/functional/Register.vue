@@ -37,7 +37,7 @@
                 <Input type="password" class="form-text password" placeholder="密码" v-model="formItem.passwordConfirm"></Input>
             </FormItem>
             <FormItem>
-                <Button type="primary" class="button-register" @click="handleSubmit">注册</Button>
+                <Button type="primary" class="button-register" size="large"  @click="handleSubmit">注册</Button>
             </FormItem>
         </Form>
     </div>
@@ -45,9 +45,10 @@
 <style scoped>
 .container{
     width:100%;
-    height:100vh;
+    /*height:100vh;*/
     background: #EDEDEE;
-    padding-top:100px;
+    /*padding-top:100px;*/
+    margin-bottom:-50px;
 }
 h2{
     text-align: center;
