@@ -7,6 +7,7 @@ import Person from 'Pages/Person'
 import TaskHall from 'Pages/TaskHall'
 import Home from 'Pages/Home'
 import About from 'Pages/About'
+import Link from '@/components/functional/LinkTable'
 
 Vue.use(Router)
 
@@ -40,6 +41,10 @@ export default new Router({
             {
               path: '/person/pushTask',
               component: Publish,
+            },
+            {
+              path: '/person/link',
+              component: Link,
             },
           ],
         },

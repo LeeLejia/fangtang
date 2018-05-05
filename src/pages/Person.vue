@@ -63,7 +63,8 @@ export default {
           name: '应用列表',
           options: [
             { name: '应用列表' },
-            { name: '我的链接' },
+            { name: '我的链接', url: '/link' },
+            { name: '文件管理' },
             { name: '应用日志' },
           ],
         },
