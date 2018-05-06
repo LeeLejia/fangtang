@@ -12,6 +12,7 @@
     "analayze": "cross-env ANALYZE=renderer npm run pack:renderer"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "eslint-friendly-formatter": "^4.0.1",
     "iview": "^2.13.1",
     "less": "^3.0.2",

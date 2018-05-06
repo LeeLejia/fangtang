@@ -30,6 +30,8 @@
     }
 </style>
 <script>
+import throttle from 'lodash'
+import Api from 'Api/user-api'
 export default {
   data() {
     return {
@@ -49,14 +51,22 @@ export default {
     }
   },
   methods: {
-    handleSubmit(name) {
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$Message.success('Success!')
-        } else {
-          this.$Message.error('Fail!')
-        }
-      })
+    handleSubmit(name){
+        this.$refs[name].validate((valid) => {
+            if (valid) {
+                Api.login(this.formInline.user,this.formInline.password).then(result=>{
+                    if(result.status){
+                        this.$Message.success('登录成功!')
+                        // todo 写到状态
+                    }else{
+                        console.log(result)
+                        this.$Message.error(result.msg)
+                    }
+                })
+            } else {
+                this.$Message.error('请正确填写信息!')
+            }
+        })
     },
   },
 }

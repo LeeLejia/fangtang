@@ -1,6 +1,10 @@
+import AxiosService from './axios-service'
 
-const login = async (account, password) => ({ status: true })
 
-const register = async data => ({ status: true })
+const login = async (account, password) => AxiosService.postKV('/api/login', { account, pwd: password, osType: 'web' })
 
-export default { login, register }
+const register = async data => AxiosService.postKV('/api/register', data)
+
+const logout = async () => AxiosService.get('/api/logout')
+
+export default { login, register, logout }
