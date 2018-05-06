@@ -7,10 +7,9 @@ import TaskHall from 'Pages/TaskHall'
 import Home from 'Pages/Home'
 import About from 'Pages/About'
 import Link from '@/components/functional/LinkTable'
+import routerHook from './router-guard'
 
-Vue.use(Router)
-
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -51,3 +50,6 @@ export default new Router({
     },
   ],
 })
+Vue.use(Router)
+routerHook(router)
+export default router
