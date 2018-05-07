@@ -1,6 +1,8 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import directives from '@/directives'
+import vstore from '@/store/store'
+import Vuex from 'vuex'
 import {
   Submenu, Layout, Header, Sider, MenuItem, Modal,
   Icon, BreadcrumbItem, Message, Notice, Carousel, CarouselItem,
@@ -11,8 +13,8 @@ import {
 } from 'iview'
 import 'iview/dist/styles/iview.css'
 import Vue from 'vue'
-import App from './App'
 import router from './router'
+import App from './App'
 
 Vue.config.productionTip = false
 Vue.component('MenuItem', MenuItem)
@@ -49,8 +51,15 @@ Vue.component('i-switch', Switch)
 Vue.component('Select', Select)
 Vue.component('Breadcrumb', Breadcrumb)
 
+// 导入指令
 Object.keys(directives).forEach((directive) => {
   Vue.directive(directive, directives[directive])
+})
+
+// 添加状态管理
+Vue.use(Vuex)
+const store = new Vuex.Store({
+  ...vstore,
 })
 
 Vue.prototype.$Notice = Notice
@@ -60,6 +69,7 @@ Vue.prototype.$Message = Message
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>',
 })

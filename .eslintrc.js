@@ -34,6 +34,12 @@ module.exports = {
       }
     }
   },
+  // ecmaFeatures: {
+  //   // lambda表达式
+  //   arrowFunctions: true,
+  //   // 解构赋值
+  //   destructuring: true,
+  // },
   // add your custom rules here
   rules: {
     // don't require .vue extension when importing

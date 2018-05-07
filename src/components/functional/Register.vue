@@ -80,6 +80,7 @@ import throttle from 'lodash/throttle'
 export default {
     data(){
         return {
+            name: 'register',
             formItem: {
                 nick: '',
                 roles: [],

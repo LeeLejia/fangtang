@@ -27,11 +27,12 @@
         <Modal title="图片预览" v-model="visible">
             <img :src="imgUrl" style="width: 100%">
         </Modal>
-        <Modal width="340" height="250" v-model="verification">
+        <Modal :mask-closable="false" width="340" height="250" v-model="verification">
             <component v-bind:is="modal"></component>
             <div slot="footer">
                 <Row>
-                    <p @click="modal=verifications[1]">注册帐号</p>
+                    <a v-if="modalName==='login'" @click="changeModal('register')">注册帐号</a>
+                    <a v-else @click="changeModal('login')">帐号登录</a>
                 </Row>
             </div>
         </Modal>
@@ -44,19 +45,39 @@
 <script>
 import Login from '@/components/functional/Login'
 import Register from '@/components/functional/Register'
-
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
       visible: false,
-      verification: true,
       modal: Login,
-      verifications: [Login,Register],
+      modalName: 'login',
       imgUrl: '',
+    }
+  },
+  computed:{
+    ...mapState({
+        openAuthModal: 'openAuthModal',
+    }),
+    verification:{
+        get(){
+            return this.openAuthModal
+        },
+        set(newVal){
+            this.$store.commit('setAuthModal',newVal)
+        }
     }
   },
   components: {Login,Register},
   methods: {
+    changeModal(name){
+        this.modalName = name
+        if(name==='login'){
+            this.modal = Login
+        } else{
+            this.modal = Register
+        }
+    },
     openImg(url) {
       this.imgUrl = url
       this.visible = true

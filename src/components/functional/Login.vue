@@ -3,12 +3,12 @@
        <h1>登录</h1>
        <Form ref="formInline" :model="formInline" :rules="ruleInline">
            <FormItem prop="user">
-               <Input type="text" v-model="formInline.user" placeholder="帐号">
+               <Input type="text" @keyup.native.enter="handleSubmit('formInline')" v-model="formInline.user" placeholder="帐号">
                <Icon type="ios-person-outline" slot="prepend"></Icon>
                </Input>
            </FormItem>
            <FormItem prop="password">
-               <Input type="password" v-model="formInline.password" placeholder="密码">
+               <Input type="password" @keyup.native.enter="handleSubmit('formInline')" v-model="formInline.password" placeholder="密码">
                <Icon type="ios-locked-outline" slot="prepend"></Icon>
                </Input>
            </FormItem>
@@ -31,10 +31,13 @@
 </style>
 <script>
 import throttle from 'lodash'
+import {mapMutations, mapState} from 'vuex'
+import vuex from 'vuex'
 import Api from 'Api/user-api'
 export default {
   data() {
     return {
+      name: 'login',
       formInline: {
         user: '',
         password: '',
@@ -50,14 +53,23 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapState({
+        user: 'user'
+    }),
+  },
   methods: {
+    ...mapMutations({
+        setUser: 'setUser',
+    }),
     handleSubmit(name){
         this.$refs[name].validate((valid) => {
             if (valid) {
                 Api.login(this.formInline.user,this.formInline.password).then(result=>{
                     if(result.status){
+                        this.setUser(result.data.user)
+                        console.log(this.user)
                         this.$Message.success('登录成功!')
-                        // todo 写到状态
                     }else{
                         console.log(result)
                         this.$Message.error(result.msg)
