@@ -175,6 +175,8 @@ export default {
         type: data.type,
         commission: data.commission,
         code: data.code,
+          // todo 添加附件
+        annex: JSON.stringify([{test:true,desc: 'test',file:'xfssfwaefqrfwqfwafwrfwqwfd'}]),
         from_time: this.period[0].getTime(),
         to_time: this.period[1].getTime(),
         describe: data.describe,
@@ -182,7 +184,7 @@ export default {
       console.log(pushData)
       Api.publish(pushData).then((response) => {
         if (response.status) {
-          this.$Message.success(response.msg || '提交成功!')
+          this.$Message.success(response.msg || '发布任务成功!')
         } else {
           this.$Message.error(response.msg || '提交失败!')
         }

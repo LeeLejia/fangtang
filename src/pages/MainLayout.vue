@@ -28,7 +28,7 @@
             <img :src="imgUrl" style="width: 100%">
         </Modal>
         <Modal :mask-closable="false" width="340" height="250" v-model="verification">
-            <component v-bind:is="modal"></component>
+            <component v-bind:is="modal" @changeModal="changeModal"></component>
             <div slot="footer">
                 <Row>
                     <a v-if="modalName==='login'" @click="changeModal('register')">注册帐号</a>
@@ -45,6 +45,7 @@
 <script>
 import Login from '@/components/functional/Login'
 import Register from '@/components/functional/Register'
+import routerHook from '@/router/router-guard'
 import { mapState } from 'vuex'
 export default {
   data() {
@@ -67,6 +68,9 @@ export default {
             this.$store.commit('setAuthModal',newVal)
         }
     }
+  },
+  created(){
+      routerHook(this.$router,this.$store)
   },
   components: {Login,Register},
   methods: {

@@ -10,6 +10,7 @@ const ERR_CODE = {
   512: '角色不符合',
   128: '数据库读写错误',
   1003: '注册-帐号已经存在',
+  10101010: 'UnknownError',
 }
 
 var _configs = {}                    // eslint-disable-line
@@ -24,9 +25,6 @@ class AxiosService {
       for (const key of keys) {      // eslint-disable-line
         _configs[key] = configs[key] // eslint-disable-line
     }
-    axios.defaults.baseURL = _configs.baseURL || axios.defaults.baseURL
-    axios.defaults.headers.common.Authorization = _configs.AUTH_TOKEN || axios.defaults.headers.common.Authorization
-    axios.defaults.headers.post['Content-Type'] = _configs.contentType || 'application/x-www-form-urlencoded'
   }
   static async postJson(url, data) {
     return axios.post(url, data, { withCredentials: true }).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
@@ -54,11 +52,14 @@ class AxiosService {
     return axios.get(requestStr).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
   }
   static catchEvent(result) {
-    return { code: result.response.status, msg: result.message, status: false }
+    return { code: result.response && result.response.status || 10101010, msg: result.message, status: false }
   }
   static thenEvent(result) {
     const data = result.data
     if (data.code !== 200) {
+      if (data.code === 406 || data.code === 1024) {
+        _configs.store && _configs.store.commit('setAuthModal', true)
+      }
       return { code: data.code, msg: data.msg || ERR_CODE[data.code], status: false }
     }
     return { code: data.code, data: data.data, status: true }

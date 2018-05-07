@@ -61,6 +61,7 @@ export default {
   methods: {
     ...mapMutations({
         setUser: 'setUser',
+        setAuthModal: 'setAuthModal',
     }),
     handleSubmit(name){
         this.$refs[name].validate((valid) => {
@@ -68,10 +69,9 @@ export default {
                 Api.login(this.formInline.user,this.formInline.password).then(result=>{
                     if(result.status){
                         this.setUser(result.data.user)
-                        console.log(this.user)
+                        this.setAuthModal(false)
                         this.$Message.success('登录成功!')
                     }else{
-                        console.log(result)
                         this.$Message.error(result.msg)
                     }
                 })

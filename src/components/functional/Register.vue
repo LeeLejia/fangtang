@@ -24,9 +24,6 @@
             <FormItem label="手机">
                 <Input class="form-text phone" placeholder="输入手机号" v-model="formItem.phone"></Input>
             </FormItem>
-            <FormItem label="QQ">
-                <Input class="form-text qq" placeholder="输入QQ号" v-model="formItem.qq"></Input>
-            </FormItem>
             <FormItem label="邮箱">
                 <AutoComplete class="form-text email" :data="autoEmail" placeholder="输入邮箱" v-model="formItem.email"></AutoComplete>
             </FormItem>
@@ -34,10 +31,10 @@
                 <Input type="password" class="form-text password" placeholder="密码" v-model="formItem.password"></Input>
             </FormItem>
             <FormItem label="确认密码">
-                <Input type="password" class="form-text password" placeholder="密码" v-model="formItem.passwordConfirm"></Input>
+                <Input type="password" class="form-text password" placeholder="确认密码" v-model="formItem.passwordConfirm"></Input>
             </FormItem>
             <FormItem>
-                <Button type="primary" class="button-register" size="large"  @click="handleSubmit">注册</Button>
+                <Button type="primary" class="button-register" :loading="loading" size="large"  @click="handleSubmit">注册</Button>
             </FormItem>
         </Form>
     </div>
@@ -81,11 +78,11 @@ export default {
     data(){
         return {
             name: 'register',
+            loading: false,
             formItem: {
                 nick: '',
                 roles: [],
                 phone: '',
-                qq: '',
                 email: '',
                 password: '',
                 passwordConfirm: '',
@@ -104,11 +101,16 @@ export default {
     },
     methods: {
         handleSubmit: throttle(async function(){
+            if(this.loading)
+                return
             if(!this.check())
                 return
+            this.loading = true
             Api.register(this.formItem).then(response=>{
+                this.loading = false
                 if(response.status){
                     this.$Message.success(response.msg || '注册成功!')
+                    this.$emit('changeModal','login')
                 }else {
                     this.$Message.error(response.msg || '注册失败!请重试.')
                 }
@@ -124,7 +126,7 @@ export default {
                 this.$Message.error('昵称不能包含特殊字符!')
                 return false
             }
-            if(this.formItem.roles.length>2 || (this.formItem.roles.length==2 && this.formItem.roles.contains('admin'))){
+            if(this.formItem.roles.length>2 || (this.formItem.roles.length==2 && this.formItem.roles.indexOf('admin')!==-1)){
                 this.$Message.error('管理员角色不能和其它角色一起设置')
                 return false
             }
@@ -134,10 +136,6 @@ export default {
             }
             if(!/^1[3458]\d{9}$/.test(this.formItem.phone)){
                 this.$Message.error('手机号不合法')
-                return false
-            }
-            if(!/^[1-9]\d{4,12}$/.test(this.formItem.qq)){
-                this.$Message.error('QQ号不合法')
                 return false
             }
             if(!/^[0-9a-zA-Z]+@[a-z]+\.(cn|com|co|net)$/.test(this.formItem.email)){

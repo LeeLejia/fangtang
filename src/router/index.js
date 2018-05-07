@@ -7,7 +7,6 @@ import TaskHall from 'Pages/TaskHall'
 import Home from 'Pages/Home'
 import About from 'Pages/About'
 import Link from '@/components/functional/LinkTable'
-import routerHook from './router-guard'
 
 const router = new Router({
   mode: 'history',
@@ -51,5 +50,4 @@ const router = new Router({
   ],
 })
 Vue.use(Router)
-routerHook(router)
 export default router
