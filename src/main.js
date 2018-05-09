@@ -7,7 +7,7 @@ import {
   Submenu, Layout, Header, Sider, MenuItem, Modal,
   Icon, BreadcrumbItem, Message, Notice, Carousel, CarouselItem,
   Form, FormItem, Input, CheckboxGroup, Checkbox, Spin, Tabs, TabPane,
-  Button, Row, Col, AutoComplete, Card, DatePicker, Scroll,
+  Button, Row, Col, AutoComplete, Card, DatePicker, Scroll, Upload,
   RadioGroup, Radio, Slider, Switch, Select, Breadcrumb, Menu,
   Tag,
 } from 'iview'
@@ -50,6 +50,7 @@ Vue.component('Spin', Spin)
 Vue.component('i-switch', Switch)
 Vue.component('Select', Select)
 Vue.component('Breadcrumb', Breadcrumb)
+Vue.component('Upload', Upload)
 
 // 导入指令
 Object.keys(directives).forEach((directive) => {

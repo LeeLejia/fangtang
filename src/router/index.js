@@ -7,6 +7,7 @@ import TaskHall from 'Pages/TaskHall'
 import Home from 'Pages/Home'
 import About from 'Pages/About'
 import Link from '@/components/functional/LinkTable'
+import FileManage from '@/components/functional/FileManage'
 
 const router = new Router({
   mode: 'history',
@@ -42,6 +43,10 @@ const router = new Router({
             {
               path: '/person/link',
               component: Link,
+            },
+            {
+              path: '/person/file',
+              component: FileManage,
             },
           ],
         },
