@@ -8,6 +8,7 @@ import Home from 'Pages/Home'
 import About from 'Pages/About'
 import Link from '@/components/functional/LinkTable'
 import FileManage from '@/components/functional/FileManage'
+import SysLog from '@/components/functional/SysLog'
 
 const router = new Router({
   mode: 'history',
@@ -47,6 +48,10 @@ const router = new Router({
             {
               path: '/person/file',
               component: FileManage,
+            },
+            {
+              path: '/person/sysLog',
+              component: SysLog,
             },
           ],
         },

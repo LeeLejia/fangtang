@@ -9,7 +9,7 @@ import {
   Form, FormItem, Input, CheckboxGroup, Checkbox, Spin, Tabs, TabPane,
   Button, Row, Col, AutoComplete, Card, DatePicker, Scroll, Upload,
   RadioGroup, Radio, Slider, Switch, Select, Breadcrumb, Menu,
-  Tag,
+  Tag, Page, Table, Poptip,
 } from 'iview'
 import 'iview/dist/styles/iview.css'
 import Vue from 'vue'
@@ -51,6 +51,9 @@ Vue.component('i-switch', Switch)
 Vue.component('Select', Select)
 Vue.component('Breadcrumb', Breadcrumb)
 Vue.component('Upload', Upload)
+Vue.component('Page', Page)
+Vue.component('Table', Table)
+Vue.component('Poptip', Poptip)
 
 // 导入指令
 Object.keys(directives).forEach((directive) => {
