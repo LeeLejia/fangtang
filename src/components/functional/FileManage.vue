@@ -7,30 +7,27 @@
                 placeholder="输入关键字"
                 style="width:300px;display:inline-block;z-index:999;">
         </AutoComplete>
-        <Upload multiple
-                style="display:inline-block"
-                action="//jsonplaceholder.typicode.com/posts/">
-            <Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>
-        </Upload>
+        <input type="file" @change="upload" style="display: none;" ref="_upload"/>
+        <Button type="ghost" icon="ios-cloud-upload-outline" @click="$refs._upload.click()">上传文件</Button>
     </Row>
-     <Menu mode="horizontal" :theme="theme1" active-name="1">
-        <MenuItem name="all" style="z-index:998!important">
+     <Menu mode="horizontal" active-name="1" @on-select="changeType">
+        <MenuItem name="all">
             <Icon type="ios-paper"></Icon>
             全部
         </MenuItem>
-        <MenuItem name="picture" style="z-index:998!important">
+        <MenuItem name="picture">
             <Icon type="ios-paper"></Icon>
             图片
         </MenuItem>
-        <MenuItem name="doc" style="z-index:998!important">
+        <MenuItem name="doc">
             <Icon type="ios-paper"></Icon>
             文档
         </MenuItem>
-        <MenuItem name="data" style="z-index:998!important">
+        <MenuItem name="data">
             <Icon type="ios-paper"></Icon>
             资料
         </MenuItem>
-         <MenuItem name="others" style="z-index:998!important">
+         <MenuItem name="others">
             <Icon type="ios-paper"></Icon>
             其它
         </MenuItem>
@@ -39,10 +36,10 @@
         <div class="item" v-for="file in files" :key="file.id">
             <div class="file-prop file-name">{{file.name}}</div>
             <div class="file-prop file-size">{{file.size}}</div>
-            <div class="file-prop file-date">{{file.date}}</div>
+            <div class="file-prop file-date">{{file.timestamps}}</div>
             <div class="file-prop file-actions">
-                <a href="www.cjwddz.cn" :download="file.name"><Icon type="ios-cloud-download-outline" style="margin-right:5px;"></Icon>下载</a>
-                <span><Icon type="trash-a" style="margin-right:5px;"></Icon>删除</span>
+                <a :href="`/static/file/${file.key}`" :download="file.name"><Icon type="ios-cloud-download-outline" style="margin-right:5px;"></Icon>下载</a>
+                <span @click="delFile(file)"><Icon type="trash-a" style="margin-right:5px;"></Icon>删除</span>
             </div>
         </div>
     </Scroll>
@@ -115,19 +112,35 @@
     }
 </style>
 <script>
+import Api from 'Api/file-api'
 export default {
   data() {
     return {
       value4: '',
-      files: [
-        { name: 'aa.txt', size: '124.34MB', date: '2018.01.23' },
-        { name: '中文.txt', size: '124.34MB', date: '2018.01.23' },
-        { name: '啊各位师傅.3gp', size: '124.34MB', date: '2018.01.23' },
-        { name: '你们少时诵诗你们少时诵诗书你们少时诵诗书你们少时诵诗书你们少时诵诗书你们少时诵诗书你们少时诵诗书你们少时诵诗书你们少时诵诗书书.doc', size: '124.34MB', date: '2018.01.23' },
-      ],
+      files: [],
     }
   },
+  created(){
+      console.log('created')
+      Api.queryFiles('','',0,100).then(result=>{
+          if(result.status){
+              this.files = result.data.files.map(file=>{
+                  const dateStr = file.created_at.slice(0,10)
+                  return {id:file.id,key:file.key,name:file.name,size:this.bytesToSize(file.size),timestamps:dateStr}
+              })
+          }else{
+              this.$Message.error(result.msg)
+          }
+      })
+  },
   methods: {
+    bytesToSize(bytes) {
+        if (bytes === 0) return '0 B'
+        let k = 1024
+        let sizes = ['B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+        let i = Math.floor(Math.log(bytes) / Math.log(k))
+        return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i]
+    },
     handleReachBottom() {
       return new Promise((resolve) => {
         setTimeout(() => {
@@ -139,6 +152,33 @@ export default {
         }, 2000)
       })
     },
+    upload({target}){
+      let file = target.files[0]
+      Api.uploadFile(file,event=>{
+          console.log(event)
+      }).then(response=>{
+        if (response.status) {
+          this.$Message.success(response.msg || '上传文件成功!')
+        } else {
+          this.$Message.error(response.msg || '上传文件失败!')
+        }
+      })
+    },
+    delFile(file){
+        Api.deleteFile(file.id,file.key).then(response=>{
+            if (response.status) {
+                this.$Message.success(response.msg || '删除文件成功!')
+                this.files = this.files.filter(item=>{
+                    return item.id !== file.id
+                })
+            } else {
+                this.$Message.error(response.msg || '删除文件失败!')
+            }
+        })
+    }
   },
+  changeType(type){
+    console.log(type)
+  }
 }
 </script>

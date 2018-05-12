@@ -37,19 +37,22 @@ class AxiosService {
     const params = paramsKV.join('&')
     return axios.post(url, params, { withCredentials: true }).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
   }
+  static async post(url, data, configs) {
+    return axios.post(url, data, Object.assign({ withCredentials: true }, configs)).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
+  }
   static async get(url, params) {
-    if (!params) { return axios.get(url).then(AxiosService.thenEvent).catch(AxiosService.catchEvent) }
+    if (!params) { return axios.get(url, { withCredentials: true }).then(AxiosService.thenEvent).catch(AxiosService.catchEvent) }
     let requestStr
     if (typeof params === 'string') {
       requestStr = `${url}?${encodeURIComponent(params)}`
     } else if (typeof params === 'object') {
       const paramsKV = []
       for (const key of Object.keys(params)) {
-        paramsKV.push(`${key}=${params[key]}`)
+        paramsKV.push(`${key}=${encodeURIComponent(params[key])}`)
       }
-      requestStr = `${url}?${encodeURIComponent(paramsKV.join('&'))}`
+      requestStr = `${url}?${paramsKV.join('&')}`
     }
-    return axios.get(requestStr).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
+    return axios.get(requestStr, { withCredentials: true }).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
   }
   static catchEvent(result) {
     return { code: result.response && result.response.status || 10101010, msg: result.message, status: false }
