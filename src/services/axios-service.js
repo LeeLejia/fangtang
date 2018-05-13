@@ -26,22 +26,22 @@ class AxiosService {
         _configs[key] = configs[key] // eslint-disable-line
     }
   }
-  static async postJson(url, data) {
-    return axios.post(url, data, { withCredentials: true }).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
+  static async postJson(url, data, configs = { withCredentials: true }) {
+    return axios.post(url, data, configs).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
   }
-  static async postKV(url, data) {
+  static async postKV(url, data, configs = { withCredentials: true }) {
     const paramsKV = []
     for (const key of Object.keys(data)) {
       paramsKV.push(`${key}=${data[key]}`)
     }
     const params = paramsKV.join('&')
-    return axios.post(url, params, { withCredentials: true }).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
+    return axios.post(url, params, configs).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
   }
   static async post(url, data, configs) {
     return axios.post(url, data, Object.assign({ withCredentials: true }, configs)).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
   }
-  static async get(url, params) {
-    if (!params) { return axios.get(url, { withCredentials: true }).then(AxiosService.thenEvent).catch(AxiosService.catchEvent) }
+  static async get(url, params, configs = { withCredentials: true }) {
+    if (!params) { return axios.get(url, configs).then(AxiosService.thenEvent).catch(AxiosService.catchEvent) }
     let requestStr
     if (typeof params === 'string') {
       requestStr = `${url}?${encodeURIComponent(params)}`
@@ -52,7 +52,7 @@ class AxiosService {
       }
       requestStr = `${url}?${paramsKV.join('&')}`
     }
-    return axios.get(requestStr, { withCredentials: true }).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
+    return axios.get(requestStr, configs).then(AxiosService.thenEvent).catch(AxiosService.catchEvent)
   }
   static catchEvent(result) {
     return { code: result.response && result.response.status || 10101010, msg: result.message, status: false }

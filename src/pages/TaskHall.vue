@@ -38,10 +38,10 @@
                     <Icon type="social-twitch-outline"></Icon>
                     {{task.describe}}
                 </Row>
-                <Row class="item" v-if="task.annex && task.annex.length>0">
-                    <a class="file-item" @click.prevent="alert('洗洗睡吧!')">
+                <Row class="item" v-for="(annex,index) in task.annex" :key="annex.file">
+                    <a :href="`/static/files/${annex.file}`" class="file-item" @click.prevent="alert('洗洗睡吧!')" :download="`附件${index+1}`">
                         <Icon type="ios-cloud-download-outline"></Icon>
-                        下载附件
+                        {{annex.describe || '下载附件'}}
                     </a>
                 </Row>
                 <img v-if="task.status==='finish'" class="seal" v-icon="'seal'">
@@ -59,10 +59,9 @@
         right:50px;
         font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
         font-size: 16px;
-        color: #fff
     }
     a{
-        color: white;
+        color: #3399ff;
     }
     .container{
         width: 80%;
@@ -109,29 +108,24 @@
     }
 </style>
 <script>
+import Api from 'Api/publish-api'
 export default{
   data() {
     return {
       height: document.body.clientHeight - 150,
       tasks: [],
+      start: 0,
+      count: 1000,
     }
   },
   created() {
-    const mockData = require('../assets/mock/mock_task.json')
     Date.prototype.formatDate = function () {
       const y = this.getFullYear()
       const m = this.getMonth()
       const d = this.getDate()
       return `${y}/${m}/${d}`
     }
-    this.tasks = mockData.map((item) => {
-      const result = item
-      result.period = `${Math.ceil(Math.abs((result.to_time - result.from_time)) / (1000 * 60 * 60 * 24))}天`
-      result.overdue = result.to_time < new Date().getTime()
-      result.from_time = new Date(result.from_time).formatDate()
-      result.to_time = new Date(result.to_time).formatDate()
-      return result
-    })
+    this.queryData()
   },
   mounted() {
     window.onresize = function () {
@@ -146,6 +140,25 @@ export default{
     },
     getRandomColor() {
       return `#${(`00000${((Math.random() * 16777215 + 0.5)).toString(16)}`).slice(-6)}`
+    },
+    queryData(){
+     Api.getTask(this.start,this.count).then(result=>{
+         if(!result.status){
+             this.$Message.error(result.msg)
+             return
+         }
+         this.tasks = result.data.tasks && result.data.tasks.map((item) => {
+             const result = item
+             result.period = `${Math.ceil(Math.abs((result.to_time - result.from_time)) / (1000 * 60 * 60 * 24))}天`
+             result.overdue = result.to_time < new Date().getTime()
+             result.from_time = new Date(result.from_time).formatDate()
+             result.to_time = new Date(result.to_time).formatDate()
+             result.type = result.labels.split(',')
+             result.annex = JSON.parse(result.annex)
+             return result
+         }) || []
+         console.log(this.tasks)
+     })
     },
   },
 }
