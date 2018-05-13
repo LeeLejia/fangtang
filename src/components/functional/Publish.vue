@@ -55,18 +55,19 @@
                        :prop="'items.' + index + '.value'">
                    <Row>
                        <Input style="width: 250px;" type="text" v-model="item.value" placeholder="简要描述附件"></Input>
-                       <Button style="width: 100px;" type="ghost" icon="ios-cloud-upload-outline">选择附件</Button>
+                       <Button style="width: 100px;" type="ghost" icon="ios-cloud-upload-outline" @click="chooseFile(index)">{{item.name || '选择附件'}}</Button>
                        <Button style="width: 50px;" type="ghost" @click="handleRemove(index)">删除</Button>
                    </Row>
                </FormItem>
                <FormItem>
                    <Row>
                        <Col span="12">
-                       <Button type="dashed" style="margin-left:80px;" long @click="handleAdd" icon="plus-round">添加附件</Button>
+                        <Button type="dashed" style="margin-left:80px;" long @click="handleAdd" icon="plus-round">添加附件</Button>
                        </Col>
                    </Row>
                </FormItem>
            </FormItem>
+           <input type="file" style="display: none;" ref="upload" @change="upload"/>
            <FormItem label="描述">
                <Input v-model="formItem.describe" type="textarea" :autosize="{minRows: 2,maxRows: 8}" placeholder="简要说明项目内容"></Input>
            </FormItem>
@@ -96,6 +97,7 @@
 <script>
 import throttle from 'lodash/throttle'  // eslint-disable-line
 import Api from 'Api/publish-api'
+import FileApi from 'Api/file-api'
 
 export default {
   data() {
@@ -106,7 +108,8 @@ export default {
           {
             value: '',
             index: 1,
-            status: 1,
+            status: true,
+            key: '',
           },
         ],
       },
@@ -147,6 +150,39 @@ export default {
     tipFormat(value) {
       return `${this.getYuan(value)}元`
     },
+    chooseFile(index){
+        this.annex.items[index].name = "上传中..."
+        this.$refs.upload.curIndex = index
+        this.$refs.upload.click()
+    },
+     upload({target}){
+        if (this.$refs.upload.uploading){
+            this.$Message.error('请先等待当前文件上传完成!')
+            return
+        }
+        const file = target.files[0]
+        const index = this.$refs.upload.curIndex
+        this.$refs.upload.uploading = true
+        FileApi.uploadFile(file,event=>{
+            this.annex.items[index].name = `进度${(event.loaded/event.total) * 100}%`
+        }).then(response=>{
+            if (response.status) {
+                if (file.name.length > 5){
+                    this.annex.items[index].name = file.name.substr(0,4) + '..'
+                }else {
+                    this.annex.items[index].name = file.name
+                }
+                this.annex.items[index].key = response.data.key
+                this.$Message.success(response.msg || '上传文件成功!')
+                console.log(this.annex.items)
+            } else {
+                this.$Message.error(response.msg || '上传文件失败!')
+                this.annex.items[index].name = '上传失败'
+            }
+            this.$refs.upload.uploading = false
+            this.$nextTick(()=>{this.$forceUpdate()})
+        })
+    },
     getYuan(value) {
       const unit = this.formItem.unit === 'yuan' ? 1 : (this.formItem.unit === 'bai' ? 100 : 1000)
       return value * unit
@@ -156,17 +192,21 @@ export default {
       this.annex.items.push({
         value: '',
         index: this.index,
-        status: 1,
+        status: true,
       })
     },
     handleRemove(index) {
-      this.annex.items[index].status = 0
+      this.annex.items[index].status = false
     },
     submit: throttle(async function () {
       if (!this.checkForm()) {
         return
       }
       const data = this.formItem
+        const annex = this.annex.items.filter(item=>item.status).map(item=>{return {
+            describe: item.value,
+            file: item.key,
+        }})
       const pushData = {
         name: data.name,
         money_lower: this.getYuan(data.slider[0]),
@@ -175,8 +215,7 @@ export default {
         type: data.type,
         commission: data.commission,
         code: data.code,
-          // todo 添加附件
-        annex: JSON.stringify([{test:true,desc: 'test',file:'xfssfwaefqrfwqfwafwrfwqwfd'}]),
+        annex: JSON.stringify(annex),
         from_time: this.period[0].getTime(),
         to_time: this.period[1].getTime(),
         describe: data.describe,
@@ -184,7 +223,7 @@ export default {
       console.log(pushData)
       Api.publish(pushData).then((response) => {
         if (response.status) {
-          this.$Message.success(response.msg || '发布任务成功!')
+          this.$Message.success(response.data.msg || '发布任务成功!')
         } else {
           this.$Message.error(response.msg || '提交失败!')
         }

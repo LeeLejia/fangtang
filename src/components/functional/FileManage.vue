@@ -2,32 +2,33 @@
 <div style="margin-top: 20px;">
     <Row>
         <AutoComplete
-                v-model="value4"
+                v-model="query"
                 icon="ios-search"
+                @keyup.native.enter="change"
                 placeholder="输入关键字"
                 style="width:300px;display:inline-block;z-index:999;">
         </AutoComplete>
         <input type="file" @change="upload" style="display: none;" ref="_upload"/>
         <Button type="ghost" icon="ios-cloud-upload-outline" @click="$refs._upload.click()">上传文件</Button>
     </Row>
-     <Menu mode="horizontal" active-name="1" @on-select="changeType">
+     <Menu mode="horizontal" active-name="all" @on-select="changeType">
         <MenuItem name="all">
             <Icon type="ios-paper"></Icon>
             全部
         </MenuItem>
-        <MenuItem name="picture">
+        <MenuItem name="image">
             <Icon type="ios-paper"></Icon>
             图片
         </MenuItem>
-        <MenuItem name="doc">
+        <MenuItem name="office">
             <Icon type="ios-paper"></Icon>
             文档
         </MenuItem>
-        <MenuItem name="data">
+        <MenuItem name="video">
             <Icon type="ios-paper"></Icon>
-            资料
+            视频
         </MenuItem>
-         <MenuItem name="others">
+         <MenuItem name="application">
             <Icon type="ios-paper"></Icon>
             其它
         </MenuItem>
@@ -116,24 +117,34 @@ import Api from 'Api/file-api'
 export default {
   data() {
     return {
-      value4: '',
+      query: '',
       files: [],
+      type: '',
     }
   },
   created(){
-      console.log('created')
-      Api.queryFiles('','',0,100).then(result=>{
-          if(result.status){
-              this.files = result.data.files.map(file=>{
-                  const dateStr = file.created_at.slice(0,10)
-                  return {id:file.id,key:file.key,name:file.name,size:this.bytesToSize(file.size),timestamps:dateStr}
-              })
-          }else{
-              this.$Message.error(result.msg)
-          }
-      })
+    this.queryFiles()
   },
   methods: {
+    queryFiles(){
+          Api.queryFiles(this.type,this.query,0,10000).then(result=>{
+              if(result.status){
+                  if(!result.data.files){
+                      this.files = []
+                      return
+                  }
+                  this.files = result.data.files.map(file=>{
+                      const dateStr = file.created_at.slice(0,10)
+                      return {id:file.id,key:file.key,name:file.name,size:this.bytesToSize(file.size),timestamps:dateStr}
+                  })
+              }else{
+                  this.$Message.error(result.msg)
+              }
+          })
+    },
+    change(){
+      this.queryFiles()
+    },
     bytesToSize(bytes) {
         if (bytes === 0) return '0 B'
         let k = 1024
@@ -153,12 +164,13 @@ export default {
       })
     },
     upload({target}){
-      let file = target.files[0]
+      const file = target.files[0]
       Api.uploadFile(file,event=>{
           console.log(event)
       }).then(response=>{
         if (response.status) {
           this.$Message.success(response.msg || '上传文件成功!')
+          this.queryFiles()
         } else {
           this.$Message.error(response.msg || '上传文件失败!')
         }
@@ -175,10 +187,15 @@ export default {
                 this.$Message.error(response.msg || '删除文件失败!')
             }
         })
+    },
+    changeType(type){
+        if(type === 'all'){
+            this.type = ''
+        }else {
+            this.type = type
+        }
+      this.queryFiles()
     }
-  },
-  changeType(type){
-    console.log(type)
   }
 }
 </script>

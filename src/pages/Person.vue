@@ -62,10 +62,10 @@ export default {
           icon: 'ios-navigate',
           name: '应用列表',
           options: [
-            { name: '应用列表' },
+//            { name: '应用列表' },
             { name: '链接列表', url: '/link' },
             { name: '文件管理', url: '/file' },
-            { name: '应用日志' },
+//            { name: '应用日志' },
           ],
         },
         {
@@ -81,7 +81,6 @@ export default {
           name: '消息中心',
           options: [
             { name: '我的消息' },
-            { name: '我的任务' },
           ],
         },
         {

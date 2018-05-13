@@ -15,11 +15,15 @@ export default {
       tableData1: this.mockTableData1(),
       tableColumns1: [
         {
-          title: 'Name',
+          title: '链接名称',
           key: 'name',
         },
         {
-          title: 'Status',
+            title: 'url',
+            key: 'url',
+        },
+        {
+          title: '状态',
           key: 'status',
           render: (h, params) => {
             const row = params.row
@@ -35,61 +39,54 @@ export default {
           },
         },
         {
-          title: 'Portrayal',
-          key: 'portrayal',
-          render: (h, params) => h('Poptip', {
-            props: {
-              trigger: 'hover',
-              title: `${params.row.portrayal.length}portrayals`,
-              placement: 'bottom',
-            },
-          }, [
-            h('Tag', params.row.portrayal.length),
-            h('div', {
-              slot: 'content',
-            }, [
-              h('ul', this.tableData1[params.index].portrayal.map(item => h('li', {
-                style: {
-                  textAlign: 'center',
-                  padding: '4px',
-                },
-              }, item))),
-            ]),
-          ]),
+          title: '类型',
+          key: 'config',
+          render: (h, params) => h('Tag', `${params.row.config.type} [${params.row.config.contentType}]`),
         },
         {
-          title: 'People',
+          title: '访问量',
           key: 'people',
-          render: (h, params) => h('Poptip', {
-            props: {
-              trigger: 'hover',
-              title: `${params.row.people.length}customers`,
-              placement: 'bottom',
-            },
-          }, [
-            h('Tag', params.row.people.length),
-            h('div', {
-              slot: 'content',
-            }, [
-              h('ul', this.tableData1[params.index].people.map(item => h('li', {
-                style: {
-                  textAlign: 'center',
-                  padding: '4px',
-                },
-              }, `${item.n}：${item.c}People`))),
-            ]),
-          ]),
+          render: (h, params) => h('Tag', params.row.people.length),
         },
         {
-          title: 'Sampling Time',
-          key: 'time',
-          render: (h, params) => h('div', `Almost${params.row.time}days`),
-        },
-        {
-          title: 'Updated Time',
-          key: 'update',
-          render: (h, params) => h('div', this.formatDate(this.tableData1[params.index].update)),
-        },
+          title: '创建时间',
+          key: 'created_at',
+          render: (h, params) => h('div', this.formatDate(this.tableData1[params.index].created_at)),
+        },{
+              title: '操作',
+              key: 'action',
+              width: 150,
+              align: 'center',
+              render: (h, params) => {
+                  return h('div', [
+                      h('Button', {
+                          props: {
+                              type: 'primary',
+                              size: 'small'
+                          },
+                          style: {
+                              marginRight: '5px'
+                          },
+                          on: {
+                              click: () => {
+                                  this.show(params.index)
+                              }
+                          }
+                      }, '修改'),
+                      h('Button', {
+                          props: {
+                              type: 'error',
+                              size: 'small'
+                          },
+                          on: {
+                              click: () => {
+                                  this.remove(params.index)
+                              }
+                          }
+                      }, '删除')
+                  ]);
+              }
+          }
       ],
     }
   },
@@ -100,7 +97,8 @@ export default {
         data.push({
           name: `Business${Math.floor(Math.random() * 100 + 1)}`,
           status: Math.floor(Math.random() * 3 + 1),
-          portrayal: ['City', 'People', 'Cost', 'Life', 'Entertainment'],
+          url: `/usenglsj/aqfsswf`,
+          config: {type: 'html', file: {name:'AAA.html',key: 'xxxxxxxxxxx'}, contentType: 'text/html'},
           people: [
             {
               n: `People${Math.floor(Math.random() * 100 + 1)}`,
@@ -115,8 +113,7 @@ export default {
               c: Math.floor(Math.random() * 1000000 + 100000),
             },
           ],
-          time: Math.floor(Math.random() * 7 + 1),
-          update: new Date(),
+          created_at: new Date(),
         })
       }
       return data
