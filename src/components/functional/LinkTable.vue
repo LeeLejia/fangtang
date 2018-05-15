@@ -19,24 +19,13 @@ export default {
           key: 'name',
         },
         {
-            title: 'url',
-            key: 'url',
+          title: 'url',
+          key: 'url',
         },
         {
           title: '状态',
           key: 'status',
-          render: (h, params) => {
-            const row = params.row
-            const color = row.status === 1 ? 'blue' : row.status === 2 ? 'green' : 'red' // eslint-disable-line
-            const text = row.status === 1 ? 'Working' : row.status === 2 ? 'Success' : 'Fail' // eslint-disable-line
-
-            return h('Tag', {
-              props: {
-                type: 'dot',
-                color,
-              },
-            }, text)
-          },
+          render: this.statusRender,
         },
         {
           title: '类型',
@@ -52,53 +41,71 @@ export default {
           title: '创建时间',
           key: 'created_at',
           render: (h, params) => h('div', this.formatDate(this.tableData1[params.index].created_at)),
-        },{
-              title: '操作',
-              key: 'action',
-              width: 150,
-              align: 'center',
-              render: (h, params) => {
-                  return h('div', [
-                      h('Button', {
-                          props: {
-                              type: 'primary',
-                              size: 'small'
-                          },
-                          style: {
-                              marginRight: '5px'
-                          },
-                          on: {
-                              click: () => {
-                                  this.show(params.index)
-                              }
-                          }
-                      }, '修改'),
-                      h('Button', {
-                          props: {
-                              type: 'error',
-                              size: 'small'
-                          },
-                          on: {
-                              click: () => {
-                                  this.remove(params.index)
-                              }
-                          }
-                      }, '删除')
-                  ]);
-              }
-          }
+        }, {
+          title: '操作',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (h, params) => h('div', [
+            h('Button', {
+              props: {
+                type: 'primary',
+                size: 'small',
+              },
+              style: {
+                marginRight: '5px',
+              },
+              on: {
+                click: () => {
+                  this.show(params.index)
+                },
+              },
+            }, '修改'),
+            h('Button', {
+              props: {
+                type: 'error',
+                size: 'small',
+              },
+              on: {
+                click: () => {
+                  this.remove(params.index)
+                },
+              },
+            }, '删除'),
+          ]),
+        },
       ],
     }
   },
   methods: {
+    statusRender(h, params) {
+      const row = params.row
+      const color = row.status === 'diable' ? 'grey' : row.status === 'normal' ? 'green' : 'red' // eslint-disable-line
+      const text = row.status === 'diable' ? 'disable' : row.status === 'normal' ? 'working' : 'error' // eslint-disable-line
+      return h('Poptip', {
+        props: {
+          trigger: 'hover',
+          title: '设置状态',
+          placement: 'bottom',
+        },
+      }, [
+        h('Tag', { props: { type: 'dot', color } }, text),
+        h('div', { slot: 'content' }, [
+          h('div', [
+            h('Tag', { props: { type: 'dot', color: 'grey' } }, '禁用'),
+            h('Tag', { props: { type: 'dot', color: 'green' } }, '启用'),
+          ]),
+        ]),
+      ])
+    },
     mockTableData1() {
       const data = []
       for (let i = 0; i < 10; i += 1) {
         data.push({
           name: `Business${Math.floor(Math.random() * 100 + 1)}`,
-          status: Math.floor(Math.random() * 3 + 1),
-          url: `/usenglsj/aqfsswf`,
-          config: {type: 'html', file: {name:'AAA.html',key: 'xxxxxxxxxxx'}, contentType: 'text/html'},
+          status: Math.floor(Math.random() * 3 + 1) % 2 === 0 ? 'disable' : 'normal',
+          url: '/usenglsj/aqfsswf',
+          config: { type: 'html', file: { name: 'AAA.html', key: 'xxxxxxxxxxx' }, contentType: 'text/html' },
           people: [
             {
               n: `People${Math.floor(Math.random() * 100 + 1)}`,

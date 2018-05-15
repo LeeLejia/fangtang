@@ -4,6 +4,7 @@ const state = {
   user: {},
   openAuthModal: false,
   hasVerify: false,
+  settings: {},
 }
 
 const getters = {
@@ -19,6 +20,11 @@ const mutations = {
   },
   setAuthModal(state, open) {
     state.openAuthModal = open
+  },
+  setSettings(state, options) {
+    Object.keys(options).forEach((key) => {
+      state.settings[key] = options[key]
+    })
   },
 }
 

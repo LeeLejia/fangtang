@@ -62,10 +62,10 @@ export default {
           icon: 'ios-navigate',
           name: '应用列表',
           options: [
-//            { name: '应用列表' },
+            //            { name: '应用列表' },
             { name: '链接列表', url: '/link' },
             { name: '文件管理', url: '/file' },
-//            { name: '应用日志' },
+            //            { name: '应用日志' },
           ],
         },
         {
@@ -87,14 +87,13 @@ export default {
           icon: 'ios-navigate',
           name: '个人信息',
           options: [
-            { name: '账号信息' },
+            { name: '账号信息', url: '/setting' },
           ],
         },
       ]
     },
     setRoute(url) {
       this.$router.push(`/person${url}`)
-      console.log(`route to ${url}`)
     },
   },
 }

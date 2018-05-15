@@ -4,6 +4,7 @@ import MainLayout from 'Pages/MainLayout'
 import Publish from 'Pages/Publish'
 import Person from 'Pages/Person'
 import TaskHall from 'Pages/TaskHall'
+import Settings from 'Pages/Settings'
 import Home from 'Pages/Home'
 import About from 'Pages/About'
 import Link from '@/components/functional/LinkTable'
@@ -52,6 +53,10 @@ const router = new Router({
             {
               path: '/person/sysLog',
               component: SysLog,
+            },
+            {
+              path: '/person/setting',
+              component: Settings,
             },
           ],
         },
