@@ -76,8 +76,8 @@ export default {
         h('Tag', { props: { type: 'dot', color } }, text),
         h('div', { slot: 'content' }, [
           h('div', [
-            h('Tag', { props: { type: 'dot', color: 'grey' } }, '禁用'),
-            h('Tag', { props: { type: 'dot', color: 'green' } }, '启用'),
+            h('Tag', { props: { type: 'dot', color: 'grey' }, nativeOn:{ click: ()=>this.disable(params.row)} }, '禁用'),
+            h('Tag', { props: { type: 'dot', color: 'green' }, nativeOn:{ click: ()=>this.enable(params.row) } }, '启用'),
           ]),
         ]),
       ])
@@ -94,7 +94,7 @@ export default {
           },
           on: {
             click: () => {
-              this.show(params.index)
+              // todo
             },
           },
         }, '修改'),
@@ -105,14 +105,20 @@ export default {
           },
           on: {
             click: () => {
-              this.remove(params.index)
+              // todo
             },
           },
         }, '删除'),
       ])
     },
     urlRender(h, params) {
-      return h('div', [params.row.urlSuffix, h('Tag', { style: { 'margin-left': '5px' }, on: { click: () => { console.log('hi!') } } }, '复制')])
+      return h('div', [params.row.urlSuffix, h('Tag', { style: { 'margin-left': '5px' }, nativeOn: { click: () => { console.log('hi!') } } }, '复制')])
+    },
+    disable(row){
+        alert(row)
+    },
+    enable(row){
+        alert(row)
     },
     mockTableData1() {
       console.log(mockData)

@@ -13,12 +13,10 @@ const ERR_CODE = {
   10101010: 'UnknownError',
 }
 
-var _configs = {}                    // eslint-disable-line
-const axios = _axios.create({
-  baseURL: process.env.NODE_ENV !== 'development' ? 'http://www.cjwddz.cn/' : 'http://localhost:80/',
-  timeout: 3000,
-  // headers: {'X-Custom-Header': 'foobar'}
-})
+let _configs = {}                    // eslint-disable-line
+const createdConfig = { timeout: 3000 }
+process.env.NODE_ENV === 'development' && (createdConfig.baseURL = 'http://localhost:80/')
+const axios = _axios.create(createdConfig)
 class AxiosService {
   static setConfigs(configs) {
     const keys = Object.keys(configs)

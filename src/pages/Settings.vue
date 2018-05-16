@@ -15,7 +15,7 @@
             </FormItem>
           </Form>
           <div class="edit-avatar">
-            <Avatar :src="person.avatar" size="large" shape="square" icon="person"/>
+            <Avatar :src="person.avatar" size="large" shape="square" icon="person" class="avatar"/>
             <Button :disabled="isLoading" @click.stop="handleAvatar">修改头像</Button>
             <input type="file" ref="fileUpload" style="display: none" @change="onAvatarUpload" />
           </div>
@@ -29,22 +29,8 @@
             <i-switch v-model="dontNotice"></i-switch>
           </div>
           <div class="switch">
-            <label>电话通知</label>
+            <label>微信通知</label>
             <i-switch v-model="mute"></i-switch>
-          </div>
-        </div>
-      </div>
-      <div class="setting">
-        <div class="setting-title">账号信息</div>
-        <div class="setting-item">
-          <div class="account-avatar">
-            <Avatar :src="userInfo.avatar" size="large" icon="person"/>
-            <div class="name">{{ userInfo.name }}</div>
-          </div>
-          <div class="btns">
-            <Button @click.stop="importKeys">导入密钥</Button>
-            <Button @click.stop="exportKeys">导出密钥</Button>
-            <Button @click.stop="handleLogout">注销</Button>
           </div>
         </div>
       </div>
@@ -77,6 +63,8 @@
 <script>
 import { mapState } from 'vuex'
 import { Button, Form, FormItem, Input, Switch, Avatar } from 'iview'
+import fileApi from 'Api/file-api'
+import userApi from 'Api/user-api'
 
 export default {
   name: 'settings',
@@ -162,21 +150,19 @@ export default {
       this.isLoading = true
       event.preventDefault()
       event.stopPropagation()
-      const response1 = await this.$fcNormal.uploadAvatar(event.target.files[0])
-      console.log(response1)
-      event.target.value = ''
-      if (!response1.status) {
-        this.$Message.error('头像设置失败')
+      const result = await fileApi.uploadFile(event.target.files[0])
+      if (!result.status) {
+        this.$Message.error(result.msg || '头像设置失败')
         this.isLoading = false
         return
       }
-      const response2 = await this.$fcNormal.setAvatar(this.userInfo.id, response1.data.content_uri)
-      if (!response2.status) {
-        this.$Message.error('头像设置失败')
+      // todo
+      const setResult = await userApi.modifyUser({})
+      if (!setResult.status) {
+        this.$Message.error(setResult.msg || '头像设置失败')
         this.isLoading = false
         return
       }
-      this.$agent.delegate(this.$channel.refreshUserInfo)
       this.isLoading = false
     },
     async handleSave() {
@@ -261,7 +247,7 @@ export default {
     overflow-y: auto;
     .setting {
       color: #333333;
-      margin: 10px auto;
+      margin: 5px auto;
       border-bottom: 1px solid #DCDCDC;
       .setting-item {
         position: relative;
@@ -273,6 +259,11 @@ export default {
         align-items: center;
         margin: 5px auto;
         padding: 0 10px;
+        .avatar{
+          width:100px;
+          height:100px;
+          margin-bottom:15px;
+        }
         .edit-avatar {
           @extend %flex-vertical;
           justify-content: space-around;
@@ -299,7 +290,7 @@ export default {
         }
       }
       .setting-item.switches {
-        width: 100%;
+        width: 260px;
         @extend %flex-vertical;
         align-items: center;
         margin: 5px 0;
@@ -308,7 +299,7 @@ export default {
           @extend %flex-horizontal;
           align-items: center;
           label {
-            width: 150px;
+            width: 60px;
           }
         }
       }

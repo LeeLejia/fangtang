@@ -7,4 +7,6 @@ const register = async data => AxiosService.postKV('/api/register', data)
 
 const logout = async () => AxiosService.get('/api/logout')
 
-export default { login, register, logout }
+const modifyUser = async (infos) => AxiosService.postKV('/api/userModify', { ...infos, osType: 'web' })
+
+export default { login, register, logout, modifyUser }

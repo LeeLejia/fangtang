@@ -83,17 +83,17 @@ export default{
       projects: [
         {
           media: [
-            { url: 'http://www.cjwddz.cn/static/image/agv_chart.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
-            { url: 'http://www.cjwddz.cn/static/image/agv_chart0.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
-            { url: 'http://www.cjwddz.cn/static/image/agv_log.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
-            { url: 'http://www.cjwddz.cn/static/image/agv_math.jpg', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'https://www.cjwddz.cn/static/image/agv_chart.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'https://www.cjwddz.cn/static/image/agv_chart0.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'https://www.cjwddz.cn/static/image/agv_log.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'https://www.cjwddz.cn/static/image/agv_math.jpg', desc: '你说这里要说什么好呢！！', type: 'picture' },
           ],
         }, {
           media: [
-            { url: 'http://www.cjwddz.cn/static/image/agv_chart.png', desc: '你你说这里要说什么好呢！！说这里要说什么好呢！！', type: 'picture' },
-            { url: 'http://www.cjwddz.cn/static/image/agv_chart0.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
-            { url: 'http://www.cjwddz.cn/static/image/agv_log.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
-            { url: 'http://www.cjwddz.cn/static/image/agv_math.jpg', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'https://www.cjwddz.cn/static/image/agv_chart.png', desc: '你你说这里要说什么好呢！！说这里要说什么好呢！！', type: 'picture' },
+            { url: 'https://www.cjwddz.cn/static/image/agv_chart0.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'https://www.cjwddz.cn/static/image/agv_log.png', desc: '你说这里要说什么好呢！！', type: 'picture' },
+            { url: 'https://www.cjwddz.cn/static/image/agv_math.jpg', desc: '你说这里要说什么好呢！！', type: 'picture' },
           ],
         },
       ],
