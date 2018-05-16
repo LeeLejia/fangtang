@@ -1,0 +1,82 @@
+{
+    "data":[
+        {
+            "id": 1,
+            "name": "哔哩哔哩",        
+            "link": "/alibaba",
+            "status": "working",
+            "visited": 12,
+            "content":{
+                "type": "file",
+                "header": "",            
+                "data":""
+            },
+            "configs":{
+                "max": 20
+            },
+            "created_time": "2018-01-2"
+        },
+        {
+            "id": 1,
+            "name": "哔哩哔哩",        
+            "link": "/alibaba",
+            "status": "working",
+            "visited": 12,
+            "content":{
+                "type": "file",
+                "header": "",            
+                "data":""
+            },
+            "configs":{
+                "max": 20
+            },
+            "created_time": "2018-01-2"
+        }, {
+            "id": 1,
+            "name": "哔哩哔哩",        
+            "link": "/alibaba",
+            "status": "disable",
+            "visited": 12,
+            "content":{
+                "type": "file",
+                "header": "",            
+                "data":""
+            },
+            "configs":{
+                "max": 20
+            },
+            "created_time": "2018-01-2"
+        }, {
+            "id": 1,
+            "name": "哔哩哔哩",        
+            "link": "/error",
+            "status": "working",
+            "visited": 12,
+            "content":{
+                "type": "file",
+                "header": "",            
+                "data":""
+            },
+            "configs":{
+                "max": 20
+            },
+            "created_time": "2018-01-2"
+        }, {
+            "id": 1,
+            "name": "哔哩哔哩",        
+            "link": "/alibaba",
+            "status": "working",
+            "visited": 12,
+            "content":{
+                "type": "file",
+                "header": "",            
+                "data":""
+            },
+            "configs":{
+                "max": 20
+            },
+            "created_time": "2018-01-2"
+        }
+    ],
+    "total":23
+}
