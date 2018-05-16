@@ -105,7 +105,7 @@ export default{
     }
   },
   created() {
-    const mockData = require('../assets/mock/mock_projects.json') // eslint-disable-line
+    const mockData = []
     Date.prototype.formatDate = function () {                     // eslint-disable-line
       const y = this.getFullYear()
       const m = this.getMonth()
