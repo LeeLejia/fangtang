@@ -16,7 +16,7 @@
         </div>
          <div style="margin: 10px;overflow: hidden">
             <div style="float: right;">
-                <Page :total="Math.ceil(this.total / this.per)" :current="1" @on-change="()=>{}"></Page>
+                <Page :total="totalPage" :current="1" @on-change="()=>{}"></Page>
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@ export default {
       per: 5,
     }
   },
-  computeds: {
+  computed: {
     totalPage() {
       return Math.ceil(this.total / this.per)
     },

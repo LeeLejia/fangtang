@@ -14,6 +14,7 @@ import { Table, Page, Tag, Poptip, Button } from 'iview'
 
 export default {
   data() {
+    Object.assign(Table.components.tableBody.components.Cell.components, { Tag, Poptip, Button })
     return {
       tableData1: this.mockTableData1(),
       total: 20,
@@ -63,7 +64,7 @@ export default {
   components: {
     Table, Page, Tag, Poptip, Button,
   },
-  computeds: {
+  computed: {
     totalPage() {
       return Math.ceil(this.total / this.per)
     },
