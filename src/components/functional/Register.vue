@@ -102,9 +102,8 @@ export default {
     Form, FormItem, Input, CheckboxGroup, AutoComplete, Checkbox, Button,
   },
   methods: {
-    handleSubmit: throttle(async () => {
-      if (this.loading) { return }
-      if (!this.check()) { return }
+    handleSubmit: throttle(async function() {
+      if (this.loading || !this.check()) { return }
       this.loading = true
       Api.register(this.formItem).then((response) => {
         this.loading = false
