@@ -6,15 +6,18 @@
                 <Page :total="totalPage" :current="1" @on-change="changePage"></Page>
             </div>
         </div>
+        <Modal >
+
+        </Modal>
     </div>
 </template>
 <script>
 import mockData from '@/assets/mock/mock_links.json'
-import { Table, Page, Tag, Poptip, Button } from 'iview'
+import { Table, Page, Tag, Poptip, Button, Modal } from 'iview'
 
 export default {
   data() {
-    Object.assign(Table.components.tableBody.components.Cell.components, { Tag, Poptip, Button })
+    Object.assign(Table.components.tableBody.components.Cell.components, { Tag, Poptip, Button, Modal })
     return {
       tableData1: this.mockTableData1(),
       total: 20,

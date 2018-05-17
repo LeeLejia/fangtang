@@ -77,7 +77,6 @@
 </style>
 <script scoped>
 import { Scroll, Tabs, TabPane, Carousel, CarouselItem, Card } from 'iview'
-
 export default{
   data() {
     return {

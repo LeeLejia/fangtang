@@ -3,19 +3,19 @@
       <div class="setting">
         <div class="setting-title">个人资料</div>
         <div class="setting-item personal">
-          <Form :model="person" label-position="left" :label-width="50" @submit.native.prevent>
+          <Form :model="userInfo" label-position="left" :label-width="50" @submit.native.prevent>
             <FormItem label="昵称">
-              <Input v-model="person.displayName" style="width: 200px" />
+              <Input v-model="userInfo.nick" style="width: 200px" />
             </FormItem>
             <FormItem label="邮箱">
-              <Input v-model="person.email" style="width: 200px" :readonly="true" />
+              <Input v-model="userInfo.email" style="width: 200px" :readonly="true" />
             </FormItem>
             <FormItem label="手机">
-              <Input v-model="person.mobile" style="width: 200px" :readonly="true" />
+              <Input v-model="userInfo.phone" style="width: 200px" :readonly="true" />
             </FormItem>
           </Form>
           <div class="edit-avatar">
-            <Avatar :src="person.avatar" size="large" shape="square" icon="person" class="avatar"/>
+            <Avatar :src="'/static/file/'+userInfo.avatar" size="large" shape="square" icon="person" class="avatar"/>
             <Button :disabled="isLoading" @click.stop="handleAvatar">修改头像</Button>
             <input type="file" ref="fileUpload" style="display: none" @change="onAvatarUpload" />
           </div>
@@ -99,12 +99,6 @@ export default {
         }],
       },
       isLoading: false,
-      person: {
-        displayName: '',
-        email: '',
-        mobile: '',
-        avatar: '',
-      },
       dontNotice: false,
       mute: false,
       password: {
@@ -119,32 +113,16 @@ export default {
     ...mapState({
       settings: state => state.settings,
       userInfo: state => state.user,
-    }),
-    checkDisplayNameUpdate() {
-      if (this.person.displayName && this.person.displayName !== this.userInfo.displayName) {
-        return true
-      }
-      return false
-    },
-    checkAppSettinigs() {
-      return this.settings.notice === this.dontNotice || this.settings.sound === this.mute
-    },
-    checkPasswordUpdate() {
-      if (this.password.oldPassword && this.password.newPassword1 && this.password.newPassword2 === this.password.newPassword1) {
-        return true
-      }
-      return false
-    },
-    changed() {
-      return this.checkDisplayNameUpdate || this.checkAppSettinigs || this.checkPasswordUpdate
-    },
+    })
+  },
+  mounted(){
+      console.log(this.userInfo)
   },
   methods: {
     handleAvatar() {
       this.$refs.fileUpload.click()
     },
     handleSettings() {
-      this.$store.dispatchGlobal('settings', { ...this.settings, notice: !this.dontNotice, sound: !this.mute })
     },
     async onAvatarUpload(event) {
       this.isLoading = true
@@ -156,77 +134,27 @@ export default {
         this.isLoading = false
         return
       }
-      // todo
-      const setResult = await userApi.modifyUser({})
-      if (!setResult.status) {
-        this.$Message.error(setResult.msg || '头像设置失败')
+      const setResult = await userApi.setAvatar(result.data.key)
+      if (setResult.status) {
+        this.$Message.success(setResult.msg || '头像设置成功')
         this.isLoading = false
         return
       }
+      this.$Message.error(setResult.msg || '头像设置失败')
       this.isLoading = false
     },
-    async handleSave() {
-      console.log('保存设置')
-      this.isLoading = true
-      if (this.checkDisplayNameUpdate) {
-        await this.$fcNormal.setDisplayName(this.userInfo.id, this.person.displayName)
-      }
-      if (this.checkAppSettinigs) {
-        this.handleSettings()
-      }
-      if (this.checkPasswordUpdate) {
-        const response = await this.$fcNormal.setPassword(this.userInfo.id, this.password.oldPassword, this.password.newPassword2)
-        this.password = {
-          oldPassword: '',
-          newPassword1: '',
-          newPassword2: '',
+    async handleLogout() {
+        const result = await userApi.logout()
+        if (result.status) {
+            this.$Message.success(result.msg || '注销成功')
+            return
         }
-        if (response.status) {
-          this.$Message.success('修改密码成功')
-        } else {
-          this.$Message.error('修改密码失败')
-        }
-      }
-      this.$agent.delegate(this.$channel.refreshUserInfo)
-      this.isLoading = false
-    },
-    handleLogout() {
-      // todo
-    },
-    async exportKeys() {
-      // todo
-    },
-    async buildPerson() {
-      const displayName = this.userInfo.displayName
-      const mobile = this.userInfo.phone
-      const email = this.userInfo.email
-      const avatar = this.userInfo.avatar
-      this.person = {
-        displayName,
-        mobile,
-        email,
-        avatar,
-      }
-    },
-    async handleCacheClear(confirm) {
-      // todo
+        this.$Message.error(result.msg || '注销失败')
     },
   },
   created() {
-    this.dontNotice = !this.settings.notice
-    this.mute = !this.settings.sound
-    this.buildPerson()
-  },
-  beforeDestroy() {
   },
   watch: {
-    userInfo() {
-      this.buildPerson()
-    },
-    settings(newVal) {
-      this.dontNotice = !newVal.notice
-      this.mute = !newVal.sound
-    },
   },
 }
 </script>

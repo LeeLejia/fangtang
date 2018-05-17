@@ -48,7 +48,7 @@
                 <img v-else-if="task.overdue" class="overdue" v-icon="'overdue'">
             </Card>
         </Scroll>
-        <Button type="ghost" class="wanna" shape="circle" large><a href="/person/pushTask">我要发任务!</a></Button>
+        <Button type="ghost" class="wanna" shape="circle" large><a style="color: #fff;" href="/person/pushTask">我要发任务!</a></Button>
     </div>
 </template>
 <style scoped lang="less">
@@ -109,7 +109,7 @@
 </style>
 <script>
 import Api from 'Api/publish-api'
-import { Scroll, Button, Card, Tag } from 'iview'
+import { Scroll, Button, Card, Tag, Spin } from 'iview'
 
 export default{
   data() {
@@ -130,7 +130,7 @@ export default{
     this.queryData()
   },
   components: {
-    Scroll, Button, Card, Tag,
+    Scroll, Button, Card, Tag, Spin,
   },
   mounted() {
     window.onresize = () => {

@@ -2,10 +2,10 @@
     "status": true,
     "total": 120,
     "data": [
-        {"id":1, "icon":"http://t1.qpic.cn/mblogpic/ab18d8132d8446e6ea92/120", "title":"假的消息", "content":"这是一条用来测试的假的消息"},
-        {"id":2, "icon":"http://t1.qpic.cn/mblogpic/ab18d8132d8446e6ea92/120", "title":"假的消息", "content":"这是一条用来测试的假的消息"},
-        {"id":3, "icon":"http://t1.qpic.cn/mblogpic/ab18d8132d8446e6ea92/120", "title":"假的消息", "content":"这是一条用来测试的假的消息"},
-        {"id":4, "icon":"http://t1.qpic.cn/mblogpic/ab18d8132d8446e6ea92/120", "title":"假的消息", "content":"这是一条用来测试的假的消息"},
-        {"id":5, "icon":"http://t1.qpic.cn/mblogpic/ab18d8132d8446e6ea92/120", "title":"假的消息", "content":"这是一条用来测试的假的消息"}
+        {"id":1, "icon":"https://file.iviewui.com/dist/03635a3c88122ad605117128f3fda0ca.png", "title":"假的消息", "content":"这是一条用来测试的假的消息"},
+        {"id":2, "icon":"https://file.iviewui.com/dist/03635a3c88122ad605117128f3fda0ca.png", "title":"假的消息", "content":"这是一条用来测试的假的消息"},
+        {"id":3, "icon":"https://file.iviewui.com/dist/03635a3c88122ad605117128f3fda0ca.png", "title":"假的消息", "content":"这是一条用来测试的假的消息"},
+        {"id":4, "icon":"https://file.iviewui.com/dist/03635a3c88122ad605117128f3fda0ca.png", "title":"假的消息", "content":"这是一条用来测试的假的消息"},
+        {"id":5, "icon":"https://file.iviewui.com/dist/03635a3c88122ad605117128f3fda0ca.png", "title":"假的消息", "content":"这是一条用来测试的假的消息"}
     ]
 }

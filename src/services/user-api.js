@@ -9,4 +9,7 @@ const logout = async () => AxiosService.get('/api/logout')
 
 const modifyUser = async (infos) => AxiosService.postKV('/api/userModify', { ...infos, osType: 'web' })
 
-export default { login, register, logout, modifyUser }
+const setAvatar = async (avatar) => AxiosService.postKV('/api/setUserAvatar', { avatar, osType: 'web' })
+
+
+export default { login, register, logout, modifyUser, setAvatar }

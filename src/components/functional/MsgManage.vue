@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="msg-actions">
-                <Button type="primary">确定</Button>
+                <Button type="primary">删除</Button>
             </div>
         </div>
          <div style="margin: 10px;overflow: hidden">
@@ -39,7 +39,7 @@
   justify-content: space-around;
 }
 .msg-words{
-  flex-basis: 70%;;
+  flex-basis: 90%;
 }
 .msg-title{
   color:#000;
@@ -57,11 +57,11 @@
 
 </style>
 <script>
-import { Page } from 'iview'
+import { Page, Button } from 'iview'
 import mockData from '@/assets/mock/mock_msgs.json'
 
 export default {
-  components: { Page },
+  components: { Page, Button },
   data() {
     return {
       msgs: mockData.data,

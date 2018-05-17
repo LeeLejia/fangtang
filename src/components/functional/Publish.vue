@@ -47,25 +47,19 @@
                <p class="notice">当指定项目可以外包时,如果本团队技术人员无法完成贵方项目,将会为贵方寻找合适的团队,双方对接工作开始后收取部分佣金.</p>
            </FormItem>
            <FormItem label="附件">
-               <FormItem
-                       v-for="(item, index) in annex.items"
-                       v-if="item.status"
-                       :key="index"
-                       :label="'附件' + index"
-                       :prop="'items.' + index + '.value'">
-                   <Row>
+               <div class="annex-item" v-for="(item, index) in annex.items" v-if="item.status" :key="index">
+                   <p class="annex-item-title">{{item.name || 'UnKnown'}}</p>
+                   <Row class="annex-item-content">
                        <Input style="width: 250px;" type="text" v-model="item.value" placeholder="简要描述附件"></Input>
-                       <Button style="width: 100px;" type="ghost" icon="ios-cloud-upload-outline" @click="chooseFile(index)">{{item.name || '选择附件'}}</Button>
+                       <Button style="width: 100px;" type="ghost" icon="ios-cloud-upload-outline" @click="chooseFile(index)" :disabled="item.key">选择附件</Button>
                        <Button style="width: 50px;" type="ghost" @click="handleRemove(index)">删除</Button>
                    </Row>
-               </FormItem>
-               <FormItem>
-                   <Row>
-                       <Col span="12">
-                        <Button type="dashed" style="margin-left:80px;" long @click="handleAdd" icon="plus-round">添加附件</Button>
-                       </Col>
-                   </Row>
-               </FormItem>
+               </div>
+               <Row>
+                   <Col span="12">
+                   <Button type="dashed" style="margin-left:80px;" long @click="handleAdd" icon="plus-round">添加附件</Button>
+                   </Col>
+               </Row>
            </FormItem>
            <input type="file" style="display: none;" ref="upload" @change="upload"/>
            <FormItem label="描述">
@@ -78,7 +72,7 @@
        </Form>
    </div>
 </template>
-<style>
+<style scoped lang="scss">
     .publish-from{
         /*width:650px;*/
     }
@@ -89,30 +83,33 @@
         line-height:20px;
         margin-top:5px;
     }
-    .annex-layout{
-        max-height:300px;
-        overflow-y: scroll;
+    .annex-item{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        .annex-item-title{
+            width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .annex-item-content{
+
+        }
     }
 </style>
 <script>
 import throttle from 'lodash/throttle'  // eslint-disable-line
 import Api from 'Api/publish-api'
 import FileApi from 'Api/file-api'
-import { Form, FormItem, Button, Input, RadioGroup, Radio, Switch as iSwitch, Checkbox, CheckboxGroup, Slider, AutoComplete } from 'iview'
+import { Form, FormItem, Button, Input, RadioGroup, Radio, Switch as iSwitch, Checkbox, CheckboxGroup, Slider, AutoComplete, DatePicker } from 'iview'
 
 export default {
   data() {
     return {
       period: [],
       annex: {
-        items: [
-          {
-            value: '',
-            index: 1,
-            status: true,
-            key: '',
-          },
-        ],
+        items: [],
       },
       formItem: {
         name: '',
@@ -133,7 +130,7 @@ export default {
     }
   },
   components: {
-    Form, FormItem, Button, Input, RadioGroup, Radio, iSwitch, Checkbox, CheckboxGroup, Slider, AutoComplete,
+    Form, FormItem, Button, Input, RadioGroup, Radio, iSwitch, Checkbox, CheckboxGroup, Slider, AutoComplete, DatePicker
   },
   computed: {
     range() {
@@ -171,11 +168,7 @@ export default {
         this.annex.items[index].name = `进度${(event.loaded / event.total) * 100}%`
       }).then((response) => {
         if (response.status) {
-          if (file.name.length > 5) {
-            this.annex.items[index].name = `${file.name.substr(0, 4)}..`
-          } else {
-            this.annex.items[index].name = file.name
-          }
+          this.annex.items[index].name = file.name
           this.annex.items[index].key = response.data.key
           this.$Message.success(response.msg || '上传文件成功!')
           console.log(this.annex.items)
