@@ -30,10 +30,11 @@
     }
 </style>
 <script>
-import throttle from 'lodash'
-import {mapMutations, mapState} from 'vuex'
-import vuex from 'vuex'
+// import throttle from 'lodash'
+import { mapMutations, mapState } from 'vuex'
 import Api from 'Api/user-api'
+import { Form, FormItem, Input, Button } from 'iview'
+
 export default {
   data() {
     return {
@@ -48,37 +49,42 @@ export default {
         ],
         password: [
           { required: true, message: '输入密码', trigger: 'blur' },
-          { type: 'string', min: 6, message: '密码不少于6位', trigger: 'blur' },
+          {
+            type: 'string', min: 6, message: '密码不少于6位', trigger: 'blur',
+          },
         ],
       },
     }
   },
   computed: {
     ...mapState({
-        user: 'user'
+      user: 'user',
     }),
+  },
+  components: {
+    Form, FormItem, Input, Button,
   },
   methods: {
     ...mapMutations({
-        setUser: 'setUser',
-        setAuthModal: 'setAuthModal',
+      setUser: 'setUser',
+      setAuthModal: 'setAuthModal',
     }),
-    handleSubmit(name){
-        this.$refs[name].validate((valid) => {
-            if (valid) {
-                Api.login(this.formInline.user,this.formInline.password).then(result=>{
-                    if(result.status){
-                        this.setUser(result.data.user)
-                        this.setAuthModal(false)
-                        this.$Message.success('登录成功!')
-                    }else{
-                        this.$Message.error(result.msg)
-                    }
-                })
+    handleSubmit(name) {
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          Api.login(this.formInline.user, this.formInline.password).then((result) => {
+            if (result.status) {
+              this.setUser(result.data.user)
+              this.setAuthModal(false)
+              this.$Message.success('登录成功!')
             } else {
-                this.$Message.error('请正确填写信息!')
+              this.$Message.error(result.msg)
             }
-        })
+          })
+        } else {
+          this.$Message.error('请正确填写信息!')
+        }
+      })
     },
   },
 }

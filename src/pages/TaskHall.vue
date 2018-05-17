@@ -109,6 +109,8 @@
 </style>
 <script>
 import Api from 'Api/publish-api'
+import { Scroll, Button, Card, Tag } from 'iview'
+
 export default{
   data() {
     return {
@@ -119,7 +121,7 @@ export default{
     }
   },
   created() {
-    Date.prototype.formatDate = function () {
+    Date.prototype.formatDate = function () {  // eslint-disable-line
       const y = this.getFullYear()
       const m = this.getMonth()
       const d = this.getDate()
@@ -127,8 +129,11 @@ export default{
     }
     this.queryData()
   },
+  components: {
+    Scroll, Button, Card, Tag,
+  },
   mounted() {
-    window.onresize = function () {
+    window.onresize = () => {
       this.height = document.body.clientHeight - 150
     }
   },
@@ -141,24 +146,24 @@ export default{
     getRandomColor() {
       return `#${(`00000${((Math.random() * 16777215 + 0.5)).toString(16)}`).slice(-6)}`
     },
-    queryData(){
-     Api.getTask(this.start,this.count).then(result=>{
-         if(!result.status){
-             this.$Message.error(result.msg)
-             return
-         }
-         this.tasks = result.data.tasks && result.data.tasks.map((item) => {
-             const result = item
-             result.period = `${Math.ceil(Math.abs((result.to_time - result.from_time)) / (1000 * 60 * 60 * 24))}天`
-             result.overdue = result.to_time < new Date().getTime()
-             result.from_time = new Date(result.from_time).formatDate()
-             result.to_time = new Date(result.to_time).formatDate()
-             result.type = result.labels.split(',')
-             result.annex = JSON.parse(result.annex)
-             return result
-         }) || []
-         console.log(this.tasks)
-     })
+    queryData() {
+      Api.getTask(this.start, this.count).then((response) => {
+        if (!response.status) {
+          this.$Message.error(response.msg)
+          return
+        }
+        this.tasks = response.data.tasks && response.data.tasks.map((item) => {
+          const result = item
+          result.period = `${Math.ceil(Math.abs((result.to_time - result.from_time)) / (1000 * 60 * 60 * 24))}天`
+          result.overdue = result.to_time < new Date().getTime()
+          result.from_time = new Date(result.from_time).formatDate()
+          result.to_time = new Date(result.to_time).formatDate()
+          result.type = result.labels.split(',')
+          result.annex = JSON.parse(result.annex)
+          return result
+        }) || []
+        console.log(this.tasks)
+      })
     },
   },
 }

@@ -114,6 +114,8 @@
 </style>
 <script>
 import Api from 'Api/file-api'
+import { Scroll, Menu, MenuItem, AutoComplete, Button } from 'iview'
+
 export default {
   data() {
     return {
@@ -122,35 +124,40 @@ export default {
       type: '',
     }
   },
-  created(){
+  created() {
     this.queryFiles()
   },
+  components: {
+    Scroll, Menu, MenuItem, AutoComplete, Button,
+  },
   methods: {
-    queryFiles(){
-          Api.queryFiles(this.type,this.query,0,10000).then(result=>{
-              if(result.status){
-                  if(!result.data.files){
-                      this.files = []
-                      return
-                  }
-                  this.files = result.data.files.map(file=>{
-                      const dateStr = file.created_at.slice(0,10)
-                      return {id:file.id,key:file.key,name:file.name,size:this.bytesToSize(file.size),timestamps:dateStr}
-                  })
-              }else{
-                  this.$Message.error(result.msg)
-              }
+    queryFiles() {
+      Api.queryFiles(this.type, this.query, 0, 10000).then((result) => {
+        if (result.status) {
+          if (!result.data.files) {
+            this.files = []
+            return
+          }
+          this.files = result.data.files.map((file) => {
+            const dateStr = file.created_at.slice(0, 10)
+            return {
+              id: file.id, key: file.key, name: file.name, size: this.bytesToSize(file.size), timestamps: dateStr,
+            }
           })
+        } else {
+          this.$Message.error(result.msg)
+        }
+      })
     },
-    change(){
+    change() {
       this.queryFiles()
     },
     bytesToSize(bytes) {
-        if (bytes === 0) return '0 B'
-        let k = 1024
-        let sizes = ['B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-        let i = Math.floor(Math.log(bytes) / Math.log(k))
-        return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i]
+      if (bytes === 0) return '0 B'
+      const k = 1024
+      const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+      const i = Math.floor(Math.log(bytes) / Math.log(k))
+      return `${(bytes / Math.pow(k, i)).toPrecision(3)} ${sizes[i]}`
     },
     handleReachBottom() {
       return new Promise((resolve) => {
@@ -163,11 +170,11 @@ export default {
         }, 2000)
       })
     },
-    upload({target}){
+    upload({ target }) {
       const file = target.files[0]
-      Api.uploadFile(file,event=>{
-          console.log(event)
-      }).then(response=>{
+      Api.uploadFile(file, (event) => {
+        console.log(event)
+      }).then((response) => {
         if (response.status) {
           this.$Message.success(response.msg || '上传文件成功!')
           this.queryFiles()
@@ -176,26 +183,24 @@ export default {
         }
       })
     },
-    delFile(file){
-        Api.deleteFile(file.id,file.key).then(response=>{
-            if (response.status) {
-                this.$Message.success(response.msg || '删除文件成功!')
-                this.files = this.files.filter(item=>{
-                    return item.id !== file.id
-                })
-            } else {
-                this.$Message.error(response.msg || '删除文件失败!')
-            }
-        })
-    },
-    changeType(type){
-        if(type === 'all'){
-            this.type = ''
-        }else {
-            this.type = type
+    delFile(file) {
+      Api.deleteFile(file.id, file.key).then((response) => {
+        if (response.status) {
+          this.$Message.success(response.msg || '删除文件成功!')
+          this.files = this.files.filter(item => item.id !== file.id)
+        } else {
+          this.$Message.error(response.msg || '删除文件失败!')
         }
+      })
+    },
+    changeType(type) {
+      if (type === 'all') {
+        this.type = ''
+      } else {
+        this.type = type
+      }
       this.queryFiles()
-    }
-  }
+    },
+  },
 }
 </script>

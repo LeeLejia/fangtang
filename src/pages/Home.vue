@@ -76,6 +76,8 @@
     }
 </style>
 <script scoped>
+import { Scroll, Tabs, TabPane, Carousel, CarouselItem, Card } from 'iview'
+
 export default{
   data() {
     return {
@@ -103,6 +105,9 @@ export default{
     window.onresize = function () {     // eslint-disable-line
       this.height = document.body.clientHeight - 150
     }
+  },
+  components: {
+    Scroll, Tabs, TabPane, Carousel, CarouselItem, Card,
   },
   created() {
     const mockData = []

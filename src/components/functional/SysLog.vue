@@ -9,7 +9,10 @@
     </div>
 </template>
 <script>
+import { Table, Page } from 'iview'
+
 export default {
+  components: { Table, Page },
   data() {
     return {
       tableData1: this.mockTableData1(),

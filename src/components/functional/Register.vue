@@ -74,80 +74,80 @@ h2{
 <script>
 import Api from 'Api/user-api'
 import throttle from 'lodash/throttle'
+import { Form, FormItem, Input, CheckboxGroup, AutoComplete, Checkbox, Button } from 'iview'
+
 export default {
-    data(){
-        return {
-            name: 'register',
-            loading: false,
-            formItem: {
-                nick: '',
-                roles: [],
-                phone: '',
-                email: '',
-                password: '',
-                passwordConfirm: '',
-            }
-        }
-    },
-    computed: {
-        autoEmail(){
-            if(this.formItem.email.indexOf('@')!==-1 || this.formItem.email==='')
-                return []
-            const emails = ['@qq.com','@gmail.com','@163.com','@yahoo.com','@ask.com','@live.com']
-            return emails.map(email=>{
-                return this.formItem.email.concat(email)
-            })
-        }
-    },
-    methods: {
-        handleSubmit: throttle(async function(){
-            if(this.loading)
-                return
-            if(!this.check())
-                return
-            this.loading = true
-            Api.register(this.formItem).then(response=>{
-                this.loading = false
-                if(response.status){
-                    this.$Message.success(response.msg || '注册成功!')
-                    this.$emit('changeModal','login')
-                }else {
-                    this.$Message.error(response.msg || '注册失败!请重试.')
-                }
-            })
-        },3000,{ leading: true, trailing: true }),
-        check(){
-            console.log(this.formItem)
-            if(this.formItem.nick.length>15 || this.formItem.nick.length<2){
-                this.$Message.error('昵称长度在2-15个字符!')
-                return false
-            }
-            if(!/^[\u4e00-\u9fa50-9a-zA-Z]+$/.test(this.formItem.nick)){
-                this.$Message.error('昵称不能包含特殊字符!')
-                return false
-            }
-            if(this.formItem.roles.length>2 || (this.formItem.roles.length==2 && this.formItem.roles.indexOf('admin')!==-1)){
-                this.$Message.error('管理员角色不能和其它角色一起设置')
-                return false
-            }
-            if(this.formItem.password!==this.formItem.passwordConfirm){
-                this.$Message.error('两次输入密码不一致,请重新校验密码')
-                return false
-            }
-            if(!/^1[3458]\d{9}$/.test(this.formItem.phone)){
-                this.$Message.error('手机号不合法')
-                return false
-            }
-            if(!/^[0-9a-zA-Z]+@[a-z]+\.(cn|com|co|net)$/.test(this.formItem.email)){
-                this.$Message.error('邮箱不合法')
-                return false
-            }
-            if(this.formItem.roles.length<1){
-                this.$Message.error('请选择角色')
-                return false
-            }
-            return true
-        }
+  data() {
+    return {
+      name: 'register',
+      loading: false,
+      formItem: {
+        nick: '',
+        roles: [],
+        phone: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+      },
     }
+  },
+  computed: {
+    autoEmail() {
+      if (this.formItem.email.indexOf('@') !== -1 || this.formItem.email === '') { return [] }
+      const emails = ['@qq.com', '@gmail.com', '@163.com', '@yahoo.com', '@ask.com', '@live.com']
+      return emails.map(email => this.formItem.email.concat(email))
+    },
+  },
+  components: {
+    Form, FormItem, Input, CheckboxGroup, AutoComplete, Checkbox, Button,
+  },
+  methods: {
+    handleSubmit: throttle(async () => {
+      if (this.loading) { return }
+      if (!this.check()) { return }
+      this.loading = true
+      Api.register(this.formItem).then((response) => {
+        this.loading = false
+        if (response.status) {
+          this.$Message.success(response.msg || '注册成功!')
+          this.$emit('changeModal', 'login')
+        } else {
+          this.$Message.error(response.msg || '注册失败!请重试.')
+        }
+      })
+    }, 3000, { leading: true, trailing: true }),
+    check() {
+      console.log(this.formItem)
+      if (this.formItem.nick.length > 15 || this.formItem.nick.length < 2) {
+        this.$Message.error('昵称长度在2-15个字符!')
+        return false
+      }
+      if (!/^[\u4e00-\u9fa50-9a-zA-Z]+$/.test(this.formItem.nick)) {
+        this.$Message.error('昵称不能包含特殊字符!')
+        return false
+      }
+      if (this.formItem.roles.length > 2 || (this.formItem.roles.length == 2 && this.formItem.roles.indexOf('admin') !== -1)) {
+        this.$Message.error('管理员角色不能和其它角色一起设置')
+        return false
+      }
+      if (this.formItem.password !== this.formItem.passwordConfirm) {
+        this.$Message.error('两次输入密码不一致,请重新校验密码')
+        return false
+      }
+      if (!/^1[3458]\d{9}$/.test(this.formItem.phone)) {
+        this.$Message.error('手机号不合法')
+        return false
+      }
+      if (!/^[0-9a-zA-Z]+@[a-z]+\.(cn|com|co|net)$/.test(this.formItem.email)) {
+        this.$Message.error('邮箱不合法')
+        return false
+      }
+      if (this.formItem.roles.length < 1) {
+        this.$Message.error('请选择角色')
+        return false
+      }
+      return true
+    },
+  },
 }
 </script>

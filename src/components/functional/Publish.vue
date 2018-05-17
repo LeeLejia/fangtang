@@ -24,10 +24,10 @@
                </CheckboxGroup>
            </FormItem>
            <FormItem label="交付源码">
-               <i-switch v-model="formItem.code" size="large">
+               <iSwitch v-model="formItem.code" size="large">
                    <span slot="open">Yes</span>
                    <span slot="close">No</span>
-               </i-switch>
+               </iSwitch>
            </FormItem>
            <FormItem label="价格区间">
                <RadioGroup v-model="formItem.unit">
@@ -98,6 +98,7 @@
 import throttle from 'lodash/throttle'  // eslint-disable-line
 import Api from 'Api/publish-api'
 import FileApi from 'Api/file-api'
+import { Form, FormItem, Button, Input, RadioGroup, Radio, Switch as iSwitch, Checkbox, CheckboxGroup, Slider, AutoComplete } from 'iview'
 
 export default {
   data() {
@@ -131,6 +132,9 @@ export default {
       },
     }
   },
+  components: {
+    Form, FormItem, Button, Input, RadioGroup, Radio, iSwitch, Checkbox, CheckboxGroup, Slider, AutoComplete,
+  },
   computed: {
     range() {
       return `${this.tipFormat(this.formItem.slider[0])} - ${this.tipFormat(this.formItem.slider[1])}`
@@ -150,45 +154,45 @@ export default {
     tipFormat(value) {
       return `${this.getYuan(value)}元`
     },
-    chooseFile(index){
-        this.annex.items[index].name = "上传中..."
-        this.$refs.upload.curIndex = index
-        this.$refs.upload.click()
+    chooseFile(index) {
+      this.annex.items[index].name = '上传中...'
+      this.$refs.upload.curIndex = index
+      this.$refs.upload.click()
     },
-     upload({target}){
-        if (this.$refs.upload.uploading){
-            this.$Message.error('请先等待当前文件上传完成!')
-            return
+    upload({ target }) {
+      if (this.$refs.upload.uploading) {
+        this.$Message.error('请先等待当前文件上传完成!')
+        return
+      }
+      const file = target.files[0]
+      const index = this.$refs.upload.curIndex
+      this.$refs.upload.uploading = true
+      FileApi.uploadFile(file, (event) => {
+        this.annex.items[index].name = `进度${(event.loaded / event.total) * 100}%`
+      }).then((response) => {
+        if (response.status) {
+          if (file.name.length > 5) {
+            this.annex.items[index].name = `${file.name.substr(0, 4)}..`
+          } else {
+            this.annex.items[index].name = file.name
+          }
+          this.annex.items[index].key = response.data.key
+          this.$Message.success(response.msg || '上传文件成功!')
+          console.log(this.annex.items)
+        } else {
+          this.$Message.error(response.msg || '上传文件失败!')
+          this.annex.items[index].name = '上传失败'
         }
-        const file = target.files[0]
-        const index = this.$refs.upload.curIndex
-        this.$refs.upload.uploading = true
-        FileApi.uploadFile(file,event=>{
-            this.annex.items[index].name = `进度${(event.loaded/event.total) * 100}%`
-        }).then(response=>{
-            if (response.status) {
-                if (file.name.length > 5){
-                    this.annex.items[index].name = file.name.substr(0,4) + '..'
-                }else {
-                    this.annex.items[index].name = file.name
-                }
-                this.annex.items[index].key = response.data.key
-                this.$Message.success(response.msg || '上传文件成功!')
-                console.log(this.annex.items)
-            } else {
-                this.$Message.error(response.msg || '上传文件失败!')
-                this.annex.items[index].name = '上传失败'
-            }
-            this.$refs.upload.uploading = false
-            this.$nextTick(()=>{this.$forceUpdate()})
-        })
+        this.$refs.upload.uploading = false
+        this.$nextTick(() => { this.$forceUpdate() })
+      })
     },
     getYuan(value) {
-      const unit = this.formItem.unit === 'yuan' ? 1 : (this.formItem.unit === 'bai' ? 100 : 1000)
-      return value * unit
+      if (this.formItem.unit === 'yuan') { return value * 1 } else if (this.formItem.unit === 'bai') { return value * 100 }
+      return value * 1000
     },
     handleAdd() {
-      this.index++
+      this.index += 1
       this.annex.items.push({
         value: '',
         index: this.index,
@@ -198,15 +202,15 @@ export default {
     handleRemove(index) {
       this.annex.items[index].status = false
     },
-    submit: throttle(async function () {
+    submit: throttle(async () => {
       if (!this.checkForm()) {
         return
       }
       const data = this.formItem
-        const annex = this.annex.items.filter(item=>item.status).map(item=>{return {
-            describe: item.value,
-            file: item.key,
-        }})
+      const annex = this.annex.items.filter(item => item.status).map(item => ({
+        describe: item.value,
+        file: item.key,
+      }))
       const pushData = {
         name: data.name,
         money_lower: this.getYuan(data.slider[0]),

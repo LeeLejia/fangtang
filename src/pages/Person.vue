@@ -37,6 +37,8 @@
     }
 </style>
 <script>
+import { Layout, Content, Breadcrumb, BreadcrumbItem, Sider, Submenu, Menu, MenuItem } from 'iview'
+
 export default {
   data() {
     return {
@@ -46,6 +48,9 @@ export default {
   },
   created() {
     this.setMenus()
+  },
+  components: {
+    Layout, Content, Breadcrumb, BreadcrumbItem, Sider, Submenu, Menu, MenuItem,
   },
   computed: {
     breadcrumb() {
@@ -80,7 +85,7 @@ export default {
           icon: 'ios-navigate',
           name: '消息中心',
           options: [
-            { name: '我的消息' },
+            { name: '我的消息', url: '/msgs' },
           ],
         },
         {

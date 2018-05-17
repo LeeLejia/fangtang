@@ -9,6 +9,7 @@ import Home from 'Pages/Home'
 import About from 'Pages/About'
 import Link from '@/components/functional/LinkTable'
 import FileManage from '@/components/functional/FileManage'
+import MsgManage from '@/components/functional/MsgManage'
 import SysLog from '@/components/functional/SysLog'
 
 const router = new Router({
@@ -57,6 +58,10 @@ const router = new Router({
             {
               path: '/person/setting',
               component: Settings,
+            },
+            {
+              path: '/person/msgs',
+              component: MsgManage,
             },
           ],
         },

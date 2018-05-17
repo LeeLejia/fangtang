@@ -47,6 +47,8 @@ import Login from '@/components/functional/Login'
 import Register from '@/components/functional/Register'
 import routerHook from '@/router/router-guard'
 import { mapState } from 'vuex'
+import { Layout, Header, Modal, MenuItem, Menu } from 'iview'
+
 export default {
   data() {
     return {
@@ -56,31 +58,33 @@ export default {
       imgUrl: '',
     }
   },
-  computed:{
+  computed: {
     ...mapState({
-        openAuthModal: 'openAuthModal',
+      openAuthModal: 'openAuthModal',
     }),
-    verification:{
-        get(){
-            return this.openAuthModal
-        },
-        set(newVal){
-            this.$store.commit('setAuthModal',newVal)
-        }
-    }
+    verification: {
+      get() {
+        return this.openAuthModal
+      },
+      set(newVal) {
+        this.$store.commit('setAuthModal', newVal)
+      },
+    },
   },
-  created(){
-      routerHook(this.$router,this.$store)
+  created() {
+    routerHook(this.$router, this.$store)
   },
-  components: {Login,Register},
+  components: {
+    Login, Register, Layout, Header, Modal, MenuItem, Menu,
+  },
   methods: {
-    changeModal(name){
-        this.modalName = name
-        if(name==='login'){
-            this.modal = Login
-        } else{
-            this.modal = Register
-        }
+    changeModal(name) {
+      this.modalName = name
+      if (name === 'login') {
+        this.modal = Login
+      } else {
+        this.modal = Register
+      }
     },
     openImg(url) {
       this.imgUrl = url
@@ -103,7 +107,7 @@ export default {
 <style scoped lang="less">
 .layout{
     border: 1px solid #d7dde4;
-    background: #f5f7f9;
+    background: #495060;
     position: relative;
     border-radius: 4px;
     overflow: hidden;

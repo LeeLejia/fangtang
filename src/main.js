@@ -3,57 +3,16 @@
 import directives from '@/directives'
 import vstore from '@/store/store'
 import Vuex from 'vuex'
-import {
-  Submenu, Layout, Header, Sider, MenuItem, Modal,
-  Icon, BreadcrumbItem, Message, Notice, Carousel, CarouselItem,
-  Form, FormItem, Input, CheckboxGroup, Checkbox, Spin, Tabs, TabPane,
-  Button, Row, Col, AutoComplete, Card, DatePicker, Scroll, Upload,
-  RadioGroup, Radio, Slider, Switch, Select, Breadcrumb, Menu,
-  Tag, Page, Table, Poptip,
-} from 'iview'
+import { Message, Notice, Row, Col, Icon } from 'iview'
 import 'iview/dist/styles/iview.css'
 import Vue from 'vue'
 import router from './router'
 import App from './App'
 
 Vue.config.productionTip = false
-Vue.component('MenuItem', MenuItem)
-Vue.component('Menu', Menu)
 Vue.component('Col', Col)
 Vue.component('Row', Row)
 Vue.component('Icon', Icon)
-Vue.component('Sider', Sider)
-Vue.component('Header', Header)
-Vue.component('Layout', Layout)
-Vue.component('Submenu', Submenu)
-Vue.component('FormItem', FormItem)
-Vue.component('Form', Form)
-Vue.component('Input', Input)
-Vue.component('Card', Card)
-Vue.component('Carousel', Carousel)
-Vue.component('Tag', Tag)
-Vue.component('Modal', Modal)
-Vue.component('Tabs', Tabs)
-Vue.component('TabPane', TabPane)
-Vue.component('CarouselItem', CarouselItem)
-Vue.component('AutoComplete', AutoComplete)
-Vue.component('Button', Button)
-Vue.component('CheckboxGroup', CheckboxGroup)
-Vue.component('Checkbox', Checkbox)
-Vue.component('BreadcrumbItem', BreadcrumbItem)
-Vue.component('DatePicker', DatePicker)
-Vue.component('RadioGroup', RadioGroup)
-Vue.component('Radio', Radio)
-Vue.component('Slider', Slider)
-Vue.component('Scroll', Scroll)
-Vue.component('Spin', Spin)
-Vue.component('i-switch', Switch)
-Vue.component('Select', Select)
-Vue.component('Breadcrumb', Breadcrumb)
-Vue.component('Upload', Upload)
-Vue.component('Page', Page)
-Vue.component('Table', Table)
-Vue.component('Poptip', Poptip)
 
 // 导入指令
 Object.keys(directives).forEach((directive) => {
