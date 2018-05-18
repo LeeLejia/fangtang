@@ -15,7 +15,7 @@
             </FormItem>
           </Form>
           <div class="edit-avatar">
-            <Avatar :src="'/static/file/'+userInfo.avatar" size="large" shape="square" icon="person" class="avatar"/>
+            <Avatar :src="'/file/'+userInfo.avatar" size="large" shape="square" icon="person" class="avatar"/>
             <Button :disabled="isLoading" @click.stop="handleAvatar">修改头像</Button>
             <input type="file" ref="fileUpload" style="display: none" @change="onAvatarUpload" />
           </div>
@@ -113,10 +113,10 @@ export default {
     ...mapState({
       settings: state => state.settings,
       userInfo: state => state.user,
-    })
+    }),
   },
-  mounted(){
-      console.log(this.userInfo)
+  mounted() {
+    console.log(this.userInfo)
   },
   methods: {
     handleAvatar() {
@@ -144,12 +144,12 @@ export default {
       this.isLoading = false
     },
     async handleLogout() {
-        const result = await userApi.logout()
-        if (result.status) {
-            this.$Message.success(result.msg || '注销成功')
-            return
-        }
-        this.$Message.error(result.msg || '注销失败')
+      const result = await userApi.logout()
+      if (result.status) {
+        this.$Message.success(result.msg || '注销成功')
+        return
+      }
+      this.$Message.error(result.msg || '注销失败')
     },
   },
   created() {
