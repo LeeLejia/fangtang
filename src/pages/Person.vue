@@ -22,19 +22,19 @@
     </Layout>
 </template>
 <style scoped>
-    .container{
-        width:100%;
-        height:100%;
-    }
-    .sider{
-        background: #fff;
-        min-height:calc(100% - 150px);
-    }
-    .content{
-        padding: 24px;
-        background: #fff;
-        /*min-height:calc(100% - 120px);*/
-    }
+  .container{
+      width:100%;
+      height:100%;
+  }
+  .sider{
+      background: #fff;
+      min-height:calc(100% - 150px);
+  }
+  .content{
+      padding: 24px;
+      background: #fff;
+      /*min-height:calc(100% - 120px);*/
+  }
 </style>
 <script>
 import { Layout, Content, Breadcrumb, BreadcrumbItem, Sider, Submenu, Menu, MenuItem } from 'iview'
