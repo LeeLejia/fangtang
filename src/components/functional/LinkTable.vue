@@ -11,6 +11,7 @@
 <script>
 import mockData from '@/assets/mock/mock_links.json'
 import { Table, Page, Tag, Poptip, Button } from 'iview'
+import Utils from 'Utils/utils'
 
 export default {
   data() {
@@ -121,7 +122,15 @@ export default {
       ])
     },
     urlRender(h, params) {
-      return h('div', [params.row.urlSuffix, h('Tag', { style: { 'margin-left': '5px' }, nativeOn: { click: () => { console.log('hi!') } } }, '复制')])
+      return h('div', [params.row.urlSuffix, h('Tag', {
+        style: { 'margin-left': '5px' },
+        nativeOn: {
+          click: () => {
+            Utils.CopyText('hellohello!!!!!!')
+            this.$Message.success('内容拷贝到剪贴板！')
+          },
+        },
+      }, '复制')])
     },
     disable(row) {
       alert(row)

@@ -16,9 +16,16 @@
                 </Col>
                 <Col span="12">
                     <Tabs class="tabs">
-                        <TabPane label="项目介绍" icon="ios-ionic-outline">这是项目介绍的内容</TabPane>
-                        <TabPane label="团队信息" icon="ios-personadd">标签二的内容</TabPane>
-                        <TabPane label="附件下载" icon="ios-cloud-download-outline">这里有全部下载链接</TabPane>
+                        <TabPane label="项目介绍" icon="ios-ionic-outline">
+
+                        </TabPane>
+                        <TabPane label="团队信息" icon="ios-personadd">
+
+                        </TabPane>
+                        <TabPane label="附件下载" icon="ios-cloud-download-outline">
+                            <Icon type="document-text"></Icon><a>测试.exe</a>
+                            <Icon type="document-text"></Icon><a>源码</a>
+                        </TabPane>
                     </Tabs>
                 </Col>
                 </Row>
@@ -76,7 +83,8 @@
     }
 </style>
 <script scoped>
-import { Scroll, Tabs, TabPane, Carousel, CarouselItem, Card } from 'iview'
+import { Scroll, Tabs, TabPane, Carousel, CarouselItem, Card, Spin } from 'iview'
+
 export default{
   data() {
     return {
@@ -106,7 +114,7 @@ export default{
     }
   },
   components: {
-    Scroll, Tabs, TabPane, Carousel, CarouselItem, Card,
+    Scroll, Tabs, TabPane, Carousel, CarouselItem, Card, Spin,
   },
   created() {
     const mockData = []
