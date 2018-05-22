@@ -3,8 +3,9 @@
         {
             "id": 1,
             "name": "哔哩哔哩",        
-            "urlSuffix": "/alibaba",
+            "urlSuffix": "/userid/bilibilbi",
             "status": "error",
+            "desc": "通过该链接可以返回好看的视频资源",
             "visited": 12,
             "content":{
                 "type": "file",
@@ -18,9 +19,10 @@
         },
         {
             "id": 2,
-            "name": "哔哩哔哩",        
-            "urlSuffix": "/alibaba",
+            "name": "给大牛的回调接口",
+            "urlSuffix": "/userid/daniu-data",
             "status": "normal",
+            "desc": "昨天给大牛做的一个App,临时数据就从这个接口返回",
             "visited": 12,
             "content":{
                 "type": "file",
@@ -33,9 +35,10 @@
             "created_time": "2018-01-2"
         }, {
             "id": 3,
-            "name": "哔哩哔哩",        
-            "urlSuffix": "/alibaba",
+            "name": "APP广告接口",
+            "urlSuffix": "/userid/ad-interface",
             "status": "disable",
+            "desc": "用来配置XXXapp的广告数据的",
             "visited": 12,
             "content":{
                 "type": "file",
@@ -48,9 +51,10 @@
             "created_time": "2018-01-2"
         }, {
             "id": 4,
-            "name": "哔哩哔哩",        
-            "urlSuffix": "/error",
+            "name": "测试接口",
+            "urlSuffix": "/userid/test",
             "status": "normal",
+            "desc": "这个接口是用来测试的,我在日志看到是否有人使用了该链接",
             "visited": 12,
             "content":{
                 "type": "file",
@@ -63,8 +67,9 @@
             "created_time": "2018-01-2"
         }, {
             "id": 5,
-            "name": "哔哩哔哩",        
-            "urlSuffix": "/alibaba",
+            "name": "跳转用的接口",
+            "urlSuffix": "/userid/forwarding",
+            "desc": "接口会跳转到第三方网站,我可以配置第三方指向",
             "status": "normal",
             "visited": 12,
             "content":{

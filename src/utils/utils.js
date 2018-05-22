@@ -8,11 +8,21 @@ function downloadFile(url, name = '') {
 }
 
 function CopyText(text) {
-  const elem = document.createElement('input')
-  elem.value = text
-  elem.select()
-  const result = document.execCommand('Copy')
-  // elem.remove()
+  const textarea = document.createElement('textarea')
+  textarea.style.position = 'fixed'
+  textarea.style.top = 0
+  textarea.style.left = 0
+  textarea.style.border = 'none'
+  textarea.style.outline = 'none'
+  textarea.style.resize = 'none'
+  textarea.style.background = 'transparent'
+  textarea.style.color = 'transparent'
+
+  textarea.value = text
+  document.body.appendChild(textarea)
+  textarea.select()
+  const result = document.execCommand('copy') ? 'successful' : 'unsuccessful'
+  document.body.removeChild(textarea)
   return result
 }
 

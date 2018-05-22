@@ -6,6 +6,9 @@
                 <Page :total="totalPage" :current="1" @on-change="changePage"></Page>
             </div>
         </div>
+        <Modal>
+            <!--todo show something when modify.-->
+        </Modal>
     </div>
 </template>
 <script>
@@ -29,6 +32,10 @@ export default {
       {
         title: '链接名称',
         key: 'name',
+      },
+      {
+        title: '描述',
+        key: 'desc',
       },
       {
         title: 'url',
@@ -122,11 +129,11 @@ export default {
       ])
     },
     urlRender(h, params) {
-      return h('div', [params.row.urlSuffix, h('Tag', {
+      return h('div',{style:{width: '200px'}}, [h('div',{style:{width:'100px',display:'inline-block'}},params.row.urlSuffix), h('Tag', {
         style: { 'margin-left': '5px' },
         nativeOn: {
           click: () => {
-            Utils.CopyText('hellohello!!!!!!')
+            Utils.CopyText(window.location.host+params.row.urlSuffix)
             this.$Message.success('内容拷贝到剪贴板！')
           },
         },

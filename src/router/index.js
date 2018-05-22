@@ -6,6 +6,7 @@ import Person from 'Pages/Person'
 import TaskHall from 'Pages/TaskHall'
 import Settings from 'Pages/Settings'
 import Home from 'Pages/Home'
+import NotFound from 'Pages/404'
 import About from 'Pages/About'
 import Link from '@/components/functional/LinkTable'
 import FileManage from '@/components/functional/FileManage'
@@ -64,6 +65,10 @@ const router = new Router({
               component: MsgManage,
             },
           ],
+        },
+        {
+          path: '*',
+          component: NotFound,
         },
       ],
     },
