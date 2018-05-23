@@ -21,7 +21,7 @@ function CopyText(text) {
   textarea.value = text
   document.body.appendChild(textarea)
   textarea.select()
-  const result = document.execCommand('copy') ? 'successful' : 'unsuccessful'
+  const result = document.execCommand('copy')
   document.body.removeChild(textarea)
   return result
 }

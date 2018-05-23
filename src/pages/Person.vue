@@ -64,7 +64,7 @@ export default {
     async setMenus() {
       this.menus = [
         {
-          icon: 'ios-navigate',
+          icon: 'android-apps',
           name: '应用列表',
           options: [
             //            { name: '应用列表' },
@@ -74,7 +74,7 @@ export default {
           ],
         },
         {
-          icon: 'ios-navigate',
+          icon: 'code-working',
           name: '任务中心',
           options: [
             { name: '发布任务', url: '/pushTask' },
@@ -82,14 +82,14 @@ export default {
           ],
         },
         {
-          icon: 'ios-navigate',
+          icon: 'speakerphone',
           name: '消息中心',
           options: [
             { name: '我的消息', url: '/msgs' },
           ],
         },
         {
-          icon: 'ios-navigate',
+          icon: 'information-circled',
           name: '个人信息',
           options: [
             { name: '账号信息', url: '/setting' },
