@@ -13,9 +13,9 @@
                         <Icon type="social-wordpress-outline"></Icon>
                         任务大厅
                     </MenuItem>
-                    <MenuItem name="about">
+                    <MenuItem name="apps">
                         <Icon type="social-twitch-outline"></Icon>
-                        关于
+                        应用中心
                     </MenuItem>
                     <MenuItem name="person">
                         <Icon type="person"></Icon>
@@ -95,8 +95,8 @@ export default {
         this.$router.push('/home')
       } else if (value === 'task') {
         this.$router.push('/taskHall')
-      } else if (value === 'about') {
-        this.$router.push('/about')
+      } else if (value === 'apps') {
+        this.$router.push('/apps')
       } else if (value === 'person') {
         this.$router.push('/person')
       }
@@ -129,7 +129,7 @@ export default {
     left: 20px;
 }
 .layout-nav{
-    width: 420px;
-    margin: 0 20px 0 auto;
+  width: 450px;
+  margin: 0 20px 0 auto;
 }
 </style>

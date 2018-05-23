@@ -5,10 +5,10 @@
         <div class="digtal">52</div>
     </Card>
      <Card class="card blue">
-        <div class="desc">当前任务</div>
+        <div class="desc">当前任务数</div>
         <div class="digtal">5</div>
     </Card>
-    <Card class="card green">
+    <Card class="card yellow">
         <div class="desc">稳定运行</div>
         <div class="digtal">89<sub>天</sub></div>
     </Card>
@@ -52,10 +52,10 @@ export default{
         background: #db6623;
     }
     .blue{
-        background: blue;
+        background: #3e5eb3;
     }
-    .green{
-        background: green;
+    .yellow{
+        background: #aa9e5c;
     }
 }
 </style>

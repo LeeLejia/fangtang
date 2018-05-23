@@ -4,10 +4,10 @@
         <p class="descript"><i>{{msg}}</i></p>
     </div>
 </template>
-<style>
+<style scoped>
     .container{
         text-align: center;
-        diplay: flex;
+        display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
@@ -24,12 +24,12 @@
     }
 </style>
 <script>
-    export default {
-        props: {
-            msg: {
-                defualt: 'Oop!你访问的链接不存在~',
-                type: String,
-            }
-        }
-    }
+export default {
+  props: {
+    msg: {
+      defualt: 'Oop!你访问的链接不存在~',
+      type: String,
+    },
+  },
+}
 </script>

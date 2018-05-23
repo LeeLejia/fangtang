@@ -72,7 +72,6 @@ export default {
           options: [
             { name: '链接列表', url: '/link' },
             { name: '文件管理', url: '/file' },
-            //            { name: '应用日志' },
           ],
         },
         {
