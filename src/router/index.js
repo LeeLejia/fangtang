@@ -4,10 +4,12 @@ import MainLayout from 'Pages/MainLayout'
 import Publish from 'Pages/Publish'
 import Person from 'Pages/Person'
 import TaskHall from 'Pages/TaskHall'
+import Condition from 'Pages/Condition'
 import Settings from 'Pages/Settings'
+import MyTask from 'Pages/MyTask'
 import Home from 'Pages/Home'
+import Apps from 'Pages/Apps'
 import NotFound from 'Pages/404'
-import About from 'Pages/About'
 import Link from '@/components/functional/LinkTable'
 import FileManage from '@/components/functional/FileManage'
 import MsgManage from '@/components/functional/MsgManage'
@@ -33,8 +35,8 @@ const router = new Router({
           component: TaskHall,
         },
         {
-          path: '/about',
-          component: About,
+          path: '/apps',
+          component: Apps,
         },
         {
           path: '/person',
@@ -43,6 +45,10 @@ const router = new Router({
             {
               path: '/person/pushTask',
               component: Publish,
+            },
+            {
+              path: '/person/myTask',
+              component: MyTask,
             },
             {
               path: '/person/link',
@@ -63,6 +69,9 @@ const router = new Router({
             {
               path: '/person/msgs',
               component: MsgManage,
+            }, {
+              path: '/',
+              component: Condition,
             },
           ],
         },
