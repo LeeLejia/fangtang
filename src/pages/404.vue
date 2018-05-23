@@ -4,7 +4,7 @@
         <p class="descript"><i>{{msg}}</i></p>
     </div>
 </template>
-<style>
+<style scoped>
     .container{
         text-align: center;
         diplay: flex;
