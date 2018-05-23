@@ -199,7 +199,7 @@ export default {
           this.paying = true
           setTimeout(()=>{
               this.paying = false
-              alert('应该弹个二维码出来的!!')
+              alert('应该弹个收钱二维码出来的!!')
           },2000)
       }
   },
