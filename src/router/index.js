@@ -4,7 +4,9 @@ import MainLayout from 'Pages/MainLayout'
 import Publish from 'Pages/Publish'
 import Person from 'Pages/Person'
 import TaskHall from 'Pages/TaskHall'
+import Condition from 'Pages/Condition'
 import Settings from 'Pages/Settings'
+import MyTask from 'Pages/MyTask'
 import Home from 'Pages/Home'
 import NotFound from 'Pages/404'
 import About from 'Pages/About'
@@ -45,6 +47,10 @@ const router = new Router({
               component: Publish,
             },
             {
+              path: '/person/myTask',
+              component: MyTask,
+            },
+            {
               path: '/person/link',
               component: Link,
             },
@@ -63,6 +69,9 @@ const router = new Router({
             {
               path: '/person/msgs',
               component: MsgManage,
+            }, {
+              path: '/',
+              component: Condition,
             },
           ],
         },

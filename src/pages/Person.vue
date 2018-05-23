@@ -48,6 +48,9 @@ export default {
   },
   created() {
     this.setMenus()
+    if (!this.selectedMenu) {
+      this.selectedMenu = window.location.pathname.substring(1)
+    }
   },
   components: {
     Layout, Content, Breadcrumb, BreadcrumbItem, Sider, Submenu, Menu, MenuItem,
@@ -67,7 +70,6 @@ export default {
           icon: 'android-apps',
           name: '应用列表',
           options: [
-            //            { name: '应用列表' },
             { name: '链接列表', url: '/link' },
             { name: '文件管理', url: '/file' },
             //            { name: '应用日志' },
@@ -78,7 +80,7 @@ export default {
           name: '任务中心',
           options: [
             { name: '发布任务', url: '/pushTask' },
-            { name: '我的任务' },
+            { name: '我的任务', url: '/myTask' },
           ],
         },
         {
