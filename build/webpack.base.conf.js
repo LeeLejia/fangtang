@@ -39,7 +39,8 @@ module.exports = {
       Pages: path.join(__dirname, '../src/pages'),
       Utils: path.join(__dirname, '../src/utils'),
       Api: path.join(__dirname, '../src/services'),
-      Model: path.join(__dirname, '../src/models')
+      Model: path.join(__dirname, '../src/models'),
+      // iview$: path.join(__dirname, '../node_modules/iview'),
     },
   },
   module: {
