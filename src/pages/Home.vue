@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <Carousel class="carousel" autoplay v-model="value2" loop>
+        <Carousel class="carousel" autoplay loop>
         <CarouselItem>
             <img style="height:300px;width:100%;" src="https://imgcache.qq.com/open_proj/proj_qcloud_v2/gateway/portal/css/img/5f1205cd1b5f25ca0f2df915cd6d798a.jpg">
         </CarouselItem>
@@ -34,6 +34,9 @@
                     </FormItem>
                     <FormItem label="商品数量" v-if="search">
                         <Input :number="true" v-model="count"></Input>
+                    </FormItem>
+                    <FormItem label="邮箱" v-if="search">
+                        <Input :number="true" v-model="email"></Input>
                     </FormItem>
                     <Button type="primary" v-if="search" :loading="paying" @click="kmPay">确定支付</Button>
                 </Form>
@@ -73,6 +76,7 @@
             padding:100px auto;
             display: flex;
             flex-direction: row;
+            justify-content: space-around;
             flex-wrap: wrap;
         }
         .server-item{
@@ -124,92 +128,98 @@
     }
 </style>
 <script>
-import { CarouselItem, Carousel, Card, Row, Form,FormItem,Cascader,AutoComplete, Input,Button } from 'iview'
+import { CarouselItem, Carousel, Card, Row, Form, FormItem, Cascader, AutoComplete, Input, Button } from 'iview'
 
 export default {
-  components: { CarouselItem, Carousel, Card, Row, Form, FormItem,Cascader,AutoComplete, Input,Button },
-  data(){
+  components: {
+    CarouselItem, Carousel, Card, Row, Form, FormItem, Cascader, AutoComplete, Input, Button,
+  },
+  data() {
     return {
-        kmClassification: [
+      kmClassification: [
+        {
+          value: 'bigData',
+          label: '大数据',
+          children: [
             {
-            value: 'bigData',
-            label: '大数据',
-            children: [
-                {
-                    value: 'traffic',
-                    label: '交通'
-                },
-                {
-                    value: 'shopping',
-                    label: '购物'
-                },
-                {
-                    value: 'social',
-                    label: '社交'
-                }
-            ]
+              value: 'traffic',
+              label: '交通',
+            },
+            {
+              value: 'shopping',
+              label: '购物',
+            },
+            {
+              value: 'social',
+              label: '社交',
+            },
+          ],
         }, {
-            value: 'data',
-            label: '学习资料',
-            children: [
+          value: 'data',
+          label: '学习资料',
+          children: [
+            {
+              value: 'doc',
+              label: '文档',
+              children: [
                 {
-                    value: 'doc',
-                    label: '文档',
-                    children: [
-                        {
-                            value: 'english',
-                            label: '英语四六级',
-                        },
-                        {
-                            value: 'code',
-                            label: '课程设计',
-                        },
-                    ]
+                  value: 'english',
+                  label: '英语四六级',
                 },
                 {
-                    value: 'Substitution',
-                    label: '视频课代课',
-                    children: [
-                        {
-                            value: 'erya',
-                            label: '尔雅',
-                        },
-                        {
-                            value: 'muke',
-                            label: '慕课',
-                        }
-                    ]
-                }
-            ],
+                  value: 'code',
+                  label: '课程设计',
+                },
+              ],
+            },
+            {
+              value: 'Substitution',
+              label: '视频课代课',
+              children: [
+                {
+                  value: 'erya',
+                  label: '尔雅',
+                },
+                {
+                  value: 'muke',
+                  label: '慕课',
+                },
+              ],
+            },
+          ],
         }],
-        kmData:'',
-        search: '',
-        filterItems: [
-            '天线宝宝',
-            '野猪佩奇',
-            '十万个为什么'
-        ],
-        price: 100,
-        count: 1,
-        paying: false,
+      kmData: [],
+      search: '',
+      filterItems: [
+        '天线宝宝',
+        '野猪佩奇',
+        '十万个为什么',
+      ],
+      price: 100,
+      count: 1,
+      email: '',
+      paying: false,
     }
   },
-  methods:{
-      kmPay(){
-          this.paying = true
-          setTimeout(()=>{
-              this.paying = false
-              alert('应该弹个收钱二维码出来的!!')
-          },2000)
-      }
+  created() {
+    this.email = this.$store.state.user.email || ''
   },
-  computed:{
-      total(){
-          if(this.count<=1){
-              return `${this.price}元`
-          }
-          return `一共${this.price * this.count}元,单价:${this.price}`
+  methods: {
+    kmPay() {
+      this.paying = true
+      setTimeout(() => {
+        this.paying = false
+        alert('应该弹个收钱二维码出来的!!')
+      }, 2000)
+    },
+  },
+  computed: {
+    total() {
+      if (this.count <= 1) {
+        return `${this.price}元`
       }
-  }
+      return `一共${this.price * this.count}元,单价:${this.price}`
+    },
+  },
 }
 </script>
