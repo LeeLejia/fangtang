@@ -15,7 +15,7 @@
                     </MenuItem>
                     <MenuItem name="apps">
                         <Icon type="social-twitch-outline"></Icon>
-                        应用中心
+                        案例
                     </MenuItem>
                     <MenuItem name="person">
                         <Icon type="person"></Icon>

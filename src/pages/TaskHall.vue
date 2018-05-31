@@ -2,6 +2,9 @@
     <div class="container">
         <Scroll class="scroll" :on-reach-bottom="handleReachBottom" :height="height">
             <h1 class="title">任务大厅</h1>
+            <div>
+
+            </div>
             <Card style="width:80%;margin-left: auto;margin-right:auto; margin-bottom:20px;" v-for="task in tasks" :key = 'task.id'>
                 <p slot="title">
                     <Icon type="social-wordpress-outline"></Icon>

@@ -16,7 +16,7 @@
         <div class="server-item">
             <div class="server-item-title sky-blue">
                 <img class="server-item-icon" src="../../src/assets/icons/fk.svg">
-                <p class="server-item-name">自动发卡</p>
+                <p class="server-item-name">自助服务</p>
             </div>
             <div class="server-item-contain">
                 <Form label-position="left" :label-width="100">
@@ -128,11 +128,15 @@
     }
 </style>
 <script>
-import { CarouselItem, Carousel, Card, Row, Form, FormItem, Cascader, AutoComplete, Input, Button } from 'iview'
+import Api from 'Api/pay-api'
+import { CarouselItem, Carousel, Card, Row, Form, FormItem, Cascader, AutoComplete, Input, Button,
+    Select, Option,
+} from 'iview'
 
 export default {
   components: {
     CarouselItem, Carousel, Card, Row, Form, FormItem, Cascader, AutoComplete, Input, Button,
+      Select, Option,
   },
   data() {
     return {
@@ -199,6 +203,33 @@ export default {
       count: 1,
       email: '',
       paying: false,
+        cityList: [
+            {
+                value: 'New York',
+                label: 'New York'
+            },
+            {
+                value: '中国',
+                label: '中国'
+            },
+            {
+                value: 'Sydney',
+                label: 'Sydney'
+            },
+            {
+                value: 'Ottawa',
+                label: 'Ottawa'
+            },
+            {
+                value: 'Paris',
+                label: 'Paris'
+            },
+            {
+                value: 'Canberra',
+                label: 'Canberra'
+            }
+        ],
+        model1: 'New York',
     }
   },
   created() {
@@ -209,9 +240,14 @@ export default {
       this.paying = true
       setTimeout(() => {
         this.paying = false
-        alert('应该弹个收钱二维码出来的!!')
+        alert('跳转到支付页面')
       }, 2000)
+
+      Api.aliPay(12354568,"会员一个月",0.01,"returnback")
     },
+    changeSelect (value) {
+        this.$Message.success(value)
+    }
   },
   computed: {
     total() {

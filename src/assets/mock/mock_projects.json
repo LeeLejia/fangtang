@@ -7,22 +7,22 @@
         "media": [
             {
                 "url": "https://www.cjwddz.cn/static/image/agv_chart.png",
-                "desc": "你说这里要说什么好呢！！",
+                "desc": "描述文本.test",
                 "type": "picture"
             },
             {
                 "url": "https://www.cjwddz.cn/static/image/agv_chart0.png",
-                "desc": "你说这里要说什么好呢！！",
+                "desc": "描述文本.test",
                 "type": "picture"
             },
             {
                 "url": "https://www.cjwddz.cn/static/image/agv_log.png",
-                "desc": "你说这里要说什么好呢！！",
+                "desc": "描述文本.test",
                 "type": "picture"
             },
             {
                 "url": "https://www.cjwddz.cn/static/image/agv_math.jpg",
-                "desc": "你说这里要说什么好呢！！",
+                "desc": "描述文本.test",
                 "type": "picture"
             }
         ],
@@ -42,7 +42,7 @@
         ],
         "state": {
             "projectName": "基于视觉导航的AGV调度系统",
-            "desc": "这是一个特别特别实用的AGV调度系统<div>A.调度精度高</div><div>B.响应速度快</div>买到就是挣到！"
+            "desc": "特别实用的AGV调度系统<div>A.调度精度高</div><div>B.响应速度快</div>"
         }
     },
     {
@@ -53,22 +53,22 @@
         "media": [
             {
                 "url": "https://www.cjwddz.cn/static/image/agv_chart.png",
-                "desc": "你你说这里要说什么好呢！！说这里要说什么好呢！！",
+                "desc": "这是一个特别特别实用的AGV调度系统<div>A.调度精度高</div><div>B.响应速度快</div>",
                 "type": "picture"
             },
             {
                 "url": "https://www.cjwddz.cn/static/image/agv_chart0.png",
-                "desc": "你说这里要说什么好呢！！",
+                "desc": "描述文本.test",
                 "type": "picture"
             },
             {
                 "url": "https://www.cjwddz.cn/static/image/agv_log.png",
-                "desc": "你说这里要说什么好呢！！",
+                "desc": "描述文本.test",
                 "type": "picture"
             },
             {
                 "url": "https://www.cjwddz.cn/static/image/agv_math.jpg",
-                "desc": "你说这里要说什么好呢！！",
+                "desc": "描述文本.test",
                 "type": "picture"
             }
         ],
@@ -91,7 +91,7 @@
         ],
         "state": {
             "projectName": "基于视觉导航的AGV调度系统",
-            "desc": "这是一个特别特别实用的AGV调度系统<div>A.调度精度高</div><div>B.响应速度快</div>买到就是挣到！"
+            "desc": "特别实用的AGV调度系统<div>A.调度精度高</div><div>B.响应速度快</div>"
         }
     }
 ]
