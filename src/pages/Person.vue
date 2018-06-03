@@ -78,7 +78,7 @@ export default {
           name: '任务中心',
           options: [
             { name: '发布任务', url: '/pushTask' },
-            { name: '我的任务' },
+            { name: '我的任务',url:'/myTask' },
           ],
         },
         {

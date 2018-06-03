@@ -11,6 +11,7 @@ import Link from '@/components/functional/LinkTable'
 import FileManage from '@/components/functional/FileManage'
 import MsgManage from '@/components/functional/MsgManage'
 import SysLog from '@/components/functional/SysLog'
+import MyTask from '@/components/functional/MyTask'
 
 const router = new Router({
   mode: 'history',
@@ -42,6 +43,10 @@ const router = new Router({
             {
               path: '/person/pushTask',
               component: Publish,
+            },
+            {
+              path: '/person/myTask',
+              component: MyTask,
             },
             {
               path: '/person/link',
