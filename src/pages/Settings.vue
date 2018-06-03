@@ -140,22 +140,17 @@ export default {
             update_at:this.userInfo.update_at,
         }
         user.avatar = result.data.key
-        console.log(this.userInfo)
         this.$store.commit('setUser',user)
-        console.log(this.userInfo)
         return
       }
       this.$Message.error(setResult.msg || '头像设置失败')
       this.isLoading = false
     },
     async handleLogout() {
+      this.$store.commit('setUser',null)
       const result = await userApi.logout()
-      if (result.status) {
-        this.$Message.success(result.msg || '注销成功')
-        this.$router.push('/')
-        return
-      }
-      this.$Message.error(result.msg || '注销失败')
+      this.$Message.success(result.msg || '注销成功')
+      this.$router.push('/')
     },
     handleCacheClear(confirm){
         if(!confirm){
