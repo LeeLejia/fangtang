@@ -33,14 +33,14 @@ function GetAlipaylink(outTradeNo, name, money, returnUrl) {
     { key: 'pid', value: 7266 },
     { key: 'type', value: 'alipay' },
     { key: 'out_trade_no', value: outTradeNo },
-    { key: 'notify_url', value: 'notify_url' },
+    { key: 'notify_url', value: 'notifyurl' },
     { key: 'return_url', value: returnUrl },
     { key: 'name', value: name },
     { key: 'money', value: money },
-    { key: 'sitename', value: '小水管' },
+    { key: 'sitename', value: 'sitename' },
   ].sort((a, b) => (a.key > b.key ? 1 : -1))
   const sortParams = `${params.map(item => `${item.key}=${item.value}`).join('&')}`
-  return `http://pay.sddyun.cn/submit.php?${sortParams}&sign_type=MD5&sign=${md5(params)}`
+  console.log(sortParams)
+  return `http://pay.sddyun.cn/submit.php?${sortParams}&sign_type=MD5&sign=${md5(`${sortParams}zL4auJ22gU441U4OJUX22fX2XXGMGmjF`)}`
 }
-
 export default { DownloadFile, CopyText, GetAlipaylink }

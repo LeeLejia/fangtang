@@ -242,8 +242,7 @@ export default {
         this.paying = false
         alert('跳转到支付页面')
       }, 2000)
-
-      Api.aliPay(12354568,"会员一个月",0.01,"returnback")
+      Api.aliPay(1001)
     },
     changeSelect (value) {
         this.$Message.success(value)
