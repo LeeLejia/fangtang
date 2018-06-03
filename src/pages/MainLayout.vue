@@ -47,7 +47,7 @@ import Login from '@/components/functional/Login'
 import Register from '@/components/functional/Register'
 import routerHook from '@/router/router-guard'
 import { mapState } from 'vuex'
-import { Layout, Header, Modal, MenuItem, Menu } from 'iview'
+import { Layout, Header, MenuItem, Menu } from 'iview'
 
 export default {
   data() {
@@ -75,7 +75,7 @@ export default {
     routerHook(this.$router, this.$store)
   },
   components: {
-    Login, Register, Layout, Header, Modal, MenuItem, Menu,
+    Login, Register, Layout, Header, MenuItem, Menu,
   },
   methods: {
     changeModal(name) {

@@ -19,27 +19,7 @@
                 <p class="server-item-name">自助服务</p>
             </div>
             <div class="server-item-contain">
-                <Form label-position="left" :label-width="100">
-                    <FormItem label="选择分类">
-                        <Cascader :data="kmClassification" v-model="kmData"></Cascader>
-                    </FormItem>
-                    <FormItem label="选择商品">
-                        <AutoComplete
-                                v-model="search"
-                                :data="filterItems"
-                                placeholder="搜索商品"></AutoComplete>
-                    </FormItem>
-                    <FormItem label="商品价格" v-if="search">
-                        <Input :readonly="true" :value="total"></Input>
-                    </FormItem>
-                    <FormItem label="商品数量" v-if="search">
-                        <Input :number="true" v-model="count"></Input>
-                    </FormItem>
-                    <FormItem label="邮箱" v-if="search">
-                        <Input :number="true" v-model="email"></Input>
-                    </FormItem>
-                    <Button type="primary" v-if="search" :loading="paying" @click="kmPay">确定支付</Button>
-                </Form>
+                <VendingMachine></VendingMachine>
             </div>
         </div>
         <!--证件照风格转化-->
@@ -128,133 +108,11 @@
     }
 </style>
 <script>
-import Api from 'Api/pay-api'
-import { CarouselItem, Carousel, Card, Row, Form, FormItem, Cascader, AutoComplete, Input, Button,
-    Select, Option,
-} from 'iview'
-
+import VendingMachine from '@/components/functional/VendingMachine'
+import { CarouselItem, Carousel} from 'iview'
 export default {
   components: {
-    CarouselItem, Carousel, Card, Row, Form, FormItem, Cascader, AutoComplete, Input, Button,
-      Select, Option,
-  },
-  data() {
-    return {
-      kmClassification: [
-        {
-          value: 'bigData',
-          label: '大数据',
-          children: [
-            {
-              value: 'traffic',
-              label: '交通',
-            },
-            {
-              value: 'shopping',
-              label: '购物',
-            },
-            {
-              value: 'social',
-              label: '社交',
-            },
-          ],
-        }, {
-          value: 'data',
-          label: '学习资料',
-          children: [
-            {
-              value: 'doc',
-              label: '文档',
-              children: [
-                {
-                  value: 'english',
-                  label: '英语四六级',
-                },
-                {
-                  value: 'code',
-                  label: '课程设计',
-                },
-              ],
-            },
-            {
-              value: 'Substitution',
-              label: '视频课代课',
-              children: [
-                {
-                  value: 'erya',
-                  label: '尔雅',
-                },
-                {
-                  value: 'muke',
-                  label: '慕课',
-                },
-              ],
-            },
-          ],
-        }],
-      kmData: [],
-      search: '',
-      filterItems: [
-        '天线宝宝',
-        '野猪佩奇',
-        '十万个为什么',
-      ],
-      price: 100,
-      count: 1,
-      email: '',
-      paying: false,
-        cityList: [
-            {
-                value: 'New York',
-                label: 'New York'
-            },
-            {
-                value: '中国',
-                label: '中国'
-            },
-            {
-                value: 'Sydney',
-                label: 'Sydney'
-            },
-            {
-                value: 'Ottawa',
-                label: 'Ottawa'
-            },
-            {
-                value: 'Paris',
-                label: 'Paris'
-            },
-            {
-                value: 'Canberra',
-                label: 'Canberra'
-            }
-        ],
-        model1: 'New York',
-    }
-  },
-  created() {
-    this.email = this.$store.state.user.email || ''
-  },
-  methods: {
-    kmPay() {
-      this.paying = true
-      setTimeout(() => {
-        this.paying = false
-        alert('跳转到支付页面')
-      }, 2000)
-      Api.aliPay(1001)
-    },
-    changeSelect (value) {
-        this.$Message.success(value)
-    }
-  },
-  computed: {
-    total() {
-      if (this.count <= 1) {
-        return `${this.price}元`
-      }
-      return `一共${this.price * this.count}元,单价:${this.price}`
-    },
-  },
+    CarouselItem, Carousel,VendingMachine
+  }
 }
 </script>

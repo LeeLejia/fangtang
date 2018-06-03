@@ -13,6 +13,7 @@ Vue.config.productionTip = false
 Vue.component('Col', Col)
 Vue.component('Row', Row)
 Vue.component('Icon', Icon)
+Vue.component('Modal', Modal)
 
 // 导入指令
 Object.keys(directives).forEach((directive) => {
