@@ -10,6 +10,7 @@ import MyTask from 'Pages/MyTask'
 import Home from 'Pages/Home'
 import Apps from 'Pages/Apps'
 import NotFound from 'Pages/404'
+import OrderList from 'Pages/OrderList'
 import Link from '@/components/functional/LinkTable'
 import FileManage from '@/components/functional/FileManage'
 import MsgManage from '@/components/functional/MsgManage'
@@ -49,6 +50,10 @@ const router = new Router({
             {
               path: '/person/myTask',
               component: MyTask,
+            },
+            {
+              path: '/person/orderList',
+              component: OrderList,
             },
             {
               path: '/person/link',

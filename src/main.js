@@ -3,7 +3,7 @@
 import directives from '@/directives'
 import vstore from '@/store/store'
 import Vuex from 'vuex'
-import { Message, Notice, Row, Col, Icon } from 'iview'
+import { Message, Notice, Row, Col, Icon, Modal } from 'iview'
 import '@/../node_modules/iview/dist/styles/iview.css'
 import Vue from 'vue'
 import router from './router'
@@ -27,6 +27,7 @@ const store = new Vuex.Store({
 
 Vue.prototype.$Notice = Notice
 Vue.prototype.$Message = Message
+Vue.prototype.$Modal = Modal
 
 /* eslint-disable no-new */
 new Vue({

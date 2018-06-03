@@ -80,6 +80,7 @@ export default {
           options: [
             { name: '发布任务', url: '/pushTask' },
             { name: '我的任务', url: '/myTask' },
+              {name:'订单列表',url:'/orderList'},
           ],
         },
         {
