@@ -15,6 +15,7 @@ import Link from '@/components/functional/LinkTable'
 import FileManage from '@/components/functional/FileManage'
 import MsgManage from '@/components/functional/MsgManage'
 import SysLog from '@/components/functional/SysLog'
+import GoodsManage from 'Pages/GoodsManage'
 
 const router = new Router({
   mode: 'history',
@@ -70,6 +71,10 @@ const router = new Router({
             {
               path: '/person/setting',
               component: Settings,
+            },
+            {
+              path: '/person/goodsList',
+              component: GoodsManage,
             },
             {
               path: '/person/msgs',
