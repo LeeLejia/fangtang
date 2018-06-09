@@ -15,6 +15,11 @@ const getters = {
 
 const mutations = {
   setUser(state, user) {
+    if (user === null) {
+      state.hasVerify = false
+      user = {}
+      return
+    }
     state.user = user
     state.hasVerify = true
   },

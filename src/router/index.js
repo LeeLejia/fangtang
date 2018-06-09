@@ -10,10 +10,12 @@ import MyTask from 'Pages/MyTask'
 import Home from 'Pages/Home'
 import Apps from 'Pages/Apps'
 import NotFound from 'Pages/404'
+import OrderList from 'Pages/OrderList'
 import Link from '@/components/functional/LinkTable'
 import FileManage from '@/components/functional/FileManage'
 import MsgManage from '@/components/functional/MsgManage'
 import SysLog from '@/components/functional/SysLog'
+import GoodsManage from 'Pages/GoodsManage'
 
 const router = new Router({
   mode: 'history',
@@ -51,6 +53,10 @@ const router = new Router({
               component: MyTask,
             },
             {
+              path: '/person/orderList',
+              component: OrderList,
+            },
+            {
               path: '/person/link',
               component: Link,
             },
@@ -65,6 +71,10 @@ const router = new Router({
             {
               path: '/person/setting',
               component: Settings,
+            },
+            {
+              path: '/person/goodsList',
+              component: GoodsManage,
             },
             {
               path: '/person/msgs',
