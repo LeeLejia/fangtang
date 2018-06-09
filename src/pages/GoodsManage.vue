@@ -12,7 +12,7 @@
             </Dropdown>
             <Input v-model="searchText" :placeholder="condition.desc" @keyup.native.enter="search" style="width: 200px"></Input>
             <Button type="primary" @click="search" :loading = "loading">搜索</Button>
-            <Button type="ghost" size="large" @click="addGood">添加商品</Button>
+            <Button type="ghost" size="large" @click="addGood = true">添加商品</Button>
         </div>
         <Table border :columns="columns" :data="data"></Table>
         <Page :total="total"
@@ -21,16 +21,50 @@
               @on-change="changePage"
               @on-page-size-change="changePageSize"
               show-sizer style="margin: 20px 0"></Page>
+        <Modal
+                v-model="addGood"
+                title="添加商品"
+                @on-ok="ok"
+                @on-cancel="cancel">
+            <Form :model="formItem" :label-width="80">
+                <FormItem label="渠道">
+                    <Input v-model="formItem.channel"></Input>
+                </FormItem>
+                <FormItem label="商品名称">
+                    <Input v-model="formItem.name"></Input>
+                </FormItem>
+                <FormItem label="价格">
+                    <Input v-model="formItem.price"></Input>
+                </FormItem>
+                <FormItem label="状态">
+                    <Select v-model="formItem.state">
+                        <Option value="dropOff">下架</Option>
+                        <Option value="normal">正常</Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="数量">
+                    <Input v-model="formItem.count"></Input>
+                </FormItem>
+            </Form>
+        </Modal>
     </div>
 </template>
 
 <script>
     import Api from 'Api/pay-api'
-    import { Table, Page, Tag, Poptip, Button ,DropdownMenu,DropdownItem,Dropdown,Input} from 'iview'
+    import { Table, Page, Tag, Poptip, Button ,DropdownMenu,DropdownItem,Dropdown,Input,FormItem,Select,Form,Option} from 'iview'
     export default {
         name: "order-list",
         data(){
             return{
+                formItem: {
+                    channel: '',    //渠道
+                    name:'',        //商品名称
+                    price:'',       //价格
+                    state:'',       //状态
+                    count:'',       //数量
+                },
+                addGood:false,      //show add good modal
                 loading: false,
                 condition:{name:'商品名称',value:'name',desc:'搜索商品'},
                 conditions:[
@@ -95,7 +129,7 @@
             }
         },
         components: {
-            Table, Page, Tag, Poptip, Button,DropdownMenu,DropdownItem,Dropdown,Input
+            Table, Page, Tag, Poptip, Button,DropdownMenu,DropdownItem,Dropdown,Input,FormItem,Select,Form,Option
         },
         created(){
             this.current = 1
@@ -159,12 +193,18 @@
                 this.pageSize = size
                 this.query()
             },
-            addGood(){
-                this.$Modal.info({
-                    title: '订单状况',
-                    content: `以后再说.`
-                })
+            ok () {
+                if(!this.formItem.channel || !this.formItem.name || !this.formItem.price || !this.formItem.count || !this.formItem.state){
+                    this.$Modal.warning({
+                        title:'提示',
+                        content: '请将信息填写完整!',
+                    });
+                }
+            },
+            cancel () {
+
             }
+
         },
     }
 </script>

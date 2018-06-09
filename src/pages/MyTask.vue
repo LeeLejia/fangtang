@@ -1,8 +1,8 @@
 <template>
     <Row>
         <Col span="11" style="margin: 20px;width: 250px" v-for="item in myTask" :key="item.key">
-        <Card @click.native="item.url" @click="clickMyTaskItem(item.url)">
-            <p slot="title" style="text-align: center;cursor: pointer" @click="clickMyTaskItem(item.url)">{{item.name}}</p>
+        <Card  @click.native="clickMyTaskItem(item.url)">
+            <p slot="title" style="text-align: center;cursor: pointer" >{{item.name}}</p>
             <img :src="item.src" style="width: 208px">
         </Card>
         </Col>
