@@ -42,7 +42,7 @@ class AxiosService {
     if (!params) { return axios.get(url, configs).then(AxiosService.thenEvent).catch(AxiosService.catchEvent) }
     let requestStr
     if (typeof params === 'string') {
-      requestStr = `${url}?${encodeURIComponent(params)}`
+      requestStr = `${url}?${params}`
     } else if (typeof params === 'object') {
       const paramsKV = []
       for (const key of Object.keys(params)) {

@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="msg-actions">
-                <Button type="primary">删除</Button>
+                <Button type="primary" @click="deleteMsg">删除</Button>
             </div>
         </div>
          <div style="margin: 10px;overflow: hidden">
@@ -72,6 +72,11 @@ export default {
   computed: {
     totalPage() {
       return Math.ceil(this.total / this.per)
+    },
+  },
+  methods: {
+    deleteMsg(event) {
+      event.target.parent.parent.remove()
     },
   },
 }

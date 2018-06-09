@@ -6,11 +6,15 @@
                 <Page :total="totalPage" :current="1" @on-change="changePage"></Page>
             </div>
         </div>
+        <Modal>
+            <!--todo show something when modify.-->
+        </Modal>
     </div>
 </template>
 <script>
 import mockData from '@/assets/mock/mock_links.json'
 import { Table, Page, Tag, Poptip, Button } from 'iview'
+import Utils from 'Utils/utils'
 
 export default {
   data() {
@@ -28,6 +32,10 @@ export default {
       {
         title: '链接名称',
         key: 'name',
+      },
+      {
+        title: '描述',
+        key: 'desc',
       },
       {
         title: 'url',
@@ -121,7 +129,15 @@ export default {
       ])
     },
     urlRender(h, params) {
-      return h('div', [params.row.urlSuffix, h('Tag', { style: { 'margin-left': '5px' }, nativeOn: { click: () => { console.log('hi!') } } }, '复制')])
+      return h('div',{style:{width: '200px'}}, [h('div',{style:{width:'100px',display:'inline-block'}},params.row.urlSuffix), h('Tag', {
+        style: { 'margin-left': '5px' },
+        nativeOn: {
+          click: () => {
+            Utils.CopyText(window.location.host+params.row.urlSuffix)
+            this.$Message.success('内容拷贝到剪贴板！')
+          },
+        },
+      }, '复制')])
     },
     disable(row) {
       alert(row)

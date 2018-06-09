@@ -26,25 +26,25 @@
         <div class="setting-item switches">
           <div class="switch">
             <label>邮件通知</label>
-            <i-switch v-model="dontNotice"></i-switch>
+            <i-switch v-model="emailNotice"></i-switch>
           </div>
           <div class="switch">
             <label>微信通知</label>
-            <i-switch v-model="mute"></i-switch>
+            <i-switch v-model="wxNotice"></i-switch>
           </div>
         </div>
       </div>
       <div class="setting">
         <div class="setting-title">修改密码</div>
         <div class="setting-item">
-          <Form :model="password" label-position="left" :label-width="80" :rules="ruleCustom" @submit.native.prevent>
+          <Form :model="password" label-position="left" :label-width="80" @submit.native.prevent>
             <FormItem label="原密码">
               <Input type="password" v-model="password.oldPassword" style="width: 170px" />
             </FormItem>
             <FormItem label="新密码">
               <Input type="password" v-model="password.newPassword1" style="max-width: 170px" />
             </FormItem>
-            <FormItem label="再次确认" prop="newPassword2">
+            <FormItem label="再次确认">
               <Input type="password" v-model="password.newPassword2" style="max-width: 170px" />
             </FormItem>
           </Form>
@@ -55,6 +55,12 @@
         <div class="setting-item more">
           <Button type="ghost" v-if="clearCacheConfirm" @click.stop="clearCacheConfirm = false">取消</Button>
           <Button :type="clearCacheConfirm ? 'error' : 'ghost'" @click.stop="handleCacheClear(clearCacheConfirm)">{{ clearCacheConfirm ? '确认清除缓存' : '清除缓存' }}</Button>
+        </div>
+      </div>
+      <div class="setting">
+
+        <div class="setting-item">
+        <Button class="logout" type='error' @click.stop="handleLogout">注销登录</Button>
         </div>
       </div>
     </div>
@@ -71,15 +77,6 @@ export default {
   components: {
     Button, Form, FormItem, Input, 'i-switch': Switch, Avatar,
   },
-  props: {
-    meta: {
-      type: Object,
-      required: false,
-      default() {
-        return {}
-      },
-    },
-  },
   data() {
     const validatePassCheck = (rule, value, callback) => {
       if (value === '') {
@@ -93,14 +90,9 @@ export default {
       }
     }
     return {
-      ruleCustom: {
-        newPassword2: [{
-          validator: validatePassCheck, trigger: 'blur',
-        }],
-      },
       isLoading: false,
-      dontNotice: false,
-      mute: false,
+      emailNotice: false,
+      wxNotice: false,
       password: {
         oldPassword: '',
         newPassword1: '',
@@ -116,13 +108,11 @@ export default {
     }),
   },
   mounted() {
-    console.log(this.userInfo)
+
   },
   methods: {
     handleAvatar() {
       this.$refs.fileUpload.click()
-    },
-    handleSettings() {
     },
     async onAvatarUpload(event) {
       this.isLoading = true
@@ -138,6 +128,21 @@ export default {
       if (setResult.status) {
         this.$Message.success(setResult.msg || '头像设置成功')
         this.isLoading = false
+        const user = {
+            avatar: result.data.key,
+            email:this.userInfo.email,
+            expend:this.userInfo.expend,
+            nick:this.userInfo.nick,
+            phone:this.userInfo.phone,
+            qq:this.userInfo.qq,
+            role:this.userInfo.role,
+            status:this.userInfo.status,
+            update_at:this.userInfo.update_at,
+        }
+        user.avatar = result.data.key
+        console.log(this.userInfo)
+        this.$store.commit('setUser',user)
+        console.log(this.userInfo)
         return
       }
       this.$Message.error(setResult.msg || '头像设置失败')
@@ -147,10 +152,18 @@ export default {
       const result = await userApi.logout()
       if (result.status) {
         this.$Message.success(result.msg || '注销成功')
+        this.$router.push('/')
         return
       }
       this.$Message.error(result.msg || '注销失败')
     },
+    handleCacheClear(confirm){
+        if(!confirm){
+            this.clearCacheConfirm = true
+            return
+        }
+        // todo dosomething confirm!
+    }
   },
   created() {
   },
@@ -239,5 +252,8 @@ export default {
         }
       }
     }
+  .logout{
+    margin:10px auto;
+  }
   }
 </style>

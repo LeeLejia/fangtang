@@ -1,0 +1,97 @@
+[
+    {
+        "configs":{
+            "autoplay": true,
+            "speed": 3000
+        },
+        "media": [
+            {
+                "url": "https://www.cjwddz.cn/static/image/agv_chart.png",
+                "desc": "描述文本.test",
+                "type": "picture"
+            },
+            {
+                "url": "https://www.cjwddz.cn/static/image/agv_chart0.png",
+                "desc": "描述文本.test",
+                "type": "picture"
+            },
+            {
+                "url": "https://www.cjwddz.cn/static/image/agv_log.png",
+                "desc": "描述文本.test",
+                "type": "picture"
+            },
+            {
+                "url": "https://www.cjwddz.cn/static/image/agv_math.jpg",
+                "desc": "描述文本.test",
+                "type": "picture"
+            }
+        ],
+        "files": [
+            {
+                "name":"可执行程序.exe",
+                "url":"https://file.iviewui.com/dist/ec11a83d8219506c7bf1005f26733fbb.jpg"
+            },
+            {
+                "name":"设计稿.doc",
+                "url":"https://file.iviewui.com/dist/ec11a83d8219506c7bf1005f26733fbb.jpg"
+            },
+            {
+                "name":"不可执行程序.exe",
+                "url":"https://file.iviewui.com/dist/ec11a83d8219506c7bf1005f26733fbb.jpg"
+            }
+        ],
+        "state": {
+            "projectName": "基于视觉导航的AGV调度系统",
+            "desc": "特别实用的AGV调度系统<div>A.调度精度高</div><div>B.响应速度快</div>"
+        }
+    },
+    {
+        "configs":{
+            "autoplay": false,
+            "speed": 5000
+        },
+        "media": [
+            {
+                "url": "https://www.cjwddz.cn/static/image/agv_chart.png",
+                "desc": "这是一个特别特别实用的AGV调度系统<div>A.调度精度高</div><div>B.响应速度快</div>",
+                "type": "picture"
+            },
+            {
+                "url": "https://www.cjwddz.cn/static/image/agv_chart0.png",
+                "desc": "描述文本.test",
+                "type": "picture"
+            },
+            {
+                "url": "https://www.cjwddz.cn/static/image/agv_log.png",
+                "desc": "描述文本.test",
+                "type": "picture"
+            },
+            {
+                "url": "https://www.cjwddz.cn/static/image/agv_math.jpg",
+                "desc": "描述文本.test",
+                "type": "picture"
+            }
+        ],
+        "files": [
+            {
+                "name":"可执行程序.exe",
+                "url":"https://file.iviewui.com/dist/ec11a83d8219506c7bf1005f26733fbb.jpg"
+            },
+            {
+                "name":"设计稿.doc",
+                "url":"https://file.iviewui.com/dist/ec11a83d8219506c7bf1005f26733fbb.jpg"
+            },
+            {
+                "name":"不可执行程序.exe",
+                "url":"https://file.iviewui.com/dist/ec11a83d8219506c7bf1005f26733fbb.jpg"
+            }
+        ],
+        "team": [
+
+        ],
+        "state": {
+            "projectName": "基于视觉导航的AGV调度系统",
+            "desc": "特别实用的AGV调度系统<div>A.调度精度高</div><div>B.响应速度快</div>"
+        }
+    }
+]

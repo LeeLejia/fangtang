@@ -4,14 +4,16 @@ import MainLayout from 'Pages/MainLayout'
 import Publish from 'Pages/Publish'
 import Person from 'Pages/Person'
 import TaskHall from 'Pages/TaskHall'
+import Condition from 'Pages/Condition'
 import Settings from 'Pages/Settings'
+import MyTask from 'Pages/MyTask'
 import Home from 'Pages/Home'
-import About from 'Pages/About'
+import Apps from 'Pages/Apps'
+import NotFound from 'Pages/404'
 import Link from '@/components/functional/LinkTable'
 import FileManage from '@/components/functional/FileManage'
 import MsgManage from '@/components/functional/MsgManage'
 import SysLog from '@/components/functional/SysLog'
-import MyTask from '@/components/functional/MyTask'
 
 const router = new Router({
   mode: 'history',
@@ -33,8 +35,8 @@ const router = new Router({
           component: TaskHall,
         },
         {
-          path: '/about',
-          component: About,
+          path: '/apps',
+          component: Apps,
         },
         {
           path: '/person',
@@ -67,8 +69,15 @@ const router = new Router({
             {
               path: '/person/msgs',
               component: MsgManage,
+            }, {
+              path: '/',
+              component: Condition,
             },
           ],
+        },
+        {
+          path: '*',
+          component: NotFound,
         },
       ],
     },
