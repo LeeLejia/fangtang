@@ -21,8 +21,7 @@
               @on-change="changePage"
               @on-page-size-change="changePageSize"
               show-sizer style="margin: 20px 0"></Page>
-        <Modal
-                v-model="addGood"
+        <Modal v-model="addGood"
                 title="添加商品"
                 @on-ok="ok"
                 @on-cancel="cancel">
@@ -34,7 +33,7 @@
                     <Input v-model="formItem.name"></Input>
                 </FormItem>
                 <FormItem label="价格">
-                    <Input v-model="formItem.price"></Input>
+                    <InputNumber :min="0" :step="0.01" v-model="formItem.price"></InputNumber>
                 </FormItem>
                 <FormItem label="状态">
                     <Select v-model="formItem.state">
@@ -43,7 +42,10 @@
                     </Select>
                 </FormItem>
                 <FormItem label="数量">
-                    <Input v-model="formItem.count"></Input>
+                    <InputNumber :min="-1" :step="1" v-model="formItem.count"></InputNumber>
+                </FormItem>
+                <FormItem label="商品描述">
+                    <Input v-model="formItem.describe" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="描述商品"></Input>
                 </FormItem>
             </Form>
         </Modal>
@@ -51,18 +53,21 @@
 </template>
 
 <script>
-    import Api from 'Api/pay-api'
-    import { Table, Page, Tag, Poptip, Button ,DropdownMenu,DropdownItem,Dropdown,Input,FormItem,Select,Form,Option} from 'iview'
+    import Api from 'Api/goods-api'
+    import Utils from 'Utils/utils'
+    import { Table, Page, Tag, Poptip, Button ,DropdownMenu,DropdownItem,Dropdown,Input,FormItem,Select,Form,Option,InputNumber} from 'iview'
     export default {
-        name: "order-list",
+        name: "goods-list",
         data(){
+            const vueInstance = this
             return{
                 formItem: {
-                    channel: '',    //渠道
-                    name:'',        //商品名称
-                    price:'',       //价格
-                    state:'',       //状态
-                    count:'',       //数量
+                    channel: '',    // 渠道
+                    name:'',        // 商品名称
+                    price: 0,       // 价格
+                    state:'正常',       // 状态
+                    count:-1,       // 数量
+                    describe:'',    // 商品描述
                 },
                 addGood:false,      //show add good modal
                 loading: false,
@@ -80,19 +85,29 @@
                 columns: [
                     {
                         title: '商品码',
-                        key: 'type',
-                        width:100
+                        width:100,
+                        render(h,params){
+                            return h('div',{style:{width: '100%','text-overflow':'ellipsis',overflow:'hidden','white-space': 'nowrap',cursor:'pointer'},on: {
+                                click: () => {
+                                    Utils.CopyText(params.row.type)
+                                    vueInstance.$Message.success('商品码已拷贝到剪贴板！')
+                                },
+                            },},params.row.type)
+                        },
                     },
                     {
                         title: '商品名称',
-                        key: 'name'
+                        key: 'name',
+                        width:200,
                     },
                     {
                         title: '渠道',
-                        key: 'channel'
+                        key: 'channel',
+                        width:120,
                     },
                     {
                         title: '单价',
+                        width:120,
                         render(h,params){
                             const text = `￥${params.row.price/100}元`
                             return h('div',text)
@@ -107,16 +122,16 @@
                         },
                     },
                     {
-                        title: '创建时间',
-                        key: 'created_at'
-                    },
-                    {
                         title: '状态',
-                        width:150,
+                        width:100,
                         render(h,params){
                             let text = '未知'
                             return h('div',text)
                         }
+                    },
+                    {
+                        title: '创建时间',
+                        key: 'created_at'
                     },
                     {
                         title:'操作',
@@ -129,13 +144,16 @@
             }
         },
         components: {
-            Table, Page, Tag, Poptip, Button,DropdownMenu,DropdownItem,Dropdown,Input,FormItem,Select,Form,Option
+            Table, Page, Tag, Poptip, Button,DropdownMenu,DropdownItem,Dropdown,Input,FormItem,Select,Form,Option,InputNumber
         },
         created(){
             this.current = 1
             this.query()
         },
         methods: {
+            add(){
+
+            },
             show (index) {
                 this.$Modal.info({
                     title: '订单状况',
@@ -148,14 +166,8 @@
             },
             checkCondition(){
                 if (!this.searchText) return true
-                if(this.condition.value==='order_id' || this.condition.value === 'type'){
-                    if(/^[1-9][0-9]*$/.test(this.searchText)===false){
-                        this.$Message.error({content:"不能输入非数字!"})
-                        return false
-                    }
-                }
                 if(this.condition.value==='state'){
-                    if(['支付成功','等待支付','支付失败'].indexOf(this.searchText)===-1){
+                    if(['已下架','正常'].indexOf(this.searchText)===-1){
                         this.$Message.error({content:"不存在该状态!"})
                         return false
                     }
@@ -168,21 +180,20 @@
                 let condition = {start:(this.current-1) * this.pageSize,count:this.pageSize}
                 let queryText = this.searchText
                 if(queryText){
-                    (this.condition.value==='state') && (queryText = queryText==='支付成功'?1:(queryText==='等待支付'?2:-1))
+                    (this.condition.value==='state') && (queryText = queryText==='已下架'?-1:1)
                     condition[this.condition.value] = queryText
                 }
-                Api.getOrders(condition).then(result=>{
+                Api.getGoods(condition).then(result=>{
                     this.loading = false
                     if(!result.status){
                         this.$Modal.warning({
-                            title:'获取订单失败',
+                            title:'获取商品列表出错',
                             content: result.msg || '服务器异常或者网络错误,请稍后重试!',
                         })
                         return
                     }
-                    this.data = result.data.orders || []
+                    this.data = result.data.goods || []
                     this.total = result.data.total || 0
-                    console.log(this.data)
                 })
             },
             changePage(value){
@@ -194,12 +205,48 @@
                 this.query()
             },
             ok () {
-                if(!this.formItem.channel || !this.formItem.name || !this.formItem.price || !this.formItem.count || !this.formItem.state){
+                let msg = ''
+                if(!this.formItem.channel) msg = "请填写渠道!"
+                else if(this.formItem.channel.length < 5 || this.formItem.channel.length>10) msg = "渠道设置为5-10个字符!"
+                else if(!this.formItem.price || this.formItem.price < 0) msg = "请正确设置价格"
+                else if(!this.formItem.count || this.formItem.count < -1) msg = "请正确设置商品数量"
+                else if(!this.formItem.state) msg = "请设置商品状态"
+                if(msg){
                     this.$Modal.warning({
                         title:'提示',
-                        content: '请将信息填写完整!',
+                        content: msg,
                     });
+                    return
                 }
+                const good = {
+                    name: this.formItem.name,
+                    channel: this.formItem.channel,
+                    price: this.formItem.price * 100,
+                    state: this.formItem.state,
+                    count: this.formItem.count,
+                    desc: this.formItem.describe,
+                }
+                Api.addGood(good).then(result=>{
+                    if(!result.status){
+                        this.$Modal.warning({
+                            title:'添加商品失败',
+                            content: result.msg || '服务器异常或者网络错误,请稍后重试!',
+                        })
+                    }else{
+                        this.$Message.success({
+                            content: '添加商品成功!',
+                        })
+                        this.formItem = {
+                            channel: '',
+                                name:'',
+                                price: 0,
+                                state:'正常',
+                                count:-1,
+                                describe:'',
+                        }
+                        this.query()
+                    }
+                })
             },
             cancel () {
 
